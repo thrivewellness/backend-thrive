@@ -16,8 +16,25 @@ jobs:
           host: ${{ secrets.VPS_HOST }}
           username: deploy
           key: ${{ secrets.VPS_SSH_KEY }}
+          port: 22
+          script_stop: true
+          debug: true
           script: |
+            echo "Connected to VPS"
+            whoami
+            pwd
+            ls -la
+
+            echo "Going to backend directory"
             cd ~/backend-thrive
+
+            echo "Pulling latest code"
             git pull origin main
+
+            echo "Installing dependencies"
             npm install --production
+
+            echo "Reloading PM2"
             pm2 reload backend-thrive
+
+            echo "Deploy completed"
