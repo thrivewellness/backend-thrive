@@ -19,21 +19,24 @@ jobs:
           port: 22
           debug: true
           script: |
+            set -e
+
             echo "Connected to VPS"
             whoami
             pwd
-            ls -la
 
             echo "Going to backend directory"
             cd ~/backend-thrive
 
-            echo "Pulling latest code"
-            git pull origin main
+            echo "Syncing code with GitHub"
+            git fetch origin
+            git reset --hard origin/main
+            git clean -fd
 
             echo "Installing dependencies"
-            npm install --production
+            npm install --omit=dev
 
             echo "Reloading PM2"
-            pm2 reload backend-thrive
+            pm2 reload backend-thrive --update-env
 
-            echo "Deploy completed"
+            echo "Deploy completed successfully"
