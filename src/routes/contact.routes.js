@@ -14,7 +14,7 @@ router.post('/contact', async (req, res, next) => {
     if (error) {
       return res.status(500).json({
         success: false,
-        message: 'Failed to save the message'
+        message: 'Failed to save message'
       });
     }
 
