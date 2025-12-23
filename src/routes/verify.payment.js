@@ -3,7 +3,6 @@ import { supabase } from '../lib/supabase.js';
 
 const router = express.Router();
 
-// GET /api/payment/:uuid
 router.get("/payment/verify/:uuid", async (req, res) => {
 
   
