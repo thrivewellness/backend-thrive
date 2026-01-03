@@ -7,6 +7,8 @@ router.post('/user/form', async (req, res, next) => {
   try {
     const { user_id, ...formFields } = req.body;
 
+    console.log(req.body)
+
     if (!user_id) {
       return res.status(400).json({
         success: false,
@@ -15,7 +17,7 @@ router.post('/user/form', async (req, res, next) => {
     }
 
     const { data: existing, error: fetchError } = await supabase
-      .from('user')
+      .from('user_forms')
       .select('form')
       .eq('user_id', user_id)
       .single();
@@ -31,7 +33,7 @@ router.post('/user/form', async (req, res, next) => {
       const updatedForms = [...(existing.form || []), formFields];
 
       const { error: updateError } = await supabase
-        .from('user')
+        .from('user_forms')
         .update({ form: updatedForms })
         .eq('user_id', user_id);
 
@@ -46,7 +48,7 @@ router.post('/user/form', async (req, res, next) => {
     }
 
     const { error: insertError } = await supabase
-      .from('user')
+      .from('user_forms')
       .insert([{ user_id, form: [formFields] }]);
 
     if (insertError) {
