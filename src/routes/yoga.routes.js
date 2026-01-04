@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.post('/yoga/signup', async (req, res, next) => {
   try {
-    const { name, phone, countryCode, referral } = req.body;
+    const { name, phone, countryCode, referral, coach_ref } = req.body;
 
     if (!name || !phone) {
       return res.status(400).json({
@@ -22,7 +22,8 @@ router.post('/yoga/signup', async (req, res, next) => {
         name,
         phone,
         country_code: countryCode,
-        referral
+        referral,
+        coach_ref
       });
 
     if (error) {
