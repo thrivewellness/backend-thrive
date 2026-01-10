@@ -1,7 +1,16 @@
 export const TEMPLATES = {
-  WELCOME_NEW: "814a2bce-a560-4d84-a3ac-dbcb9b28920a"
+  WELCOME_NEW: "814a2bce-a560-4d84-a3ac-dbcb9b28920a",
+  STEP_2: "0859c5c7-49f8-45b5-a80a-b616097977b2",
+  STEP_3: "ceaf55fe-a726-481b-bb2c-845733fba9bb"
 };
 
 export const EVENTS = {
-  START: "start"
+  START: "start",
+
+  STEP_2: "CLICK HERE - STEP 2",
+  STEP_3: "CLICK HERE - STEP 3",
+
+  INVITE_FRIENDS: "INVITE FRIENDS",
+  SHARE_WHATSAPP: "SHARE ON WHATSAPP",
+  WHATSAPP_STATUS: "WHATSAPP STATUS"
 };

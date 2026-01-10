@@ -1,29 +1,22 @@
-import { sendTemplateMessage } from "./gupshup.service.js";
-import { TEMPLATES, EVENTS } from "./gupshup.constants.js";
 import { supabase } from "../lib/supabase.js";
+import {
+  sendTemplateMessage,
+  sendImageMessage,
+  sendTextMessage
+} from "./gupshup.service.js";
+import { TEMPLATES, EVENTS } from "./gupshup.constants.js";
 
 /**
- * Extract country code & phone
- * 918050717704 → { countryCode: "+91", phone: "8050717704" }
+ * Extract phone from WhatsApp ID
  */
 function extractPhone(waId) {
   const digits = waId.replace(/\D/g, "");
 
-  console.log("Extracting phone from waId:", waId, "->", digits);
-
-  // India case (you can extend later)
   if (digits.startsWith("91") && digits.length === 12) {
-    return {
-      countryCode: "+91",
-      phone: digits.slice(2)
-    };
+    return digits.slice(2);
   }
 
-  // fallback
-  return {
-    countryCode: `+${digits.slice(0, digits.length - 10)}`,
-    phone: digits.slice(-10)
-  };
+  return digits.slice(-10);
 }
 
 export async function handleWebhook(req, res) {
@@ -39,51 +32,202 @@ export async function handleWebhook(req, res) {
       return res.sendStatus(200);
     }
 
+    const waId = contact.wa_id;
     const messageText = messageObj.text?.body?.toLowerCase();
-    const waId = contact.wa_id; // 918050717704
+    const buttonPayload = messageObj.button?.payload;
 
-    if (messageText !== EVENTS.START) {
+    const phone = extractPhone(waId);
+
+    /* ================= START ================= */
+    if (messageText === EVENTS.START) {
+      const { data: user } = await supabase
+        .from("yoga_signups")
+        .select("name")
+        .eq("phone", phone)
+        .single();
+
+      const { data: program } = await supabase
+        .from("free_yoga_programs_data")
+        .select("start_date")
+        .order("start_date", { ascending: false })
+        .limit(1)
+        .single();
+
+      if (!user || !program) return res.sendStatus(200);
+
+      await sendTemplateMessage({
+        phone: waId,
+        templateId: TEMPLATES.WELCOME_NEW,
+        params: [user.name, program.start_date]
+      });
+
       return res.sendStatus(200);
     }
 
-    const { phone, countryCode } = extractPhone(waId);
+    /* ================= STEP 2 ================= */
+    if (buttonPayload === EVENTS.STEP_2) {
+      await sendTemplateMessage({
+        phone: waId,
+        templateId: TEMPLATES.STEP_2,
+        params: ["Sunday, 4th January"]
+      });
 
-    // 🔍 Fetch user
-    const { data: user, error: userError } = await supabase
-      .from("yoga_signups")
-      .select("name")
-      .eq("phone", phone)
-      .single();
-
-    if (userError || !user) {
-      console.log("User not found:", phone);
       return res.sendStatus(200);
+    }
+
+    /* ================= STEP 3 ================= */
+    if (buttonPayload === EVENTS.STEP_3) {
+      await sendTemplateMessage({
+        phone: waId,
+        templateId: TEMPLATES.STEP_3,
+        params: []
+      });
+
+      return res.sendStatus(200);
+    }
+    /* ================= INVITE FRIENDS ================= */
+    if (buttonPayload === EVENTS.INVITE_FRIENDS) {
+
+      // 🔍 Fetch ref_user_id
+      const { data: user, error } = await supabase
+        .from("yoga_signups")
+        .select("ref_user_id")
+        .eq("phone", phone)
+        .single();
+
+      if (error || !user?.ref_user_id) {
+        console.log("ref_user_id not found for:", phone);
+        return res.sendStatus(200);
       }
 
-      // 🔍 Fetch latest program start date
-      const { data: program, error: programError } = await supabase
-          .from("free_yoga_programs_data")
-          .select("start_date")
-          .order("start_date", { ascending: false })
-          .limit(1)
-          .single();
+      const referralLink = `https://thrivewellness.in/thrive-yoga?ref=${user.ref_user_id}`;
 
-    if (programError || !program) {
-      console.log("Program not found:", phone);
+      // 🖼️ Image + caption message
+      await sendImageMessage({
+        phone: waId,
+        imageUrl: "https://fss.gupshup.io/0/public/0/0/gupshup/919355221522/d3c6c611-b822-41ea-86e6-fad4824d54eb/1767892465557_1%2810%29.jpg",
+        caption:
+          `I personally invite you to experience *THRIVE YOGA*
+An Exercise Program by Thrive Wellness
+
+*FREE | 14-Day Online Program*
+
+📅 *Starts*
+⏰ *5 Batches Daily, Join Anytime*
+
+Designed to help you:
+🔥 Support fat loss
+🏋️ Reduce body Pain & stiffness
+🧍 Move with confidence
+⏳ Improve longevity
+
+Led by *Satyam Patkar & Bobby Rajput*
+Certified Exercise & Nutrition Expert | 6+ Years Exp
+
+👇 Click below to join the *FREE 14-Day Thrive Yoga Program*
+\n${referralLink}`
+      });
+
+      // 🔗 Referral link message (NO IMAGE)
+      await sendTextMessage({
+        phone: waId,
+        text: `Forward above message to your close ones & WIN when they JOIN ⬆`
+      });
+
       return res.sendStatus(200);
     }
 
-    // ✅ Send template
-    await sendTemplateMessage({
-      phone: waId, // send back full waId
-      templateName: TEMPLATES.WELCOME_NEW,
-      name: user.name,
-      date: program.start_date 
-    });
+
+    /* ================= SHARE ON WHATSAPP ================= */
+    if (buttonPayload === EVENTS.SHARE_WHATSAPP) {
+
+
+      // 🔍 Fetch ref_user_id
+      const { data: user, error } = await supabase
+        .from("yoga_signups")
+        .select("ref_user_id")
+        .eq("phone", phone)
+        .single();
+
+      if (error || !user?.ref_user_id) {
+        console.log("ref_user_id not found for:", phone);
+        return res.sendStatus(200);
+      }
+
+      const referralLink = `https://thrivewellness.in/thrive-yoga?ref=${user.ref_user_id}`;
+      await sendImageMessage({
+        phone: waId,
+        imageUrl: "https://fss.gupshup.io/0/public/0/0/gupshup/919355221522/d3c6c611-b822-41ea-86e6-fad4824d54eb/1767892465557_1%2810%29.jpg",
+        caption: `I personally invite you to experience *THRIVE YOGA*
+An Exercise Program by Thrive Wellness
+
+*FREE | 14-Day Online Program*
+
+📅 *Starts*
+⏰ *5 Batches Daily, Join Anytime*
+
+Designed to help you:
+🔥 Support fat loss
+🏋️ Reduce body Pain & stiffness
+🧍 Move with confidence
+⏳ Improve longevity
+
+Led by *Satyam Patkar & Bobby Rajput*
+Certified Exercise & Nutrition Expert | 6+ Years Exp
+
+👇 Click below to join the *FREE 14-Day Thrive Yoga Program*
+\n${referralLink}`
+      });
+
+      await sendTextMessage({
+        phone: waId,
+        text: "Forward above message to your close ones & WIN when they JOIN ⬆"
+      });
+
+      return res.sendStatus(200);
+    }
+
+    /* ================= WHATSAPP STATUS ================= */
+    if (buttonPayload === EVENTS.WHATSAPP_STATUS) {
+
+      // 🔍 Fetch ref_user_id
+      const { data: user, error } = await supabase
+        .from("yoga_signups")
+        .select("ref_user_id")
+        .eq("phone", phone)
+        .single();
+
+      if (error || !user?.ref_user_id) {
+        console.log("ref_user_id not found for:", phone);
+        return res.sendStatus(200);
+      }
+
+      const referralLink = `https://thrivewellness.in/thrive-yoga?ref=${user.ref_user_id}`;
+
+      await sendImageMessage({
+        phone: waId,
+        imageUrl: "https://fss.gupshup.io/0/public/0/0/gupshup/919355221522/d3c6c611-b822-41ea-86e6-fad4824d54eb/1767892465557_1%2810%29.jpg",
+        caption: `Movement today is an investment in a longer, healthier life 🌱
+Join a community that supports you- we grow stronger together 🤝
+
+🧘 *FREE THRIVE YOGA | 14 Days Online*
+🗓️ Starts Tomorrow
+🎯 Focused on *long-term health and longevity*
+
+CLICK TO JOIN  👉🏻 ${referralLink}`
+      });
+
+      await sendTextMessage({
+        phone: waId,
+        text: "Forward on WHATSAPP STATUS 👆🏻"
+      });
+
+      return res.sendStatus(200);
+    }
 
     return res.sendStatus(200);
   } catch (err) {
-    console.error("Gupshup webhook error:", err);
+    console.error("Webhook error:", err);
     return res.sendStatus(500);
   }
 }

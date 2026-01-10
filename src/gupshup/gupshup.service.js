@@ -1,37 +1,85 @@
 import axios from "axios";
 
-export async function sendTemplateMessage({ phone, templateName, name , date }) {
-    console.log("Sending Gupshup template:", { phone, templateName, name, date });
+const BASE_URL = "https://api.gupshup.io/wa/api/v1";
 
+/**
+ * Send template message
+ */
+export async function sendTemplateMessage({ phone, templateId, params = [] }) {
+  const body = new URLSearchParams({
+    channel: "whatsapp",
+    source: "919355221522",
+    destination: phone,
+    "src.name": process.env.GUPSHUP_APP_NAME,
+    template: JSON.stringify({
+      id: templateId,
+      params
+    })
+  });
+
+  const result = await axios.post(`${BASE_URL}/template/msg`, body.toString(), {
+    headers: {
+      apikey: process.env.GUPSHUP_API_KEY,
+      "Content-Type": "application/x-www-form-urlencoded"
+    }
+  });
+
+  console.log("Template message sent:", result.data);
+}
+
+/**
+ * Send image message
+ */
+export async function sendImageMessage({ phone, imageUrl, caption }) {
+
+  console.log("Sending image message:", { phone, imageUrl });
 
   const body = new URLSearchParams({
     channel: "whatsapp",
-    source: "919355221522",              // SAME as curl
-    destination: phone,                  // e.g. 918050717704
-    "src.name": process.env.GUPSHUP_APP_NAME, // e.g. thrivewellness    ",
-    template: JSON.stringify({
-      id: templateName,
-      params: [
-       name, date
-      ]
-    }),
+    source: "919355221522",
+    destination: phone,
+    "src.name": process.env.GUPSHUP_APP_NAME,
     message: JSON.stringify({
       type: "image",
       image: {
-        link: "https://fss.gupshup.io/0/public/0/0/gupshup/919355221522/d3c6c611-b822-41ea-86e6-fad4824d54eb/1767892465557_1%2810%29.jpg"
+        link: imageUrl,
+        caption // keep SHORT
       }
     })
   });
 
-  await axios.post(
-    "https://api.gupshup.io/wa/api/v1/template/msg",
+  const result = await axios.post(
+    `${BASE_URL}/msg`,
     body.toString(),
     {
       headers: {
         apikey: process.env.GUPSHUP_API_KEY,
-        "Content-Type": "application/x-www-form-urlencoded",
-        "Cache-Control": "no-cache"
+        "Content-Type": "application/x-www-form-urlencoded"
       }
     }
   );
+
+  console.log("Image message sent:", result.data);
+}
+
+/**
+ * Send text message
+ */
+export async function sendTextMessage({ phone, text }) {
+  const body = new URLSearchParams({
+    channel: "whatsapp",
+    source: "919355221522",
+    destination: phone,
+    "src.name": process.env.GUPSHUP_APP_NAME,
+    message: JSON.stringify({
+      type: "text",
+      text
+    })
+  });
+
+  await axios.post(`${BASE_URL}/msg`, body.toString(), {
+    headers: {
+      apikey: process.env.GUPSHUP_API_KEY
+    }
+  });
 }
