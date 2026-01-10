@@ -55,10 +55,10 @@ export async function handleWebhook(req, res) {
 
       if (!user || !program) return res.sendStatus(200);
 
-      await sendTemplateMessage({
+      await sendWelcomeTemplate({
         phone: waId,
-        templateId: TEMPLATES.WELCOME_NEW,
-        params: [user.name, program.start_date]
+        name: user.name,
+        startDate: program.start_date
       });
 
       return res.sendStatus(200);
