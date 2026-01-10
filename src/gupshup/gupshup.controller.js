@@ -9,6 +9,8 @@ import { supabase } from "../lib/supabase.js";
 function extractPhone(waId) {
   const digits = waId.replace(/\D/g, "");
 
+  console.log("Extracting phone from waId:", waId, "->", digits);
+
   // India case (you can extend later)
   if (digits.startsWith("91") && digits.length === 12) {
     return {
@@ -51,18 +53,20 @@ export async function handleWebhook(req, res) {
       .from("yoga_signups")
       .select("name")
       .eq("phone", phone)
-      .eq("country_code", countryCode)
       .single();
 
     if (userError || !user) {
       console.log("User not found:", phone);
       return res.sendStatus(200);
-    }
+      }
 
-    // 🔍 Fetch program start date
-    const { data: program, error: programError } = await supabase
-      .from("free_yoga_programs_data")
-      .select("start_date")
+      // 🔍 Fetch latest program start date
+      const { data: program, error: programError } = await supabase
+          .from("free_yoga_programs_data")
+          .select("start_date")
+          .order("start_date", { ascending: false })
+          .limit(1)
+          .single();
 
     if (programError || !program) {
       console.log("Program not found:", phone);
@@ -73,10 +77,8 @@ export async function handleWebhook(req, res) {
     await sendTemplateMessage({
       phone: waId, // send back full waId
       templateName: TEMPLATES.WELCOME_NEW,
-      params: [
-        user.name,            // {{1}}
-        program.start_date    // {{2}}
-      ]
+      name: user.name,
+      date: program.start_date 
     });
 
     return res.sendStatus(200);
