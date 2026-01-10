@@ -7,6 +7,7 @@ import yogaRoutes from './routes/yoga.routes.js';
 import errorHandler from './middlewares/error.middleware.js';
 import paymentRoutes from "./routes/payment.js";
 import verifyPayment from "./routes/verify.payment.js"
+import gupshupRoutes from "./gupshup/gupshup.routes.js";
 
 const app = express();
 
@@ -19,5 +20,6 @@ app.use(yogaRoutes);
 app.use("/payment", paymentRoutes);
 app.use(verifyPayment);
 app.use(errorHandler);
+app.use("/gupshup", gupshupRoutes);
 
 export default app;
