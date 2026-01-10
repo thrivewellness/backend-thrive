@@ -2,7 +2,8 @@ import { supabase } from "../lib/supabase.js";
 import {
   sendTemplateMessage,
   sendImageMessage,
-  sendTextMessage
+  sendTextMessage,
+  sendWelcomeTemplate
 } from "./gupshup.service.js";
 import { TEMPLATES, EVENTS } from "./gupshup.constants.js";
 
