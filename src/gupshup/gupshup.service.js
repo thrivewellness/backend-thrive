@@ -105,6 +105,7 @@ export async function sendImageMessage({ phone, imageUrl, caption }) {
  * Send text message
  */
 export async function sendTextMessage({ phone, text }) {
+
   const body = new URLSearchParams({
     channel: "whatsapp",
     source: "919355221522",

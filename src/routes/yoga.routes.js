@@ -1,63 +1,86 @@
 import express from 'express';
 import { supabase } from '../lib/supabase.js';
+import { sendYogaSignupWhatsApp } from '../gupshup/send.yoga.signup.first.js'; 
+import { processPhone } from "../utils/phoneUtils.js"; 
 
 const router = express.Router();
 
-//post for yoga sinups
 
-router.post('/yoga/signup', async (req, res, next) => {
+router.post("/yoga/signup", async (req, res, next) => {
   try {
     const { name, phone, countryCode, referral, coach_ref } = req.body;
 
-    if (!name || !phone) {
+    if (!name || !phone || !countryCode) {
       return res.status(400).json({
         success: false,
-        message: 'Missing required fields'
+        message: "Missing required fields",
       });
     }
 
-    // 1️⃣ CHECK IF PHONE ALREADY EXISTS
-    const { data: existingUser, error: checkError } = await supabase
-      .from('yoga_signups')
-      .select('id')
-      .eq('phone', phone)
+    // 🔥 PROCESS PHONE FOR ANY COUNTRY
+    const phoneData = processPhone(phone, countryCode);
+    if (!phoneData) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid phone data",
+      });
+    }
+
+    const { localPhone, whatsappPhone} = phoneData;
+
+    // CHECK DUPLICATE (LOCAL + COUNTRY)
+    const { data: existingUser } = await supabase
+      .from("yoga_signups")
+      .select("id")
+      .eq("phone", localPhone)
+      .eq("country_code", countryCode)
       .single();
 
     if (existingUser) {
       return res.status(409).json({
         success: false,
-        message: 'Mobile number already exists'
+        message: "Mobile number already exists",
       });
     }
 
-    // 2️⃣ GENERATE ref_user_id
+    // INSERT → STORE CLEAN DATA
     const randomCode = Math.random().toString(36).substring(2, 6).toUpperCase();
-    const ref_user_id = `${name.replace(/\s+/g, '').toLowerCase()}_${randomCode}`;
+    const ref_user_id = `${name.replace(/\s+/g, "").toLowerCase()}_${randomCode}`;
 
-    // 3️⃣ INSERT DATA
-    const { error } = await supabase
-      .from('yoga_signups')
-      .insert({
-        name,
-        phone,
-        country_code: countryCode,
-        referral,
-        coach_ref,
-        ref_user_id
-      });
+    const { error } = await supabase.from("yoga_signups").insert({
+      name,
+      phone: localPhone,     // ONLY LOCAL NUMBER
+      country_code: countryCode,      // STORE COUNTRY CODE SEPARATELY
+      referral,
+      coach_ref,
+      ref_user_id,
+    });
 
     if (error) {
       return res.status(500).json({
         success: false,
-        message: 'Database insert failed'
+        message: "Database insert failed",
       });
     }
 
-    res.status(200).json({
-      success: true,
-      message: 'Signup successful'
+    const { data: program } = await supabase
+      .from("free_yoga_programs_data")
+      .select("start_date")
+      .order("start_date", { ascending: false })
+      .limit(1)
+      .single();
+
+    // 🔔 WHATSAPP → FULL NUMBER
+    sendYogaSignupWhatsApp({
+      phone: whatsappPhone,
+      name,
+      startDate: program?.start_date,
     });
 
+    res.status(200).json({
+      success: true,
+      message: "Signup successful",
+    });
   } catch (err) {
     next(err);
   }
