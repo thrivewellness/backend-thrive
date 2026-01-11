@@ -70,7 +70,7 @@ export async function handleWebhook(req, res) {
       await sendTemplateMessage({
         phone: waId,
         templateId: TEMPLATES.STEP_2,
-        params: ["Sunday, 4th January"]
+        params: ["Monday, 18th January"]
       });
 
       return res.sendStatus(200);
@@ -101,7 +101,7 @@ export async function handleWebhook(req, res) {
         return res.sendStatus(200);
       }
 
-      const referralLink = `https://thrivewellness.in/thrive-yoga?ref=${user.ref_user_id}`;
+      const referralLink = `https://thriveyoga.thrivewellness.in//?ref=${user.ref_user_id}`;
 
       // 🖼️ Image + caption message
       {/*await sendImageMessage({
@@ -180,7 +180,7 @@ Certified Exercise & Nutrition Expert | 6+ Years Exp
         return res.sendStatus(200);
       }
 
-      const referralLink = `https://thrivewellness.in/thrive-yoga?ref=${user.ref_user_id}`;
+      const referralLink = `https://thriveyoga.thrivewellness.in/?ref=${user.ref_user_id}`;
 
 
      {/* await sendImageMessage({
@@ -255,7 +255,7 @@ Certified Exercise & Nutrition Expert | 6+ Years Exp
         return res.sendStatus(200);
       }
 
-      const referralLink = `https://thrivewellness.in/thrive-yoga?ref=${user.ref_user_id}`;
+      const referralLink = `https://thriveyoga.thrivewellness.in/?ref=${user.ref_user_id}`;
 
      { /*await sendImageMessage({
         phone: waId,
