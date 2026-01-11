@@ -16,6 +16,25 @@ router.post('/yoga/signup', async (req, res, next) => {
       });
     }
 
+    // 1️⃣ CHECK IF PHONE ALREADY EXISTS
+    const { data: existingUser, error: checkError } = await supabase
+      .from('yoga_signups')
+      .select('id')
+      .eq('phone', phone)
+      .single();
+
+    if (existingUser) {
+      return res.status(409).json({
+        success: false,
+        message: 'Mobile number already exists'
+      });
+    }
+
+    // 2️⃣ GENERATE ref_user_id
+    const randomCode = Math.random().toString(36).substring(2, 6).toUpperCase();
+    const ref_user_id = `${name.replace(/\s+/g, '').toLowerCase()}_${randomCode}`;
+
+    // 3️⃣ INSERT DATA
     const { error } = await supabase
       .from('yoga_signups')
       .insert({
@@ -23,7 +42,8 @@ router.post('/yoga/signup', async (req, res, next) => {
         phone,
         country_code: countryCode,
         referral,
-        coach_ref
+        coach_ref,
+        ref_user_id
       });
 
     if (error) {
@@ -33,7 +53,11 @@ router.post('/yoga/signup', async (req, res, next) => {
       });
     }
 
-    res.status(200).json({ success: true });
+    res.status(200).json({
+      success: true,
+      message: 'Signup successful'
+    });
+
   } catch (err) {
     next(err);
   }

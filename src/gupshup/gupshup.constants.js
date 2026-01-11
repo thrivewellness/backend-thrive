@@ -5,7 +5,7 @@ export const TEMPLATES = {
 };
 
 export const EVENTS = {
-  START: "start",
+  START: "START",
 
   STEP_2: "CLICK HERE - STEP 2",
   STEP_3: "CLICK HERE - STEP 3",

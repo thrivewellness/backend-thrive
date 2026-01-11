@@ -104,7 +104,7 @@ export async function handleWebhook(req, res) {
       const referralLink = `https://thrivewellness.in/thrive-yoga?ref=${user.ref_user_id}`;
 
       // 🖼️ Image + caption message
-      await sendImageMessage({
+      {/*await sendImageMessage({
         phone: waId,
         imageUrl: "https://fss.gupshup.io/0/public/0/0/gupshup/919355221522/d3c6c611-b822-41ea-86e6-fad4824d54eb/1767892465557_1%2810%29.jpg",
         caption:
@@ -127,7 +127,32 @@ Certified Exercise & Nutrition Expert | 6+ Years Exp
 
 👇 Click below to join the *FREE 14-Day Thrive Yoga Program*
 \n${referralLink}`
-      });
+      });*/}
+
+      await sendTextMessage(
+        {
+          phone: waId,  
+          text: `I personally invite you to experience *THRIVE YOGA*
+An Exercise Program by Thrive Wellness
+
+*FREE | 14-Day Online Program*
+
+📅 *Starts*
+⏰ *5 Batches Daily, Join Anytime*
+
+Designed to help you:
+🔥 Support fat loss
+🏋️ Reduce body Pain & stiffness
+🧍 Move with confidence
+⏳ Improve longevity
+
+Led by *Satyam Patkar & Bobby Rajput*
+Certified Exercise & Nutrition Expert | 6+ Years Exp
+
+👇 Click below to join the *FREE 14-Day Thrive Yoga Program*
+\n${referralLink}`
+        }
+      )
 
       // 🔗 Referral link message (NO IMAGE)
       await sendTextMessage({
@@ -156,7 +181,9 @@ Certified Exercise & Nutrition Expert | 6+ Years Exp
       }
 
       const referralLink = `https://thrivewellness.in/thrive-yoga?ref=${user.ref_user_id}`;
-      await sendImageMessage({
+
+
+     {/* await sendImageMessage({
         phone: waId,
         imageUrl: "https://fss.gupshup.io/0/public/0/0/gupshup/919355221522/d3c6c611-b822-41ea-86e6-fad4824d54eb/1767892465557_1%2810%29.jpg",
         caption: `I personally invite you to experience *THRIVE YOGA*
@@ -178,7 +205,32 @@ Certified Exercise & Nutrition Expert | 6+ Years Exp
 
 👇 Click below to join the *FREE 14-Day Thrive Yoga Program*
 \n${referralLink}`
-      });
+      });*/}
+
+      await sendTextMessage(
+        {
+          phone: waId,  
+          text: `I personally invite you to experience *THRIVE YOGA*
+An Exercise Program by Thrive Wellness
+
+*FREE | 14-Day Online Program*
+
+📅 *Starts*
+⏰ *5 Batches Daily, Join Anytime*
+
+Designed to help you:
+🔥 Support fat loss
+🏋️ Reduce body Pain & stiffness
+🧍 Move with confidence
+⏳ Improve longevity
+
+Led by *Satyam Patkar & Bobby Rajput*
+Certified Exercise & Nutrition Expert | 6+ Years Exp
+
+👇 Click below to join the *FREE 14-Day Thrive Yoga Program*
+\n${referralLink}`
+        }
+      )
 
       await sendTextMessage({
         phone: waId,
@@ -205,7 +257,7 @@ Certified Exercise & Nutrition Expert | 6+ Years Exp
 
       const referralLink = `https://thrivewellness.in/thrive-yoga?ref=${user.ref_user_id}`;
 
-      await sendImageMessage({
+     { /*await sendImageMessage({
         phone: waId,
         imageUrl: "https://fss.gupshup.io/0/public/0/0/gupshup/919355221522/d3c6c611-b822-41ea-86e6-fad4824d54eb/1767892465557_1%2810%29.jpg",
         caption: `Movement today is an investment in a longer, healthier life 🌱
@@ -216,7 +268,21 @@ Join a community that supports you- we grow stronger together 🤝
 🎯 Focused on *long-term health and longevity*
 
 CLICK TO JOIN  👉🏻 ${referralLink}`
-      });
+      });*/}
+
+      await sendTextMessage(
+        {
+          phone: waId,  
+          text: `Movement today is an investment in a longer, healthier life 🌱
+Join a community that supports you- we grow stronger together 🤝
+
+🧘 *FREE THRIVE YOGA | 14 Days Online*
+🗓️ Starts Tomorrow
+🎯 Focused on *long-term health and longevity*
+
+CLICK TO JOIN  👉🏻 ${referralLink}`
+        }
+      )
 
       await sendTextMessage({
         phone: waId,
