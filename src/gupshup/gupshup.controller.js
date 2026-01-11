@@ -129,6 +129,15 @@ Certified Exercise & Nutrition Expert | 6+ Years Exp
 \n${referralLink}`
       });*/}
 
+
+      
+      // 🔗 Referral link message (NO IMAGE)
+      await sendTextMessage({
+        phone: waId,
+        text: `Forward below message to your close ones & WIN when they JOIN ⬇️`
+      });
+
+
       await sendTextMessage(
         {
           phone: waId,  
@@ -153,12 +162,6 @@ Certified Exercise & Nutrition Expert | 6+ Years Exp
 \n${referralLink}`
         }
       )
-
-      // 🔗 Referral link message (NO IMAGE)
-      await sendTextMessage({
-        phone: waId,
-        text: `Forward above message to your close ones & WIN when they JOIN ⬆`
-      });
 
       return res.sendStatus(200);
     }
@@ -207,6 +210,11 @@ Certified Exercise & Nutrition Expert | 6+ Years Exp
 \n${referralLink}`
       });*/}
 
+      await sendTextMessage({
+        phone: waId,
+        text: `Forward below message to your close ones & WIN when they JOIN ⬇️`
+      });
+
       await sendTextMessage(
         {
           phone: waId,  
@@ -232,10 +240,7 @@ Certified Exercise & Nutrition Expert | 6+ Years Exp
         }
       )
 
-      await sendTextMessage({
-        phone: waId,
-        text: "Forward above message to your close ones & WIN when they JOIN ⬆"
-      });
+    
 
       return res.sendStatus(200);
     }
@@ -270,6 +275,12 @@ Join a community that supports you- we grow stronger together 🤝
 CLICK TO JOIN  👉🏻 ${referralLink}`
       });*/}
 
+      await sendTextMessage({
+        phone: waId,
+        text: "Forward on WHATSAPP STATUS 👇"
+      });
+
+
       await sendTextMessage(
         {
           phone: waId,  
@@ -284,11 +295,7 @@ CLICK TO JOIN  👉🏻 ${referralLink}`
         }
       )
 
-      await sendTextMessage({
-        phone: waId,
-        text: "Forward on WHATSAPP STATUS 👆🏻"
-      });
-
+      
       return res.sendStatus(200);
     }
 
