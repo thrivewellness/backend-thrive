@@ -3,7 +3,9 @@ import {
   sendTemplateMessage,
   sendImageMessage,
   sendTextMessage,
-  sendWelcomeTemplate
+  sendWelcomeTemplate,
+  sendStep2Message,
+  sendTemplateMessageWithImage
 } from "./gupshup.service.js";
 import { TEMPLATES, EVENTS } from "./gupshup.constants.js";
 
@@ -67,10 +69,11 @@ export async function handleWebhook(req, res) {
 
     /* ================= STEP 2 ================= */
     if (buttonPayload === EVENTS.STEP_2) {
-      await sendTemplateMessage({
+      await sendStep2Message({
         phone: waId,
         templateId: TEMPLATES.STEP_2,
-        params: ["Monday, 18th January"]
+        startDate: "Monday, 18th January",
+        ImgaeUrl: "https://fss.gupshup.io/0/public/0/0/gupshup/919355221522/d3c6c611-b822-41ea-86e6-fad4824d54eb/1767892465557_1%2810%29.jpg"
       });
 
       return res.sendStatus(200);
@@ -101,14 +104,22 @@ export async function handleWebhook(req, res) {
         return res.sendStatus(200);
       }
 
-       // 🔗 Referral link message (NO IMAGE)
+      // 🔗 Referral link message (NO IMAGE)
       await sendTextMessage({
         phone: waId,
         text: `Forward below message to your close ones & WIN when they JOIN ⬇️`
       });
 
 
-      const referralLink = `https://thriveyoga.thrivewellness.in//?ref=${user.ref_user_id}`;
+      const referralLink = `https://thriveyoga.thrivewellness.in/?ref=${user.ref_user_id}`;
+
+      await sendTemplateMessageWithImage({
+        phone: waId,
+        templateId: TEMPLATES.INVITE_FRIENDS,
+        params: ["19 jan 2026", referralLink],
+        ImageUrl: "https://fss.gupshup.io/0/public/0/0/gupshup/919355221522/d3c6c611-b822-41ea-86e6-fad4824d54eb/1767892465557_1%2810%29.jpg"
+      })
+
 
       // 🖼️ Image + caption message
       {/*await sendImageMessage({
@@ -137,10 +148,8 @@ Certified Exercise & Nutrition Expert | 6+ Years Exp
       });*/}
 
 
-      
-     
 
-      await sendTextMessage(
+      {/*await sendTextMessage(
         {
           phone: waId,  
           text: `I personally invite you to experience *THRIVE YOGA*
@@ -164,6 +173,8 @@ Certified Exercise & Nutrition Expert | 6+ Years Exp
 \n${referralLink}`
         }
       )
+*/}
+
 
       return res.sendStatus(200);
     }
@@ -185,7 +196,7 @@ Certified Exercise & Nutrition Expert | 6+ Years Exp
         return res.sendStatus(200);
       }
 
-       await sendTextMessage({
+      await sendTextMessage({
         phone: waId,
         text: `Forward below message to your close ones & WIN when they JOIN ⬇️`
       });
@@ -193,8 +204,16 @@ Certified Exercise & Nutrition Expert | 6+ Years Exp
 
       const referralLink = `https://thriveyoga.thrivewellness.in/?ref=${user.ref_user_id}`;
 
+      await sendTemplateMessageWithImage({
+        phone: waId,
+        templateId: TEMPLATES.INVITE_FRIENDS,
+        params: ["19 jan 2026", referralLink],
+        ImageUrl: "https://fss.gupshup.io/0/public/0/0/gupshup/919355221522/d3c6c611-b822-41ea-86e6-fad4824d54eb/1767892465557_1%2810%29.jpg"
+      })
 
-     {/* await sendImageMessage({
+
+
+      {/* await sendImageMessage({
         phone: waId,
         imageUrl: "https://fss.gupshup.io/0/public/0/0/gupshup/919355221522/d3c6c611-b822-41ea-86e6-fad4824d54eb/1767892465557_1%2810%29.jpg",
         caption: `I personally invite you to experience *THRIVE YOGA*
@@ -218,8 +237,8 @@ Certified Exercise & Nutrition Expert | 6+ Years Exp
 \n${referralLink}`
       });*/}
 
-     
-      await sendTextMessage(
+
+      {/*await sendTextMessage(
         {
           phone: waId,  
           text: `I personally invite you to experience *THRIVE YOGA*
@@ -242,9 +261,9 @@ Certified Exercise & Nutrition Expert | 6+ Years Exp
 👇 Click below to join the *FREE 14-Day Thrive Yoga Program*
 \n${referralLink}`
         }
-      )
+      )*/}
 
-    
+
 
       return res.sendStatus(200);
     }
@@ -271,7 +290,14 @@ Certified Exercise & Nutrition Expert | 6+ Years Exp
 
       const referralLink = `https://thriveyoga.thrivewellness.in/?ref=${user.ref_user_id}`;
 
-     { /*await sendImageMessage({
+      await sendTemplateMessageWithImage({
+        phone: waId,
+        templateId: TEMPLATES.WHATSAPP_STATUS,
+        params: ["19 jan 2026", referralLink],
+        ImageUrl: "https://fss.gupshup.io/0/public/0/0/gupshup/919355221522/d3c6c611-b822-41ea-86e6-fad4824d54eb/1767892465557_1%2810%29.jpg"
+      })
+
+      { /*await sendImageMessage({
         phone: waId,
         imageUrl: "https://fss.gupshup.io/0/public/0/0/gupshup/919355221522/d3c6c611-b822-41ea-86e6-fad4824d54eb/1767892465557_1%2810%29.jpg",
         caption: `Movement today is an investment in a longer, healthier life 🌱
@@ -284,10 +310,10 @@ Join a community that supports you- we grow stronger together 🤝
 CLICK TO JOIN  👉🏻 ${referralLink}`
       });*/}
 
-      
 
 
-      await sendTextMessage(
+
+      {/* await sendTextMessage(
         {
           phone: waId,  
           text: `Movement today is an investment in a longer, healthier life 🌱
@@ -299,9 +325,9 @@ Join a community that supports you- we grow stronger together 🤝
 
 CLICK TO JOIN  👉🏻 ${referralLink}`
         }
-      )
+      )*/}
 
-      
+
       return res.sendStatus(200);
     }
 

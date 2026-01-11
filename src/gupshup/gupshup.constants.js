@@ -1,7 +1,9 @@
 export const TEMPLATES = {
   WELCOME_NEW: "814a2bce-a560-4d84-a3ac-dbcb9b28920a",
-  STEP_2: "0859c5c7-49f8-45b5-a80a-b616097977b2",
-  STEP_3: "ceaf55fe-a726-481b-bb2c-845733fba9bb"
+  STEP_2: "525806c5-1c7b-425e-93fa-e78ff189c38f",
+  STEP_3: "ceaf55fe-a726-481b-bb2c-845733fba9bb",
+  INVITE_FRIENDS: "25515b81-04ed-4b4a-870f-45217bcb7bc8",
+  WHATSAPP_STATUS: "0c582054-e20d-4ebb-ad5a-eaa022ada985"
 };
 
 export const EVENTS = {

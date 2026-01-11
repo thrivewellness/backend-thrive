@@ -41,6 +41,46 @@ export async function sendWelcomeTemplate({
   );
 }
 
+
+export async function sendStep2Message({
+  phone,
+  templateId,
+  startDate,
+  ImgaeUrl
+}) {
+  console.log("Sending Gupshup template:", { phone,templateId, startDate, ImgaeUrl  });
+
+  const body = new URLSearchParams({
+    channel: "whatsapp",
+    source: "919355221522",              // SAME as curl
+    destination: phone,                  // e.g. 918050717704
+    "src.name": process.env.GUPSHUP_APP_NAME,
+    template: JSON.stringify({
+      id: templateId,
+      params: [startDate]
+      
+    }),
+    message: JSON.stringify({
+      type: "image",
+      image: {
+        link: ImgaeUrl
+      }
+    })
+  });
+
+  await axios.post(
+    "https://api.gupshup.io/wa/api/v1/template/msg",
+    body.toString(),
+    {
+      headers: {
+        apikey: process.env.GUPSHUP_API_KEY,
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Cache-Control": "no-cache"
+      }
+    }
+  );
+}
+
 /**
  * Send template message
  */
@@ -122,4 +162,37 @@ export async function sendTextMessage({ phone, text }) {
       apikey: process.env.GUPSHUP_API_KEY
     }
   });
+}
+
+
+
+export async function sendTemplateMessageWithImage({ phone, templateId, params = [], ImageUrl  }) {
+
+
+  console.log("Sending Gupshup template with image:", { phone, templateId, params, ImageUrl });
+  const body = new URLSearchParams({
+    channel: "whatsapp",
+    source: "919355221522",
+    destination: phone,
+    "src.name": process.env.GUPSHUP_APP_NAME,
+    template: JSON.stringify({
+      id: templateId,
+      params
+    }),
+    message: JSON.stringify({
+      type: "image",
+      image: {
+        link: ImageUrl
+      }
+    })
+  });
+
+  const result = await axios.post(`${BASE_URL}/template/msg`, body.toString(), {
+    headers: {
+      apikey: process.env.GUPSHUP_API_KEY,
+      "Content-Type": "application/x-www-form-urlencoded"
+    }
+  });
+
+  console.log("Template message sent:", result.data);
 }
