@@ -101,6 +101,13 @@ export async function handleWebhook(req, res) {
         return res.sendStatus(200);
       }
 
+       // 🔗 Referral link message (NO IMAGE)
+      await sendTextMessage({
+        phone: waId,
+        text: `Forward below message to your close ones & WIN when they JOIN ⬇️`
+      });
+
+
       const referralLink = `https://thriveyoga.thrivewellness.in//?ref=${user.ref_user_id}`;
 
       // 🖼️ Image + caption message
@@ -131,12 +138,7 @@ Certified Exercise & Nutrition Expert | 6+ Years Exp
 
 
       
-      // 🔗 Referral link message (NO IMAGE)
-      await sendTextMessage({
-        phone: waId,
-        text: `Forward below message to your close ones & WIN when they JOIN ⬇️`
-      });
-
+     
 
       await sendTextMessage(
         {
@@ -183,6 +185,12 @@ Certified Exercise & Nutrition Expert | 6+ Years Exp
         return res.sendStatus(200);
       }
 
+       await sendTextMessage({
+        phone: waId,
+        text: `Forward below message to your close ones & WIN when they JOIN ⬇️`
+      });
+
+
       const referralLink = `https://thriveyoga.thrivewellness.in/?ref=${user.ref_user_id}`;
 
 
@@ -210,11 +218,7 @@ Certified Exercise & Nutrition Expert | 6+ Years Exp
 \n${referralLink}`
       });*/}
 
-      await sendTextMessage({
-        phone: waId,
-        text: `Forward below message to your close ones & WIN when they JOIN ⬇️`
-      });
-
+     
       await sendTextMessage(
         {
           phone: waId,  
@@ -260,6 +264,11 @@ Certified Exercise & Nutrition Expert | 6+ Years Exp
         return res.sendStatus(200);
       }
 
+      await sendTextMessage({
+        phone: waId,
+        text: "Forward on WHATSAPP STATUS 👇"
+      });
+
       const referralLink = `https://thriveyoga.thrivewellness.in/?ref=${user.ref_user_id}`;
 
      { /*await sendImageMessage({
@@ -275,10 +284,7 @@ Join a community that supports you- we grow stronger together 🤝
 CLICK TO JOIN  👉🏻 ${referralLink}`
       });*/}
 
-      await sendTextMessage({
-        phone: waId,
-        text: "Forward on WHATSAPP STATUS 👇"
-      });
+      
 
 
       await sendTextMessage(
