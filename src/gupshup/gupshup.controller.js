@@ -34,7 +34,7 @@ export async function handleWebhook(req, res) {
     }
 
     const waId = contact.wa_id;
-    const messageText = messageObj.text?.body?.toLowerCase();
+    const messageText = messageObj.text?.body;
     const buttonPayload = messageObj.button?.payload;
 
     const phone = extractPhone(waId);
