@@ -71,11 +71,11 @@ router.post("/yoga/signup", async (req, res, next) => {
       .single();
 
     // 🔔 WHATSAPP → FULL NUMBER
-    sendYogaSignupWhatsApp({
+ {/*  sendYogaSignupWhatsApp({
       phone: whatsappPhone,
       name,
       startDate: program?.start_date,
-    });
+    });*/}
 
     res.status(200).json({
       success: true,
