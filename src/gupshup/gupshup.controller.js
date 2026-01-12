@@ -74,7 +74,7 @@ export async function handleWebhook(req, res) {
       await sendStep2Message({
         phone: waId,
         templateId: TEMPLATES.STEP_2,
-        startDate: "Monday, 18th January",
+        startDate: "Sunday, 25th January",
         ImgaeUrl: "https://fss.gupshup.io/0/public/0/0/gupshup/919355221522/d3c6c611-b822-41ea-86e6-fad4824d54eb/1767892465557_1%2810%29.jpg"
       });
 
@@ -125,7 +125,7 @@ An Exercise Program by Thrive Wellness
 
 *FREE | 14-Day Online Program*
 
-📅 *Starts* 19 Jan 2026
+📅 *Starts* 26 Jan 2026
 ⏰ *5 Batches Daily, Join Anytime*
 
 Designed to help you:
@@ -243,7 +243,7 @@ An Exercise Program by Thrive Wellness
 
 *FREE | 14-Day Online Program*
 
-📅 *Starts* 19 Jan 2026
+📅 *Starts* 26 Jan 2026
 ⏰ *5 Batches Daily, Join Anytime*
 
 Designed to help you:
@@ -373,7 +373,7 @@ CLICK TO JOIN  👉🏻 ${referralLink}`
 Join a community that supports you- we grow stronger together 🤝
 
 🧘 *FREE THRIVE YOGA | 14 Days Online*
-🗓️ Starts Tomorrow
+🗓️ Starts 26 Jan 2026
 🎯 Focused on *long-term health and longevity*
 
 CLICK TO JOIN  👉🏻 ${referralLink}`

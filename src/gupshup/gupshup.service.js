@@ -237,7 +237,7 @@ export async function sendWhatsAppImagMessage({
       body,
     });
     
-    console.log(response)
+   
     const result = await response.json();
     return result;
   } catch (error) {
