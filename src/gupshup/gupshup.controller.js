@@ -5,7 +5,8 @@ import {
   sendTextMessage,
   sendWelcomeTemplate,
   sendStep2Message,
-  sendTemplateMessageWithImage
+  sendTemplateMessageWithImage,
+  sendWhatsAppImagMessage
 } from "./gupshup.service.js";
 import { TEMPLATES, EVENTS } from "./gupshup.constants.js";
 
@@ -113,13 +114,40 @@ export async function handleWebhook(req, res) {
 
       const referralLink = `https://thriveyoga.thrivewellness.in/?ref=${user.ref_user_id}`;
 
+
+      await sendWhatsAppImagMessage(
+        {
+          destination: phone,
+           imageUrl: "https://fss.gupshup.io/0/public/0/0/gupshup/919355221522/d3c6c611-b822-41ea-86e6-fad4824d54eb/1767892465557_1%2810%29.jpg",
+           caption: `I personally invite you to experience *THRIVE YOGA*
+An Exercise Program by Thrive Wellness
+
+*FREE | 14-Day Online Program*
+
+📅 *Starts*
+⏰ *5 Batches Daily, Join Anytime*
+
+Designed to help you:
+🔥 Support fat loss
+🏋️ Reduce body Pain & stiffness
+🧍 Move with confidence
+⏳ Improve longevity
+
+Led by *Satyam Patkar & Bobby Rajput*
+Certified Exercise & Nutrition Expert | 6+ Years Exp
+
+👇 Click below to join the *FREE 14-Day Thrive Yoga Program*
+\n${referralLink}`
+        }
+      )
+{/*
       await sendTemplateMessageWithImage({
         phone: waId,
         templateId: TEMPLATES.INVITE_FRIENDS,
         params: ["19 jan 2026", referralLink],
         ImageUrl: "https://fss.gupshup.io/0/public/0/0/gupshup/919355221522/d3c6c611-b822-41ea-86e6-fad4824d54eb/1767892465557_1%2810%29.jpg"
       })
-
+*/}
 
       // 🖼️ Image + caption message
       {/*await sendImageMessage({

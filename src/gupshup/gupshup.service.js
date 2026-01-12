@@ -196,3 +196,52 @@ export async function sendTemplateMessageWithImage({ phone, templateId, params =
 
   console.log("Template message sent:", result.data);
 }
+
+
+export async function sendWhatsAppImagMessage({
+  destination,
+  imageUrl,
+  caption,
+}) {
+  const API_URL = "https://api.gupshup.io/wa/api/v1/msg";
+  const API_KEY = process.env.GUPSHUP_API_KEY; // recommended
+  const SOURCE = "919355221522"; // your Gupshup WhatsApp number
+
+  console.log(destination, imageUrl, caption)
+
+  const messagePayload = {
+    type: "image",
+    caption,
+    previewUrl: imageUrl,
+    originalUrl: imageUrl,
+    filename: "image.jpg",
+    url: imageUrl,
+  };
+
+  const body = new URLSearchParams({
+    channel: "whatsapp",
+    source: SOURCE,
+    destination,
+    message: JSON.stringify(messagePayload),
+    "src.name": process.env.GUPSHUP_APP_NAME,
+  });
+
+  try {
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        apikey: API_KEY,
+        "Cache-Control": "no-cache",
+      },
+      body,
+    });
+    
+    console.log(response)
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error("WhatsApp Image Send Error:", error);
+    throw error;
+  }
+}
