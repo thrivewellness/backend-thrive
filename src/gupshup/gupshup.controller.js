@@ -118,13 +118,13 @@ export async function handleWebhook(req, res) {
       await sendWhatsAppImagMessage(
         {
           destination: phone,
-           imageUrl: "https://fss.gupshup.io/0/public/0/0/gupshup/919355221522/d3c6c611-b822-41ea-86e6-fad4824d54eb/1767892465557_1%2810%29.jpg",
-           caption: `I personally invite you to experience *THRIVE YOGA*
+          imageUrl: "https://fss.gupshup.io/0/public/0/0/gupshup/919355221522/d3c6c611-b822-41ea-86e6-fad4824d54eb/1767892465557_1%2810%29.jpg",
+          caption: `I personally invite you to experience *THRIVE YOGA*
 An Exercise Program by Thrive Wellness
 
 *FREE | 14-Day Online Program*
 
-📅 *Starts*
+📅 *Starts* 19 Jan 2026
 ⏰ *5 Batches Daily, Join Anytime*
 
 Designed to help you:
@@ -232,7 +232,34 @@ Certified Exercise & Nutrition Expert | 6+ Years Exp
 
       const referralLink = `https://thriveyoga.thrivewellness.in/?ref=${user.ref_user_id}`;
 
-      await sendTemplateMessageWithImage({
+
+         await sendWhatsAppImagMessage(
+        {
+          destination: phone,
+          imageUrl: "https://fss.gupshup.io/0/public/0/0/gupshup/919355221522/d3c6c611-b822-41ea-86e6-fad4824d54eb/1767892465557_1%2810%29.jpg",
+          caption: `I personally invite you to experience *THRIVE YOGA*
+An Exercise Program by Thrive Wellness
+
+*FREE | 14-Day Online Program*
+
+📅 *Starts* 19 Jan 2026
+⏰ *5 Batches Daily, Join Anytime*
+
+Designed to help you:
+🔥 Support fat loss
+🏋️ Reduce body Pain & stiffness
+🧍 Move with confidence
+⏳ Improve longevity
+
+Led by *Satyam Patkar & Bobby Rajput*
+Certified Exercise & Nutrition Expert | 6+ Years Exp
+
+👇 Click below to join the *FREE 14-Day Thrive Yoga Program*
+\n${referralLink}`
+        }
+      )
+
+     {/* await sendTemplateMessageWithImage({
         phone: waId,
         templateId: TEMPLATES.INVITE_FRIENDS,
         params: ["19 jan 2026", referralLink],
@@ -241,7 +268,7 @@ Certified Exercise & Nutrition Expert | 6+ Years Exp
 
 
 
-      {/* await sendImageMessage({
+       await sendImageMessage({
         phone: waId,
         imageUrl: "https://fss.gupshup.io/0/public/0/0/gupshup/919355221522/d3c6c611-b822-41ea-86e6-fad4824d54eb/1767892465557_1%2810%29.jpg",
         caption: `I personally invite you to experience *THRIVE YOGA*
@@ -318,14 +345,14 @@ Certified Exercise & Nutrition Expert | 6+ Years Exp
 
       const referralLink = `https://thriveyoga.thrivewellness.in/?ref=${user.ref_user_id}`;
 
-      await sendTemplateMessageWithImage({
+       { /* await sendTemplateMessageWithImage({
         phone: waId,
         templateId: TEMPLATES.WHATSAPP_STATUS,
         params: ["19 jan 2026", referralLink],
         ImageUrl: "https://fss.gupshup.io/0/public/0/0/gupshup/919355221522/d3c6c611-b822-41ea-86e6-fad4824d54eb/1767892465557_1%2810%29.jpg"
       })
 
-      { /*await sendImageMessage({
+    await sendImageMessage({
         phone: waId,
         imageUrl: "https://fss.gupshup.io/0/public/0/0/gupshup/919355221522/d3c6c611-b822-41ea-86e6-fad4824d54eb/1767892465557_1%2810%29.jpg",
         caption: `Movement today is an investment in a longer, healthier life 🌱
@@ -341,9 +368,9 @@ CLICK TO JOIN  👉🏻 ${referralLink}`
 
 
 
-      {/* await sendTextMessage(
+      await sendTextMessage(
         {
-          phone: waId,  
+          phone: waId,
           text: `Movement today is an investment in a longer, healthier life 🌱
 Join a community that supports you- we grow stronger together 🤝
 
@@ -353,7 +380,7 @@ Join a community that supports you- we grow stronger together 🤝
 
 CLICK TO JOIN  👉🏻 ${referralLink}`
         }
-      )*/}
+      )
 
 
       return res.sendStatus(200);
