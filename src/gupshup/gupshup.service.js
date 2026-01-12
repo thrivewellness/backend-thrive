@@ -2,6 +2,26 @@ import axios from "axios";
 
 const BASE_URL = "https://api.gupshup.io/wa/api/v1";
 
+export async function sendWelcomeTemplate({ phone, name, startDate }) {
+  const body = new URLSearchParams({
+    channel: "whatsapp",
+    source: "919355221522",
+    destination: phone,
+    "src.name": process.env.GUPSHUP_APP_NAME,
+    template: JSON.stringify({
+      id: "814a2bce-a560-4d84-a3ac-dbcb9b28920a",
+      params: [name, startDate]
+    })
+  });
+
+  await axios.post(
+    "https://api.gupshup.io/wa/api/v1/template/msg",
+    body.toString(),
+    { headers: { apikey: process.env.GUPSHUP_API_KEY } }
+  );
+}
+
+
 export async function sendWelcomeTemplate({
   phone,
   name,
