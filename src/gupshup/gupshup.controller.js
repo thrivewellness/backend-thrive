@@ -115,7 +115,7 @@ export async function handleWebhook(req, res) {
       const referralLink = `https://thriveyoga.thrivewellness.in/?ref=${user.ref_user_id}`;
 
 
-      await sendWhatsAppImagMessage(
+      await sendTemplateMessageWithImage(
         {
           destination: phone,
           imageUrl: "https://fss.gupshup.io/0/public/0/0/gupshup/919355221522/d3c6c611-b822-41ea-86e6-fad4824d54eb/1767892465557_1%2810%29.jpg",
@@ -233,7 +233,7 @@ Certified Exercise & Nutrition Expert | 6+ Years Exp
       const referralLink = `https://thriveyoga.thrivewellness.in/?ref=${user.ref_user_id}`;
 
 
-         await sendWhatsAppImagMessage(
+         await sendTemplateMessageWithImage(
         {
           destination: phone,
           imageUrl: "https://fss.gupshup.io/0/public/0/0/gupshup/919355221522/d3c6c611-b822-41ea-86e6-fad4824d54eb/1767892465557_1%2810%29.jpg",
@@ -364,9 +364,6 @@ Join a community that supports you- we grow stronger together 🤝
 
 CLICK TO JOIN  👉🏻 ${referralLink}`
       });*/}
-
-
-
 
       await sendTextMessage(
         {
