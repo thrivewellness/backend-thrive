@@ -1,7 +1,9 @@
 import express from 'express';
 import { supabase } from '../lib/supabase.js';
-import { sendYogaSignupWhatsApp } from '../gupshup/send.yoga.signup.first.js'; 
 import { processPhone } from "../utils/phoneUtils.js"; 
+
+import { sendAiSensyYogaSignup } from "./aisensy/intiateautomation.js";
+
 
 const router = express.Router();
 
@@ -47,14 +49,18 @@ router.post("/yoga/signup", async (req, res, next) => {
     const randomCode = Math.random().toString(36).substring(2, 6).toUpperCase();
     const ref_user_id = `${name.replace(/\s+/g, "").toLowerCase()}_${randomCode}`;
 
-    const { error } = await supabase.from("yoga_signups").insert({
-      name,
-      phone: localPhone,     // ONLY LOCAL NUMBER
-      country_code: countryCode,      // STORE COUNTRY CODE SEPARATELY
-      referral,
-      coach_ref,
-      ref_user_id,
-    });
+    const { data: newUserData, error } = await supabase
+  .from("yoga_signups")
+  .insert({
+    name,
+    phone: localPhone,
+    country_code: countryCode,
+    referral,
+    coach_ref,
+    ref_user_id,
+  })
+  .select()
+  .single();
 
     if (error) {
       return res.status(500).json({
@@ -70,13 +76,20 @@ router.post("/yoga/signup", async (req, res, next) => {
       .limit(1)
       .single();
 
-    // 🔔 WHATSAPP → FULL NUMBER
- {/*  sendYogaSignupWhatsApp({
-      phone: whatsappPhone,
+
+    const programStartDate = program?.start_date || "soon";
+
+  
+   {/* sendAiSensyYogaSignup({
+      whatsappPhone, 
       name,
-      startDate: program?.start_date,
+      refId: ref_user_id,
+      userId: newUserData.id,
+      startDate: programStartDate,
     });*/}
 
+
+    
     res.status(200).json({
       success: true,
       message: "Signup successful",
