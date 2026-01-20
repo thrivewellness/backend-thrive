@@ -33,7 +33,7 @@ router.post("/get-user", async (req, res) => {
     return res.json({
       user: "yes",
       name: user.name,
-      startDate: "27 Jan 2026",
+      startDate: "26 Jan 2026",
       refId: user.ref_user_id,
       userId: user.id
     })
