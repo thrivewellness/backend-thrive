@@ -80,13 +80,13 @@ router.post("/yoga/signup", async (req, res, next) => {
     const programStartDate = program?.start_date || "soon";
 
   
-   {/* sendAiSensyYogaSignup({
+   sendAiSensyYogaSignup({
       whatsappPhone, 
       name,
       refId: ref_user_id,
       userId: newUserData.id,
       startDate: programStartDate,
-    });*/}
+    });
 
 
     
