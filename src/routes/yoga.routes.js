@@ -1,9 +1,10 @@
 import express from 'express';
 import { supabase } from '../lib/supabase.js';
-import { processPhone } from "../utils/phoneUtils.js"; 
+import { processPhone } from "../utils/phoneUtils.js";
+
+import { handleReferralCount } from "./handlers/referralHandler.js";
 
 import { sendAiSensyYogaSignup } from "./aisensy/intiateautomation.js";
-
 
 const router = express.Router();
 
@@ -19,7 +20,7 @@ router.post("/yoga/signup", async (req, res, next) => {
       });
     }
 
-    // 🔥 PROCESS PHONE FOR ANY COUNTRY
+    // PROCESS PHONE FOR ANY COUNTRY
     const phoneData = processPhone(phone, countryCode);
     if (!phoneData) {
       return res.status(400).json({
@@ -28,7 +29,7 @@ router.post("/yoga/signup", async (req, res, next) => {
       });
     }
 
-    const { localPhone, whatsappPhone} = phoneData;
+    const { localPhone, whatsappPhone } = phoneData;
 
     // CHECK DUPLICATE (LOCAL + COUNTRY)
     const { data: existingUser } = await supabase
@@ -45,22 +46,22 @@ router.post("/yoga/signup", async (req, res, next) => {
       });
     }
 
-    // INSERT → STORE CLEAN DATA
+    // INSERT STORE CLEAN DATA
     const randomCode = Math.random().toString(36).substring(2, 6).toUpperCase();
     const ref_user_id = `${name.replace(/\s+/g, "").toLowerCase()}_${randomCode}`;
 
     const { data: newUserData, error } = await supabase
-  .from("yoga_signups")
-  .insert({
-    name,
-    phone: localPhone,
-    country_code: countryCode,
-    referral,
-    coach_ref,
-    ref_user_id,
-  })
-  .select()
-  .single();
+      .from("yoga_signups")
+      .insert({
+        name,
+        phone: localPhone,
+        country_code: countryCode,
+        referral,
+        coach_ref,
+        ref_user_id,
+      })
+      .select()
+      .single();
 
     if (error) {
       return res.status(500).json({
@@ -79,9 +80,8 @@ router.post("/yoga/signup", async (req, res, next) => {
 
     const programStartDate = program?.start_date || "soon";
 
-  
-   sendAiSensyYogaSignup({
-      whatsappPhone, 
+    sendAiSensyYogaSignup({
+      whatsappPhone,
       name,
       refId: ref_user_id,
       userId: newUserData.id,
@@ -89,7 +89,35 @@ router.post("/yoga/signup", async (req, res, next) => {
     });
 
 
-    
+    if (referral) {
+      const { data, count, error } = await supabase
+        .from("yoga_signups")
+        .select("coach_ref", { count: "exact" })
+        .eq("ref_user_id", referral)
+        .not("coach_ref", "is", null)
+        .limit(1);
+
+      if (error) {
+        console.error("Referral lookup error:", error);
+      } else {
+        const userId = newUserData.id;
+        const userName = newUserData.name;
+        const coachRef = data?.[0]?.coach_ref || null;
+        console.log(coachRef)
+
+        // Only update if coach_ref exists
+        if (coachRef) {
+          await supabase
+            .from("yoga_signups")
+            .update({ coach_ref: coachRef })
+            .eq("id", userId);
+        }
+
+        // Always call referral count handler
+        await handleReferralCount(userId, userName, referral, count);
+      }
+    }
+
     res.status(200).json({
       success: true,
       message: "Signup successful",
