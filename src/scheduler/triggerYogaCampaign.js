@@ -8,8 +8,6 @@ export const triggerYogaCampaignManually = async () => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .gte("id", 403)
-    .lte("id", 403);
 
   if (!users?.length) {
     console.log("⚠️ No users found");
@@ -32,7 +30,7 @@ export const triggerYogaCampaignManually = async () => {
     }
 
     // WhatsApp safety delay
-    await delay(10_00);
+    await delay(500);
   }
 
   console.log("🎉 Yoga campaign finished");
