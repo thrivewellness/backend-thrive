@@ -1,4 +1,5 @@
 import app from './app.js';
+import './scheduler/welcomeSession.scheduler.js'
 
 import dotenv from 'dotenv';
 dotenv.config();

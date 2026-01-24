@@ -19,8 +19,9 @@
     "crypto": "^1.0.1",
     "dotenv": "^16.6.1",
     "express": "^4.22.1",
+    "node-cron": "^4.2.1",
     "razorpay": "^2.9.6",
-    "supabase": "^2.70.4"
+    "supabase": "^2.72.8"
   },
   "devDependencies": {
     "eslint": "^8.57.0",
