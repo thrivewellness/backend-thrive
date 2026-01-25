@@ -2,9 +2,8 @@ import cron from "node-cron";
 import { supabase } from "../lib/supabase.js";
 import { triggerYogaCampaignManually } from "./triggerYogaCampaign.js";
 
-const CAMPAIGN_NAME = "welcome_yoga_jan_25_evn";
-const TARGET_TIME = new Date("2026-01-25T17:48:00"); // IST
-
+const CAMPAIGN_NAME = "welcome_yoga_jan_26_rem";
+const TARGET_TIME = new Date("2026-01-25T17:45:00"); // IST
 
 
 cron.schedule("* * * * *", async () => {

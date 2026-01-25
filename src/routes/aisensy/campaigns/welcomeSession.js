@@ -12,21 +12,23 @@ export const sendWelcomeSessionMorningMessage = async ({
 
         const payload = {
             apiKey: process.env.AISENSY_API_KEY,
-            campaignName: "send_eving_wel_remiander",
-            destination: whatsappPhone, 
+            campaignName: "day_01_rem",
+            destination: whatsappPhone,
             userName: "Thrive Wellness",
 
             templateParams: [
-                String(name),
-                "11 AM",
-                "6:00 - 6:40 PM (IST)",
+                "Day 1",
+                "Strength, Stability & Body Awareness",
+                "Builds overall strength and stability",
+                "Enhances full-body awareness",
+                "Creates a strong foundation for safer, stronger movement"
             ],
 
             source: "new-landing-page form",
 
             media: {
-                url: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/8754792_Welcome%20session.jpg.jpeg",
-        filename: "Welcome session.jpg.jpeg",
+                url: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/4415314_day1.jpg.jpeg",
+                filename: "day1.jpg.jpeg",
             },
             buttons: [
                 {
@@ -56,7 +58,7 @@ export const sendWelcomeSessionMorningMessage = async ({
                 },
             }
         );
-        console.log(`Aisensy response for ${userId}:`,response.data)
+        console.log(`Aisensy response for ${userId}:`, response.data)
         return response.data;
     } catch (error) {
         console.error(
