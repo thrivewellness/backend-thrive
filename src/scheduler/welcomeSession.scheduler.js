@@ -2,14 +2,14 @@ import cron from "node-cron";
 import { supabase } from "../lib/supabase.js";
 import { triggerYogaCampaignManually } from "./triggerYogaCampaign.js";
 
-const CAMPAIGN_NAME = "welcome_yoga_jan_25";
-const TARGET_TIME = new Date("2026-01-25T10:30:00"); // IST
+const CAMPAIGN_NAME = "welcome_yoga_jan_25_evn";
+const TARGET_TIME = new Date("2026-01-25T17:48:00"); // IST
 
 
 
 cron.schedule("* * * * *", async () => {
   const now = new Date();
-  console.log("⏱ Server time:", now.toString());
+  console.log("> Server time:", now.toString());
 
   if (now < TARGET_TIME) return;
 
@@ -23,10 +23,9 @@ cron.schedule("* * * * *", async () => {
 
   // If no row updated → already triggered by another process
   if (!updated || updated.length === 0) {
-    console.log("⛔ Campaign already executed (locked)");
     return;
   }
 
-  console.log("🔥 Lock acquired. Triggering campaign...");
+  console.log("> Lock acquired. Triggering campaign...");
   await triggerYogaCampaignManually();
 });

@@ -3,14 +3,14 @@ import { sendWelcomeSessionMorningMessage } from "../routes/aisensy/campaigns/we
 import { delay } from "../utils/delay.js";
 
 export const triggerYogaCampaignManually = async () => {
-  console.log("🚀 Yoga campaign started");
+  console.log("> Yoga campaign started");
 
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
 
   if (!users?.length) {
-    console.log("⚠️ No users found");
+    console.log("> No users found");
     return;
   }
 
@@ -24,14 +24,14 @@ export const triggerYogaCampaignManually = async () => {
         userId: user.ref_user_id,
       });
 
-      console.log(`✅ Sent to ${user.id}`);
+      console.log(`> Sent to ${user.id}`);
     } catch (err) {
-      console.error(`❌ Failed for ${user.id}`, err.message);
+      console.error(`> Failed for ${user.id}`, err.message);
     }
 
     // WhatsApp safety delay
-    await delay(500);
+    await delay(300);
   }
 
-  console.log("🎉 Yoga campaign finished");
+  console.log("> Yoga campaign finished");
 };

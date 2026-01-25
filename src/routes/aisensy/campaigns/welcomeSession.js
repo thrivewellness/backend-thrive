@@ -6,25 +6,28 @@ export const sendWelcomeSessionMorningMessage = async ({
     userId
 }) => {
 
-    console.log("recvied data : ", whatsappPhone, name, userId)
+    console.log("recvied user data : ", whatsappPhone, name, userId)
     try {
         const url = `https://thriveyoga.thrivewellness.in/join/${userId}`
 
         const payload = {
             apiKey: process.env.AISENSY_API_KEY,
-            campaignName: "mor_wel_s",
+            campaignName: "send_eving_wel_remiander",
             destination: whatsappPhone, 
             userName: "Thrive Wellness",
 
             templateParams: [
                 String(name),
-                "11:00 - 11:40 AM (IST)",
+                "11 AM",
                 "6:00 - 6:40 PM (IST)",
             ],
 
             source: "new-landing-page form",
 
-            media: {},
+            media: {
+                url: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/8754792_Welcome%20session.jpg.jpeg",
+        filename: "Welcome session.jpg.jpeg",
+            },
             buttons: [
                 {
                     "type": "button",
@@ -53,7 +56,7 @@ export const sendWelcomeSessionMorningMessage = async ({
                 },
             }
         );
-
+        console.log(`Aisensy response for ${userId}:`,response.data)
         return response.data;
     } catch (error) {
         console.error(
