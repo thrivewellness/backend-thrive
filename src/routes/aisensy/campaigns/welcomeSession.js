@@ -31,17 +31,7 @@ export const sendWelcomeSessionMorningMessage = async ({
                 filename: "day1.jpg.jpeg",
             },
             buttons: [
-                {
-                    "type": "button",
-                    "sub_type": "URL",
-                    "index": 0,
-                    "parameters": [
-                        {
-                            "type": "text",
-                            "text": `/${String(userId)}`
-                        }
-                    ]
-                }
+        
 
             ],
             carouselCards: [],
