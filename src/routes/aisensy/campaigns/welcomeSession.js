@@ -18,7 +18,7 @@ export const sendWelcomeSessionMorningMessage = async ({
 
             templateParams: [
                 name,
-                "Strength, Stability & Body Awareness"
+                "Posture Reset & Joint Alignment"
             ],
 
             source: "new-landing-page form",

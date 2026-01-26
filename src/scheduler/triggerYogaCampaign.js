@@ -30,7 +30,7 @@ export const triggerYogaCampaignManually = async () => {
     }
 
     // WhatsApp safety delay
-    await delay(1000);
+    await delay(7000);
   }
 
   console.log("> Yoga campaign finished");
