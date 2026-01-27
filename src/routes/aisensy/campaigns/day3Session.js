@@ -18,7 +18,7 @@ export const day3Session = async ({
             templateParams: [
                 `${name} Ji ☀️`,
                 "🎯 Focus",
-                " *Core Control & Balance Control*"
+                "*Core Control & Balance Control*"
             ],
 
             source: "new-landing-page form",
