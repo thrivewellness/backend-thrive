@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const sendWelcomeSessionMorningMessage = async ({
+export const day3Session = async ({
     whatsappPhone,
     name,
     userId
@@ -8,30 +8,23 @@ export const sendWelcomeSessionMorningMessage = async ({
 
     console.log("recvied user data : ", whatsappPhone, name, userId)
     try {
-        const url = `https://thriveyoga.thrivewellness.in/join/${userId}`
 
         const payload = {
             apiKey: process.env.AISENSY_API_KEY,
-            campaignName: "evening_session_message",
+            campaignName: "good_morning",
             destination: whatsappPhone,
             userName: "Thrive Wellness",
 
             templateParams: [
-                name,
-                "morning",
-                " 5:30 PM | 6:30 PM | 7:30 PM (IST)"
+                `${name} Ji ☀️`,
+                "🎯 Focus",
+                " *Core Control & Balance Control*"
             ],
 
             source: "new-landing-page form",
 
-            media: {
-                url: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/8667429_day2.jpg.jpeg",
-                filename: "day2.jpg.jpeg",
-            },
-            buttons: [
-
-
-            ],
+            media: {},
+            buttons: [],
             carouselCards: [],
             location: {},
             attributes: {},

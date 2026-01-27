@@ -1,5 +1,6 @@
 import { supabase } from "../lib/supabase.js";
 import { sendWelcomeSessionMorningMessage } from "../routes/aisensy/campaigns/welcomeSession.js";
+import {day3Session} from "../routes/aisensy/campaigns/day3Session.js"
 import { delay } from "../utils/delay.js";
 
 export const triggerYogaCampaignManually = async () => {
@@ -18,7 +19,7 @@ export const triggerYogaCampaignManually = async () => {
     const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
 
     try {
-      await sendWelcomeSessionMorningMessage({
+      await day3Session({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,
@@ -30,7 +31,7 @@ export const triggerYogaCampaignManually = async () => {
     }
 
     // WhatsApp safety delay
-    await delay(7000);
+    await delay(2000);
   }
 
   console.log("> Yoga campaign finished");
