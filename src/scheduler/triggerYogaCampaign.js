@@ -10,7 +10,6 @@ export const triggerYogaCampaignManually = async () => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .eq("id", 403)
 
   if (!users?.length) {
     console.log("> No users found");
