@@ -1,12 +1,12 @@
 import axios from "axios";
 
-export const day3Session = async ({
+export const day4Session = async ({
     whatsappPhone,
     name,
     userId
 }) => {
 
-    console.log("recvied user data : ", whatsappPhone, name, userId)
+    console.log("recvied user data day 4 trigger : ", whatsappPhone, name, userId)
     try {
 
         const payload = {
@@ -18,7 +18,7 @@ export const day3Session = async ({
             templateParams: [
                 `${name} Ji ☀️`,
                 "🎯 Focus",
-                "*Core Control & Balance Control*"
+                "*Mobility for Hips, Spine & Shoulders*"
             ],
 
             source: "new-landing-page form",
@@ -52,7 +52,7 @@ export const day3Session = async ({
 
 
 
-export const day3SessionEvening = async ({
+export const day4SessionEvening = async ({
     whatsappPhone,
     name,
     userId
@@ -76,8 +76,8 @@ export const day3SessionEvening = async ({
             source: "new-landing-page form",
 
             media: {
-                     url: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/8254092_day3.jpg.jpeg",
-        filename: "day3.jpg.jpeg",
+                url: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/5760364_day4.jpg.jpeg",
+                filename: "day4.jpg.jpeg",
             },
             buttons: [],
             carouselCards: [],
