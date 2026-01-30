@@ -20,7 +20,7 @@ export const GutHealthProgram = async ({
                 "Science of Gut Health",
                 "Today",
                 "11:00 AM | 8:30 PM",
-                "https://thriveyoga.thrivewellness.in/join/gh/"
+                `https://thriveyoga.thrivewellness.in/join/sp/${userId}`
             ],
 
             source: "new-landing-page form",

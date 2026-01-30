@@ -8,17 +8,17 @@ import {
 
 const CAMPAIGNS = [
   {
-    name: "yoga_jan_30_morning",
+    name: "yoga_jan_31_morning",
     targetTime: new Date("2026-01-31T05:05:00"), 
     handler: triggerYogaCampaignManually,
   },
   {
-    name: "yoga_jan_30_evening",
+    name: "yoga_jan_31_evening",
     targetTime: new Date("2026-01-31T16:00:00"), 
     handler: triggerYogaCampaignevening,
   },
     {
-    name: "gut_prog_jan_30",
+    name: "gut_prog_jan_31",
     targetTime: new Date("2026-01-31T10:30:00"),
     handler: triggerGutHealthProgram,
   },
