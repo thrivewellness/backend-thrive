@@ -6,7 +6,7 @@ export const day5Session = async ({
     userId
 }) => {
 
-    console.log("recvied user data day 5 trigger : ", whatsappPhone, name, userId)
+    console.log("recvied user data day 5  morning trigger : ", whatsappPhone, name, userId)
     try {
 
         const payload = {
@@ -58,7 +58,7 @@ export const day5SessionEvening = async ({
     userId
 }) => {
 
-    console.log("recvied user data : ", whatsappPhone, name, userId)
+    console.log("recvied user day 5 evening data : ", whatsappPhone, name, userId)
     try {
 
         const payload = {
