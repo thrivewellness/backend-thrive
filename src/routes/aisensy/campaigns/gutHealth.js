@@ -17,7 +17,7 @@ export const GutHealthProgram = async ({
 
             templateParams: [
                 `${name}`,
-                "Science of Gut Health",
+                "Science of Metabolic Health",
                 "Today",
                 "11:00 AM | 8:30 PM",
                 `https://thriveyoga.thrivewellness.in/join/sp/${userId}`

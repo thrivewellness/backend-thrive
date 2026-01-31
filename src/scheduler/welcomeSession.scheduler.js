@@ -18,8 +18,8 @@ const CAMPAIGNS = [
     handler: triggerYogaCampaignevening,
   },
     {
-    name: "gut_prog_jan_31",
-    targetTime: new Date("2026-01-31T10:30:00"),
+    name: "gut_prog_feb_1",
+    targetTime: new Date("2026-02-01T10:30:00"),
     handler: triggerGutHealthProgram,
   },
 ];
