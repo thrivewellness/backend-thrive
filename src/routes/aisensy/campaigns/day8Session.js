@@ -6,7 +6,7 @@ export const day8Session = async ({
     userId
 }) => {
 
-    console.log("recvied user data day 8 morning trigger : ", whatsappPhone, name, userId)
+    console.log("recvied user data day 8 morning trigger: ", whatsappPhone, name, userId)
     try {
 
         const payload = {
