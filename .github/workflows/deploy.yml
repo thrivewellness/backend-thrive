@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+concurrency:
+  group: deploy-main
+  cancel-in-progress: true
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -20,23 +24,9 @@ jobs:
           debug: true
           script: |
             set -e
-
-            echo "Connected to VPS"
-            whoami
-            pwd
-
-            echo "Going to backend directory"
             cd ~/backend-thrive
-
-            echo "Syncing code with GitHub"
             git fetch origin
             git reset --hard origin/main
             git clean -fd
-
-            echo "Installing dependencies"
             npm install --omit=dev
-
-            echo "Reloading PM2"
             pm2 reload backend-thrive --update-env
-
-            echo "Deploy completed successfully"
