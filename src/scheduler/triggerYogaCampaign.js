@@ -7,6 +7,7 @@ import { day8Session, day8SessionEvening } from "../routes/aisensy/campaigns/day
 import { day9Session, day9SessionEvening } from "../routes/aisensy/campaigns/day9Session.js"
 import { day10Session, day10SessionEvening } from "../routes/aisensy/campaigns/day10Session.js"
 import { day11Session, day11SessionEvening } from "../routes/aisensy/campaigns/day11Session.js"
+import { day12Session, day12SessionEvening } from "../routes/aisensy/campaigns/day12Session.js"
 import {GutHealthProgram} from "../routes/aisensy/campaigns/gutHealth.js"
 import { delay } from "../utils/delay.js";
 
@@ -26,7 +27,7 @@ export const triggerYogaCampaignManually = async () => {
     const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
 
     try {
-      await day11Session({
+      await day12Session({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,
@@ -61,7 +62,7 @@ export const triggerYogaCampaignevening = async () => {
     const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
 
     try {
-      await day11SessionEvening({
+      await day12SessionEvening({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,
