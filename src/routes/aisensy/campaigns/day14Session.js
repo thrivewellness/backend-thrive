@@ -18,7 +18,7 @@ export const day14Session = async ({
             templateParams: [
                 `${name} Ji 🙏`,
                 "🌿 Thrive Talk",
-                "*Full Body Integration Flow*",
+                "*Fix Your Thyroid*",
                 "📅 Today",
                 "7 PM",
                 `https://thriveyoga.thrivewellness.in/join/ld/${userId}`
@@ -72,7 +72,7 @@ export const day14SessionEvening = async ({
             templateParams: [
                 `${name} Ji 🙏`,
                 "🌿 Thrive Talk",
-                "*Full Body Integration Flow*",
+                "*Fix Your Thyroid*",
                 "📅 Today",
                 "7 PM",
                 `https://thriveyoga.thrivewellness.in/join/ld/${userId}`
