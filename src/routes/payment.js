@@ -11,6 +11,8 @@ const router = express.Router();
 router.post("/create-order", async (req, res) => {
   const { amount, user, program, duration } = req.body;
 
+  console.log("Creating order with data:", { amount, user, program, duration });
+
   try {
     const order = await razorpay.orders.create({
       amount: amount * 100,
