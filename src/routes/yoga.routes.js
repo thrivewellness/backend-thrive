@@ -80,6 +80,7 @@ router.post("/yoga/signup", async (req, res, next) => {
 
     const programStartDate = program?.start_date || "soon";
 
+
     sendAiSensyYogaSignup({
       whatsappPhone,
       name,
@@ -88,35 +89,51 @@ router.post("/yoga/signup", async (req, res, next) => {
       startDate: programStartDate,
     });
 
-
     if (referral) {
-      const { data, count, error } = await supabase
+      //  Get coach_ref (only one matching row needed)
+      const { data: coachData, error: coachError } = await supabase
         .from("yoga_signups")
-        .select("coach_ref", { count: "exact" })
+        .select("coach_ref")
         .eq("ref_user_id", referral)
         .not("coach_ref", "is", null)
-        .limit(1);
+        .limit(1)
+        .maybeSingle(); // safer than .single()
 
-      if (error) {
-        console.error("Referral lookup error:", error);
-      } else {
-        const userId = newUserData.id;
-        const userName = newUserData.name;
-        const coachRef = data?.[0]?.coach_ref || null;
-        console.log(coachRef)
-
-        // Only update if coach_ref exists
-        if (coachRef) {
-          await supabase
-            .from("yoga_signups")
-            .update({ coach_ref: coachRef })
-            .eq("id", userId);
-        }
-
-        // Always call referral count handler
-        await handleReferralCount(userId, userName, referral, count);
+      if (coachError) {
+        console.error("Referral lookup error:", coachError);
       }
+
+      //  Get total count of users referred by this ref_user_id
+      const { count, error: countError } = await supabase
+        .from("yoga_signups")
+        .select("*", { count: "exact", head: true })
+        .eq("referral", referral);
+
+      if (countError) {
+        console.error("Referral count error:", countError);
+      }
+
+      const userId = newUserData.id;
+      const userName = newUserData.name;
+      const coachRef = coachData?.coach_ref || null;
+
+  
+      //  Only update if coach_ref exists
+      if (coachRef) {
+        const { error: updateError } = await supabase
+          .from("yoga_signups")
+          .update({ coach_ref: coachRef })
+          .eq("id", userId);
+
+        if (updateError) {
+          console.error("Coach ref update error:", updateError);
+        }
+      }
+
+      // Always call referral count handler
+      await handleReferralCount(userId, userName, referral, count || 0);
     }
+
 
     res.status(200).json({
       success: true,
