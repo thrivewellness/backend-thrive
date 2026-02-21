@@ -1,5 +1,6 @@
 import { supabase } from "../lib/supabase.js";
 import { sendWelcomeSessionMorningMessage } from "../routes/aisensy/campaigns/welcomeSession.js";
+import { day0SessionMorning, day0SessionEvening } from "../routes/aisensy/campaigns/day0welcome.js"
 import { day3Session, day3SessionEvening } from "../routes/aisensy/campaigns/day3Session.js"
 import { day4Session, day4SessionEvening } from "../routes/aisensy/campaigns/day4Session.js"
 import { day5Session, day5SessionEvening } from "../routes/aisensy/campaigns/day5Session.js"
@@ -9,8 +10,8 @@ import { day10Session, day10SessionEvening } from "../routes/aisensy/campaigns/d
 import { day11Session, day11SessionEvening } from "../routes/aisensy/campaigns/day11Session.js"
 import { day12Session, day12SessionEvening } from "../routes/aisensy/campaigns/day12Session.js"
 import { day13Session, day13SessionEvening } from "../routes/aisensy/campaigns/day13Session.js"
-import { day14Session, day14SessionEvening} from "../routes/aisensy/campaigns/day14Session.js"
-import {GutHealthProgram} from "../routes/aisensy/campaigns/gutHealth.js"
+import { day14Session, day14SessionEvening } from "../routes/aisensy/campaigns/day14Session.js"
+import { GutHealthProgram } from "../routes/aisensy/campaigns/gutHealth.js"
 import { delay } from "../utils/delay.js";
 
 export const triggerYogaCampaignManually = async () => {
@@ -19,6 +20,8 @@ export const triggerYogaCampaignManually = async () => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
+    .order("created_at", { ascending: false })
+    .range(0, 5000);
 
   if (!users?.length) {
     console.log("> No users found");
@@ -29,7 +32,7 @@ export const triggerYogaCampaignManually = async () => {
     const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
 
     try {
-      await day14Session({
+      await day0SessionMorning({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,
@@ -41,7 +44,7 @@ export const triggerYogaCampaignManually = async () => {
     }
 
     // WhatsApp safety delay
-    await delay(1000);
+    await delay(200);
   }
 
   console.log("> Yoga campaign finished");
@@ -54,7 +57,9 @@ export const triggerYogaCampaignevening = async () => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-  
+    .order("created_at", { ascending: false })
+    .range(0, 5000);
+
 
   if (!users?.length) {
     console.log("> No users found");
@@ -65,7 +70,7 @@ export const triggerYogaCampaignevening = async () => {
     const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
 
     try {
-      await day14SessionEvening({
+      await day0SessionEvening({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,
@@ -76,7 +81,7 @@ export const triggerYogaCampaignevening = async () => {
       console.error(`> Failed for ${user.id}`, err.message);
     }
 
-    await delay(1000);
+    await delay(200);
   }
 
   console.log("> Yoga campaign finished");
