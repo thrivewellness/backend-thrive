@@ -9,6 +9,8 @@ import paymentRoutes from "./routes/payment.js";
 import verifyPayment from "./routes/verify.payment.js"
 import gupshupRoutes from "./gupshup/gupshup.routes.js";
 import webhook from "./webhook/webhook.routes.js";  
+import eveningAttendanceRoute from "./routes/free-thrive-yoga/attendance/evening.route.js";
+import morningAttendanceRoute from "./routes/free-thrive-yoga/attendance/morning.route.js";
 
 const app = express();
 
@@ -23,5 +25,7 @@ app.use(verifyPayment);
 app.use(errorHandler);
 app.use("/gupshup", gupshupRoutes);
 app.use("/webhook", webhook);   
+app.use("/free-thrive-yoga/attendance/evening", eveningAttendanceRoute);
+app.use("/free-thrive-yoga/attendance/morning", morningAttendanceRoute);
 
 export default app;

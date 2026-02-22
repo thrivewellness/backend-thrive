@@ -1,6 +1,8 @@
 import { supabase } from "../lib/supabase.js";
 import { sendWelcomeSessionMorningMessage } from "../routes/aisensy/campaigns/welcomeSession.js";
 import { day0SessionMorning, day0SessionEvening } from "../routes/aisensy/campaigns/day0welcome.js"
+import { day1Session, day1SessionEvening } from "../routes/aisensy/campaigns/day1Session.js"
+import { day2Session, day2SessionEvening } from "../routes/aisensy/campaigns/day2Session.js"
 import { day3Session, day3SessionEvening } from "../routes/aisensy/campaigns/day3Session.js"
 import { day4Session, day4SessionEvening } from "../routes/aisensy/campaigns/day4Session.js"
 import { day5Session, day5SessionEvening } from "../routes/aisensy/campaigns/day5Session.js"
@@ -32,7 +34,7 @@ export const triggerYogaCampaignManually = async () => {
     const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
 
     try {
-      await day0SessionMorning({
+      await day1Session({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,
@@ -70,7 +72,7 @@ export const triggerYogaCampaignevening = async () => {
     const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
 
     try {
-      await day0SessionEvening({
+      await day1SessionEvening({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,

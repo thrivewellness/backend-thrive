@@ -8,13 +8,13 @@ import {
 
 const CAMPAIGNS = [
   {
-    name: "yoga_fab_22_morning",
-    targetTime: new Date("2026-02-22T10:20:00"), 
+    name: "yoga_fab_23_morning",
+    targetTime: new Date("2026-02-23T05:20:00"), 
     handler: triggerYogaCampaignManually,
   },
   {
-    name: "yoga_fab_22_eve",
-    targetTime: new Date("2026-02-22T17:15:00"), 
+    name: "yoga_fab_23_eve",
+    targetTime: new Date("2026-02-23T14:00:00"), 
     handler: triggerYogaCampaignevening,
   },
     {
