@@ -34,7 +34,7 @@ export const triggerYogaCampaignManually = async () => {
     const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
 
     try {
-      await day3Session({
+      await day4Session({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,
@@ -72,7 +72,7 @@ export const triggerYogaCampaignevening = async () => {
     const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
 
     try {
-      await day3SessionEvening({
+      await day4SessionEvening({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,
