@@ -8,20 +8,21 @@ import {
 
 const CAMPAIGNS = [
   {
-    name: "yoga_fab_27_morning",
-    targetTime: new Date("2026-02-27T05:00:00"), 
+    name: "yoga_fab_28_morning",
+    targetTime: new Date("2026-02-28T05:00:00"), 
     handler: triggerYogaCampaignManually,
   },
   {
-    name: "yoga_fab_27_eve",
-    targetTime: new Date("2026-02-27T16:00:00"), 
+    name: "yoga_fab_28_eve",
+    targetTime: new Date("2026-02-28T16:00:00"), 
     handler: triggerYogaCampaignevening,
   },
     {
-    name: "gut_prog_feb_1",
-    targetTime: new Date("2026-02-01T10:30:00"),
+    name: "gut_prog_feb_28",
+    targetTime: new Date("2026-02-28T10:00:00"),
     handler: triggerGutHealthProgram,
   },
+  
 ];
 
 cron.schedule("* * * * *", async () => {

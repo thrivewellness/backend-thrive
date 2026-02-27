@@ -6,6 +6,7 @@ import { day2Session, day2SessionEvening } from "../routes/aisensy/campaigns/day
 import { day3Session, day3SessionEvening } from "../routes/aisensy/campaigns/day3Session.js"
 import { day4Session, day4SessionEvening } from "../routes/aisensy/campaigns/day4Session.js"
 import { day5Session, day5SessionEvening } from "../routes/aisensy/campaigns/day5Session.js"
+import { day6Session, day6SessionEvening, GutHealthDay6} from "../routes/aisensy/campaigns/day6Session.js"
 import { day8Session, day8SessionEvening } from "../routes/aisensy/campaigns/day8Session.js"
 import { day9Session, day9SessionEvening } from "../routes/aisensy/campaigns/day9Session.js"
 import { day10Session, day10SessionEvening } from "../routes/aisensy/campaigns/day10Session.js"
@@ -34,7 +35,7 @@ export const triggerYogaCampaignManually = async () => {
     const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
 
     try {
-      await day5Session({
+      await day6Session({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,
@@ -72,7 +73,7 @@ export const triggerYogaCampaignevening = async () => {
     const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
 
     try {
-      await day5SessionEvening({
+      await day6SessionEvening({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,
@@ -105,7 +106,7 @@ export const triggerGutHealthProgram = async () => {
     const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
 
     try {
-      await GutHealthProgram({
+      await GutHealthDay6({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,
