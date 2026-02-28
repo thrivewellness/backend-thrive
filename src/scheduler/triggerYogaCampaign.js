@@ -7,6 +7,7 @@ import { day3Session, day3SessionEvening } from "../routes/aisensy/campaigns/day
 import { day4Session, day4SessionEvening } from "../routes/aisensy/campaigns/day4Session.js"
 import { day5Session, day5SessionEvening } from "../routes/aisensy/campaigns/day5Session.js"
 import { day6Session, day6SessionEvening, GutHealthDay6} from "../routes/aisensy/campaigns/day6Session.js"
+import { day7Session, day7SessionEvening } from "../routes/aisensy/campaigns/day7Session.js"
 import { day8Session, day8SessionEvening } from "../routes/aisensy/campaigns/day8Session.js"
 import { day9Session, day9SessionEvening } from "../routes/aisensy/campaigns/day9Session.js"
 import { day10Session, day10SessionEvening } from "../routes/aisensy/campaigns/day10Session.js"
@@ -16,15 +17,27 @@ import { day13Session, day13SessionEvening } from "../routes/aisensy/campaigns/d
 import { day14Session, day14SessionEvening } from "../routes/aisensy/campaigns/day14Session.js"
 import { GutHealthProgram } from "../routes/aisensy/campaigns/gutHealth.js"
 import { delay } from "../utils/delay.js";
+import { morningSessions, eveningSessions } from "./utils/paramToFuntionMatching.js"; 
 
-export const triggerYogaCampaignManually = async () => {
+
+export const triggerYogaCampaignmorning = async (dayNumber) => {
   console.log("> Yoga campaign started");
+  console.log("> day number: ", dayNumber );  
+
+  const sessionFunction = morningSessions[dayNumber];
+  
+  if (!sessionFunction) {
+    console.log("> Invalid day number");
+    return;
+  }
 
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .order("created_at", { ascending: false })
-    .range(0, 5000);
+    .eq("id", 403)
+    
+    //.order("created_at", { ascending: false })
+    //.range(0, 5000);
 
   if (!users?.length) {
     console.log("> No users found");
@@ -35,7 +48,7 @@ export const triggerYogaCampaignManually = async () => {
     const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
 
     try {
-      await day6Session({
+      await sessionFunction({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,
@@ -54,14 +67,25 @@ export const triggerYogaCampaignManually = async () => {
 };
 
 
-export const triggerYogaCampaignevening = async () => {
+export const triggerYogaCampaignevening = async (dayNumber) => {
   console.log("> Yoga campaign started");
+  console.log("> day number: ", dayNumber );
+
+  const sessionFunction = eveningSessions[dayNumber];
+
+if (!sessionFunction) {
+  console.log("> Invalid day number");
+  return;
+}
 
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .order("created_at", { ascending: false })
-    .range(0, 5000);
+    .eq("id", 403)
+
+
+    //.order("created_at", { ascending: false })
+    //.range(0, 5000);
 
 
   if (!users?.length) {
@@ -73,7 +97,7 @@ export const triggerYogaCampaignevening = async () => {
     const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
 
     try {
-      await day6SessionEvening({
+      await sessionFunction({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,
@@ -96,6 +120,10 @@ export const triggerGutHealthProgram = async () => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
+    .eq("id", 403)
+
+    //.order("created_at", { ascending: false })
+    //.range(0, 5000);  
 
   if (!users?.length) {
     console.log("> No users found");
