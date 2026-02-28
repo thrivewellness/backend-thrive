@@ -6,7 +6,7 @@ import { day2Session, day2SessionEvening } from "../routes/aisensy/campaigns/day
 import { day3Session, day3SessionEvening } from "../routes/aisensy/campaigns/day3Session.js"
 import { day4Session, day4SessionEvening } from "../routes/aisensy/campaigns/day4Session.js"
 import { day5Session, day5SessionEvening } from "../routes/aisensy/campaigns/day5Session.js"
-import { day6Session, day6SessionEvening, GutHealthDay6} from "../routes/aisensy/campaigns/day6Session.js"
+import { day6Session, day6SessionEvening, GutHealthDay6 } from "../routes/aisensy/campaigns/day6Session.js"
 import { day7Session, day7SessionEvening } from "../routes/aisensy/campaigns/day7Session.js"
 import { day8Session, day8SessionEvening } from "../routes/aisensy/campaigns/day8Session.js"
 import { day9Session, day9SessionEvening } from "../routes/aisensy/campaigns/day9Session.js"
@@ -17,15 +17,15 @@ import { day13Session, day13SessionEvening } from "../routes/aisensy/campaigns/d
 import { day14Session, day14SessionEvening } from "../routes/aisensy/campaigns/day14Session.js"
 import { GutHealthProgram } from "../routes/aisensy/campaigns/gutHealth.js"
 import { delay } from "../utils/delay.js";
-import { morningSessions, eveningSessions } from "./utils/paramToFuntionMatching.js"; 
+import { morningSessions, eveningSessions } from "./utils/paramToFuntionMatching.js";
 
 
 export const triggerYogaCampaignmorning = async (dayNumber) => {
   console.log("> Yoga campaign started");
-  console.log("> day number: ", dayNumber );  
+  console.log("> day number: ", dayNumber);
 
   const sessionFunction = morningSessions[dayNumber];
-  
+
   if (!sessionFunction) {
     console.log("> Invalid day number");
     return;
@@ -34,10 +34,8 @@ export const triggerYogaCampaignmorning = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .eq("id", 403)
-    
-    //.order("created_at", { ascending: false })
-    //.range(0, 5000);
+    .order("created_at", { ascending: false })
+    .range(0, 5000);
 
   if (!users?.length) {
     console.log("> No users found");
@@ -69,23 +67,20 @@ export const triggerYogaCampaignmorning = async (dayNumber) => {
 
 export const triggerYogaCampaignevening = async (dayNumber) => {
   console.log("> Yoga campaign started");
-  console.log("> day number: ", dayNumber );
+  console.log("> day number: ", dayNumber);
 
   const sessionFunction = eveningSessions[dayNumber];
 
-if (!sessionFunction) {
-  console.log("> Invalid day number");
-  return;
-}
+  if (!sessionFunction) {
+    console.log("> Invalid day number");
+    return;
+  }
 
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .eq("id", 403)
-
-
-    //.order("created_at", { ascending: false })
-    //.range(0, 5000);
+    .order("created_at", { ascending: false })
+    .range(0, 5000);
 
 
   if (!users?.length) {
@@ -121,9 +116,8 @@ export const triggerGutHealthProgram = async () => {
     .from("yoga_signups")
     .select("*")
     .eq("id", 403)
-
-    //.order("created_at", { ascending: false })
-    //.range(0, 5000);  
+    .order("created_at", { ascending: false })
+    .range(0, 5000);
 
   if (!users?.length) {
     console.log("> No users found");
