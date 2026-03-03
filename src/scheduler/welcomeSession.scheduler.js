@@ -5,12 +5,14 @@ import {
   triggerYogaCampaignevening,
   triggerGutHealthProgram
 } from "./triggerYogaCampaign.js";
+import { triggerAttendance } from "../routes/aisensy/triggerAttendance.js";
 
 const HANDLERS = {
   triggerYogaCampaignmorning,
   triggerYogaCampaignevening,
   triggerGutHealthProgram,
-};
+  triggerAttendance
+}; 
 
 cron.schedule("* * * * *", async () => {
   const now = new Date().toISOString(); // Always use ISO
@@ -54,3 +56,53 @@ cron.schedule("* * * * *", async () => {
     }
   }
 });
+
+
+// Separate cron for attendance at 08:45 PM IST
+cron.schedule(
+  "45 20 * * *",
+  async () => {
+    console.log("> Checking campaigns for attendance...");
+
+    const campaign = await checkCampaignTriggeredToday(supabase);
+
+    if (campaign) {
+      console.log("> Campaign was triggered today.");
+      await triggerAttendance(campaign.campaign_date, campaign.day_number);
+    } else {
+      console.log("> No campaign triggered today. Skipping.");
+    }
+  },
+  {
+    timezone: "Asia/Kolkata",
+  }
+);
+
+
+// Helper to check if any campaign was triggered today  
+export const checkCampaignTriggeredToday = async (supabase) => {
+  // Get today's date in IST (YYYY-MM-DD format)
+  const todayIST = new Date().toLocaleDateString("en-CA", {
+    timeZone: "Asia/Kolkata",
+  });
+  // en-CA gives format: YYYY-MM-DD 
+
+  const { data, error } = await supabase
+    .from("campaigns_data")
+    .select("id, campaign_date, day_number")
+    .eq("campaign_date", todayIST) 
+    .eq("triggered_status", true)
+    .limit(1)
+    .single();
+
+  if (error) {
+    if (error.code !== "PGRST116") {
+      console.error("Error checking today's campaigns:", error);
+    }
+    return null;
+  }
+
+  return data;
+};
+
+
