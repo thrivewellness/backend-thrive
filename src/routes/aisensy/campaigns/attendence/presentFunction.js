@@ -10,10 +10,10 @@ export const presentFunction = async (userId, whatsappPhone, name, dayNumber) =>
             userName: "Thrive Wellness",
 
             templateParams: [
-                `${name}`,
+                `${name} Ji`,
                 `${dayNumber} completed strong 💪`,
                 "Present ✔️",
-                "✅✅✅⬜⬜⬜",
+                "✅✅✅✅✅⬜",
                 "💪 Progress is built quietly, one day at a time."
             ],
 
