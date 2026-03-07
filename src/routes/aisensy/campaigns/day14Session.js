@@ -11,17 +11,20 @@ export const day14Session = async ({
 
         const payload = {
             apiKey: process.env.AISENSY_API_KEY,
-            campaignName: "thrive_talk",
+            campaignName: "day14_live_qna",
             destination: whatsappPhone,
             userName: "Thrive Wellness",
 
             templateParams: [
                 `${name} Ji 🙏`,
-                "🌿 Thrive Talk",
-                "*Fix Your Thyroid*",
-                "📅 Today",
-                "7 PM",
-                `https://thriveyoga.thrivewellness.in/join/ld/${userId}`
+                "1 Day",
+                "*Today*",
+                "How To Continue Your Thrive Yoga Journey",
+                "⏰ 11 AM & 8:30 PM (IST)",
+                "✅ Answer your questions about the Thrive Yoga program",
+                "✅ Explain membership plans",
+                "✅ Help with any payment related queries",
+                `https://thriveyoga.thrivewellness.in/join/m/${userId}`
             ],
 
             source: "new-landing-page form",
@@ -65,18 +68,22 @@ export const day14SessionEvening = async ({
 
         const payload = {
             apiKey: process.env.AISENSY_API_KEY,
-            campaignName: "thrive_talk",
+            campaignName: "day14_live_qna",
             destination: whatsappPhone,
             userName: "Thrive Wellness",
 
             templateParams: [
                 `${name} Ji 🙏`,
-                "🌿 Thrive Talk",
-                "*Fix Your Thyroid*",
-                "📅 Today",
-                "7 PM",
-                `https://thriveyoga.thrivewellness.in/join/ld/${userId}`
+                "1 Day",
+                "*Today*",
+                "How To Continue Your Thrive Yoga Journey",
+                "⏰ 11 AM & 8:30 PM (IST)",
+                "✅ Answer your questions about the Thrive Yoga program",
+                "✅ Explain membership plans",
+                "✅ Help with any payment related queries",
+                `https://thriveyoga.thrivewellness.in/join/e/${userId}`
             ],
+
 
             source: "new-landing-page form",
 
