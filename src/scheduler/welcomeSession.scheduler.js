@@ -6,12 +6,15 @@ import {
   triggerGutHealthProgram
 } from "./triggerYogaCampaign.js";
 import { triggerAttendance } from "../routes/aisensy/triggerAttendance.js";
+import { triggerPlans } from "../routes/aisensy/triggerPlans.js";
+
 
 const HANDLERS = {
   triggerYogaCampaignmorning,
   triggerYogaCampaignevening,
   triggerGutHealthProgram,
-  triggerAttendance
+  triggerAttendance,
+  triggerPlans
 }; 
 
 cron.schedule("* * * * *", async () => {
@@ -31,6 +34,8 @@ cron.schedule("* * * * *", async () => {
   }
 
   if (!campaigns || campaigns.length === 0) return;
+
+
 
   for (const campaign of campaigns) {
 
