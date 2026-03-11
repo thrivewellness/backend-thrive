@@ -22,6 +22,8 @@ export const triggerPlans = async ( dayNumber) => {
       return;
     }
 
+    let presentCount = 0;
+
     for (const user of users) {
       const { id, name, country_code, phone, attendance } = user;
 
@@ -33,19 +35,20 @@ export const triggerPlans = async ( dayNumber) => {
 
       try {
         if (isPresent) {
+          presentCount++;
           await sendThriveYogaPlansMessage(id, whatsappPhone, name, dayNumber);
         } else {
-          console.log(`> User ${id} is absent. Skipping.`);
+          //console.log(`> User ${id} is absent. Skipping.`);
           continue;
         }
       } catch (err) {
         console.error(`> Failed for ${user.id}`, err.message);
       }
 
-      await delay(1000);
+      await delay(500);
     }
 
-    console.log("> Attendance processing completed successfully");
+    console.log(`> Attendance processing completed successfully. Total present users: ${presentCount}`);
   } catch (err) {
     console.error("Attendance Error:", err);
   }
