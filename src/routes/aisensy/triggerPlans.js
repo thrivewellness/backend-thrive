@@ -6,7 +6,6 @@ import { sendThriveYogaPlansMessage } from "./campaigns/promtions/sendThriveYoga
 // 🎯 Plans Trigger Function
 export const triggerPlans = async ( dayNumber) => {
   console.log("> Running Plans Function");
-  console.log("> Day Number:", dayNumber);
 
   try {
     // 🔹 Fetch required fields from yoga_signups table
@@ -29,7 +28,7 @@ export const triggerPlans = async ( dayNumber) => {
       // 📱 Convert to WhatsApp-ready number
       const whatsappPhone = `${country_code}${phone}`.replace(/\D/g, "");
 
-     const isPresent = Array.isArray(attendance) && attendance.length > 0;
+     const isPresent = Array.isArray(attendance) && attendance.length > 1;
 
 
       try {

@@ -5,28 +5,23 @@ export const sendThriveYogaPlansMessage = async (userId, whatsappPhone, name, da
 
         const payload = {
             apiKey: process.env.AISENSY_API_KEY,
-            campaignName: "plans_remainder",
+            campaignName: "plans_rem",
             destination: whatsappPhone,
             userName: "Thrive Integrated Lifestyle Private Limited",
 
             templateParams: [
-                `${name} Ji 🌿 `,
-                "Your 14-Day Free Thrive Yoga sessions have now ended. But this is just the beginning of your wellness journey! 🌟",
-                "Today",
-                "Thrive Yoga",
+                `${name} Ji `,
+                "Your 14-Day Free Thrive Yoga sessions have now ended. But this is just the beginning of your wellness journey! ",
                 "✨Thrive Yoga – Basic",
                 "Only ₹300/month (billed annually)",
                 "Link – https://payment.thrivewellness.in/payment/yoga/basic",
                 "✨Thrive Yoga – Advanced",
                 "Only ₹999/month (billed annually)",
                 "Link – https://payment.thrivewellness.in/payment/yoga/advanced",
-                "Let’s keep the momentum going. 🌱"
             ],
 
             source: "new-landing-page form",
-            media: {
-            },
-
+            media: {},
             buttons: [],
             carouselCards: [],
             location: {},
