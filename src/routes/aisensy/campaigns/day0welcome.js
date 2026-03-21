@@ -21,7 +21,7 @@ export const day0SessionMorning = async ({
             templateParams: [
                 `${name}`,
                 `11 AM`,    
-                ` 6 PM (IST)`,    
+                `6 PM (IST)`,    
                 `11:58 AM`,            
                 `https://thriveyoga.thrivewellness.in/join/m/${userId}`
             ],
@@ -74,7 +74,6 @@ export const day0SessionEvening = async ({
     console.log("received user data : ", whatsappPhone, name, userId);
 
     try {
-
         const payload = {
             apiKey: process.env.AISENSY_API_KEY,
             campaignName: "send_eving_wel_remiander",
