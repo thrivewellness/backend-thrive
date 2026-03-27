@@ -112,8 +112,9 @@ export const triggerYogaCampaignevening = async (dayNumber) => {
   console.log("> Yoga campaign finished");
 };
 
-export const triggerGutHealthProgram = async () => {
+export const triggerGutHealthProgram = async (dayNumber) => {
   console.log("> Yoga campaign started");
+  console.log("> day number: ", dayNumber); 
 
   const { data: users } = await supabase
     .from("yoga_signups")
