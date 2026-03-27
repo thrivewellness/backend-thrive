@@ -118,7 +118,7 @@ export const triggerGutHealthProgram = async () => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .eq("id", 403)
+    .gt("created_at", YOGA_CAMPAIGN_JOIN_CUTOFF)
     .order("created_at", { ascending: false })
     .range(0, 5000);
 
