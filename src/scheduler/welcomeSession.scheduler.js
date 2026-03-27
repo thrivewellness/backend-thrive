@@ -3,7 +3,8 @@ import { supabase } from "../lib/supabase.js";
 import {
   triggerYogaCampaignmorning,
   triggerYogaCampaignevening,
-  triggerGutHealthProgram
+  triggerGutHealthProgram,
+  triggerGutHealthProgramEvening
 } from "./triggerYogaCampaign.js";
 import { triggerAttendance } from "../routes/aisensy/triggerAttendance.js";
 import { triggerPlans } from "../routes/aisensy/triggerPlans.js";
@@ -14,7 +15,8 @@ const HANDLERS = {
   triggerYogaCampaignevening,
   triggerGutHealthProgram,
   triggerAttendance,
-  triggerPlans
+  triggerPlans,
+  triggerGutHealthProgramEvening
 }; 
 
 cron.schedule("* * * * *", async () => {
