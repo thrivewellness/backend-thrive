@@ -20,6 +20,8 @@ import { delay } from "../utils/delay.js";
 import { morningSessions, eveningSessions } from "./utils/paramToFuntionMatching.js";
 
 const YOGA_CAMPAIGN_JOIN_CUTOFF = "2026-02-28T23:59:59Z";
+    
+const YOGA_CAMPAIGN_JOIN_END_DATE = "2026-03-29T23:59:59Z";
 
 export const triggerYogaCampaignmorning = async (dayNumber) => {
   console.log("> Yoga campaign started");
@@ -36,6 +38,7 @@ export const triggerYogaCampaignmorning = async (dayNumber) => {
     .from("yoga_signups")
     .select("*")
     .gt("created_at", YOGA_CAMPAIGN_JOIN_CUTOFF)
+    .lte("created_at", YOGA_CAMPAIGN_JOIN_END_DATE)
     .order("created_at", { ascending: false })
     .range(0, 5000);
 
@@ -82,6 +85,7 @@ export const triggerYogaCampaignevening = async (dayNumber) => {
     .from("yoga_signups")
     .select("*")
     .gt("created_at", YOGA_CAMPAIGN_JOIN_CUTOFF)
+    .lte("created_at", YOGA_CAMPAIGN_JOIN_END_DATE)
     .order("created_at", { ascending: false })
     .range(0, 5000);
 
@@ -120,6 +124,7 @@ export const triggerGutHealthProgram = async (dayNumber) => {
     .from("yoga_signups")
     .select("*")
     .gt("created_at", YOGA_CAMPAIGN_JOIN_CUTOFF)
+    .lte("created_at", YOGA_CAMPAIGN_JOIN_END_DATE)
     .order("created_at", { ascending: false })
     .range(0, 5000);
 
@@ -160,6 +165,7 @@ export const triggerGutHealthProgramEvening = async (dayNumber) => {
     .from("yoga_signups")
     .select("*")
     .gt("created_at", YOGA_CAMPAIGN_JOIN_CUTOFF)
+    .lte("created_at", YOGA_CAMPAIGN_JOIN_END_DATE)
     .order("created_at", { ascending: false })
     .range(0, 5000);
 

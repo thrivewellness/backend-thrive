@@ -6,6 +6,7 @@ import { delay } from "../../utils/delay.js";
 
 
 const YOGA_CAMPAIGN_JOIN_CUTOFF = "2026-02-28T23:59:59Z";
+const YOGA_CAMPAIGN_JOIN_END_DATE = "2026-03-29T23:59:59Z";
 
 // 🎯 Attendance Trigger Function
 export const triggerAttendance = async (triggeredToday, dayNumber) => {
@@ -19,6 +20,7 @@ export const triggerAttendance = async (triggeredToday, dayNumber) => {
       .from("yoga_signups")
       .select("*")
       .gt("created_at", YOGA_CAMPAIGN_JOIN_CUTOFF)
+      .lte("created_at", YOGA_CAMPAIGN_JOIN_END_DATE)
       .order("created_at", { ascending: false })
       .range(0, 5000);
 
