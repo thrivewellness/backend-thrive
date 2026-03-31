@@ -4,10 +4,15 @@ import {supabase} from "../../../lib/supabase.js";
 
 const router = express.Router();
 
-// POST /free-thrive-yoga/attendance/evening
+// POST /free-thrive-yoga/attendance/morning
 router.post("/", async (req, res) => {
   try {
     const { id } = req.body;
+
+    // Validate ID
+    if (!id) {
+      return res.status(400).json({ error: "Invalid ID" });
+    }
 
     const now = dayjs();
     const currentTime = now.format("HH:mm");
@@ -28,11 +33,29 @@ router.post("/", async (req, res) => {
       .eq("ref_user_id", id)
       .single();
 
-    if (fetchError) throw fetchError;
+    if (fetchError) {
+      // PGRST116 = No rows found
+      if (fetchError.code === "PGRST116") {
+        return res.status(400).json({ error: "Invalid ID" });
+      }
+      throw fetchError;
+    }
 
     if (!existingUser) {
-      return res.status(404).json({ error: "User not found" });
+      return res.status(400).json({ error: "Invalid ID" });
     }
+
+    // Fetch today's campaign link
+    const { data: campaignData, error: campaignError } = await supabase
+      .from("campaigns_data")
+      .select("link")
+      .eq("campaign_date", todayDate)
+      .eq("session_name", "morning")
+      .single();
+
+    if (campaignError && campaignError.code !== "PGRST116") throw campaignError;
+
+    const campaignLink = campaignData?.link ?? null;
 
     if (isMorningTime) {
       // ---- UPDATE ATTENDANCE ----
@@ -48,10 +71,13 @@ router.post("/", async (req, res) => {
 
       if (error) throw error;
 
+      console.log("link", campaignLink);
+
       return res.status(200).json({
         success: true,
         message: "Morning attendance recorded",
         type: "attendance",
+        link: campaignLink,
       });
     } else {
       // ---- UPDATE ACTIVITY ----
@@ -67,10 +93,13 @@ router.post("/", async (req, res) => {
 
       if (error) throw error;
 
+      console.log("link", campaignLink);
+
       return res.status(200).json({
         success: true,
         message: "Activity recorded",
         type: "activity",
+        link: campaignLink,
       });
     }
   } catch (err) {
