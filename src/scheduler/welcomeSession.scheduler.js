@@ -4,7 +4,9 @@ import {
   triggerYogaCampaignmorning,
   triggerYogaCampaignevening,
   triggerGutHealthProgram,
-  triggerGutHealthProgramEvening
+  triggerGutHealthProgramEvening,
+  triggerwelcomenmorning,
+  triggerwelcomeevening
 } from "./triggerYogaCampaign.js";
 import { triggerAttendance } from "../routes/aisensy/triggerAttendance.js";
 import { triggerPlans } from "../routes/aisensy/triggerPlans.js";
@@ -18,7 +20,9 @@ const HANDLERS = {
   triggerAttendance,
   triggerPlans,
   triggerGutHealthProgramEvening,
-  triggerconsultaion
+  triggerconsultaion,
+  triggerwelcomenmorning,
+  triggerwelcomeevening
 }; 
 
 cron.schedule("* * * * *", async () => {

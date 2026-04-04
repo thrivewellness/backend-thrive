@@ -23,6 +23,8 @@ const YOGA_CAMPAIGN_JOIN_CUTOFF = "2026-02-28T23:59:59Z";
     
 const YOGA_CAMPAIGN_JOIN_END_DATE = "2026-03-29T23:59:59Z";
 
+const YOGA_CAMPAIGN_JOIN_WELCOME_CUTOFF = "2026-03-29T23:59:59Z";
+
 export const triggerYogaCampaignmorning = async (dayNumber) => {
   console.log("> Yoga campaign started");
   console.log("> day number: ", dayNumber);
@@ -191,6 +193,84 @@ export const triggerGutHealthProgramEvening = async (dayNumber) => {
 
     // WhatsApp safety delay
     await delay(1000);
+  }
+
+  console.log("> Yoga campaign finished");
+};
+
+
+export const triggerwelcomenmorning = async (dayNumber) => {
+  console.log("> Yoga campaign started");
+  console.log("> day number: ", dayNumber);
+
+  const { data: users } = await supabase
+    .from("yoga_signups")
+    .select("*")
+    .gt("created_at", YOGA_CAMPAIGN_JOIN_WELCOME_CUTOFF)
+    .order("created_at", { ascending: false })
+    .range(0, 5000);
+
+  if (!users?.length) {
+    console.log("> No users found");
+    return;
+  }
+
+  for (const user of users) {
+    const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
+
+    try {
+      await day0SessionMorning({
+        whatsappPhone,
+        name: user.name,
+        userId: user.ref_user_id,
+      });
+
+      console.log(`> Sent to ${user.id}`);
+    } catch (err) {
+      console.error(`> Failed for ${user.id}`, err.message);
+    }
+
+    // WhatsApp safety delay
+    await delay(200);
+  }
+
+  console.log("> Yoga campaign finished");
+};
+
+
+export const triggerwelcomeevening = async (dayNumber) => {
+  console.log("> Yoga campaign started");
+  console.log("> day number: ", dayNumber);
+
+  const { data: users } = await supabase
+    .from("yoga_signups")
+    .select("*")
+    .gt("created_at", YOGA_CAMPAIGN_JOIN_WELCOME_CUTOFF)
+    .order("created_at", { ascending: false })
+    .range(0, 5000);
+
+
+  if (!users?.length) {
+    console.log("> No users found");
+    return;
+  }
+
+  for (const user of users) {
+    const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
+
+    try {
+      await day0SessionEvening({
+        whatsappPhone,
+        name: user.name,
+        userId: user.ref_user_id,
+      });
+
+      console.log(`> Sent to ${user.id}`);
+    } catch (err) {
+      console.error(`> Failed for ${user.id}`, err.message);
+    }
+
+    await delay(200);
   }
 
   console.log("> Yoga campaign finished");

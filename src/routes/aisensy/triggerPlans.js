@@ -1,7 +1,11 @@
 import { supabase } from "../../lib/supabase.js";
 import { delay } from "../../utils/delay.js";
 import { sendThriveYogaPlansMessage } from "./campaigns/promtions/sendThriveYogaPlansMessage.js";
+import {sendThriveYogaPlans1day} from "./campaigns/promtions/sendThriveYogaPlans1day.js"; 
 
+
+const YOGA_CAMPAIGN_JOIN_CUTOFF = "2026-02-28T23:59:59Z";
+const YOGA_CAMPAIGN_JOIN_END_DATE = "2026-03-29T23:59:59Z";
 
 // 🎯 Plans Trigger Function
 export const triggerPlans = async ( dayNumber) => {
@@ -10,8 +14,10 @@ export const triggerPlans = async ( dayNumber) => {
   try {
     // 🔹 Fetch required fields from yoga_signups table
     const { data: users, error } = await supabase
-      .from("yoga_signups")
+     .from("yoga_signups")
       .select("*")
+      .gt("created_at", YOGA_CAMPAIGN_JOIN_CUTOFF)
+      .lte("created_at", YOGA_CAMPAIGN_JOIN_END_DATE)
       .order("created_at", { ascending: false })
       .range(0, 5000);
      
@@ -36,9 +42,9 @@ export const triggerPlans = async ( dayNumber) => {
       try {
         if (isPresent) {
           presentCount++;
-          await sendThriveYogaPlansMessage(id, whatsappPhone, name, dayNumber);
+          await sendThriveYogaPlans1day(id, whatsappPhone, name, dayNumber);
         } else {
-          //console.log(`> User ${id} is absent. Skipping.`);
+          //console.log(`> User ${id} Skipping.`);
           continue;
         }
       } catch (err) {
@@ -48,7 +54,7 @@ export const triggerPlans = async ( dayNumber) => {
       await delay(500);
     }
 
-    console.log(`> Attendance processing completed successfully. Total present users: ${presentCount}`);
+    console.log(`> Total Sent: ${presentCount}`);
   } catch (err) {
     console.error("Attendance Error:", err);
   }

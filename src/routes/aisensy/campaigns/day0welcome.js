@@ -23,7 +23,7 @@ export const day0SessionMorning = async ({
                 `11 AM`,    
                 `6 PM (IST)`,    
                 `11:58 AM`,            
-                `https://thriveyoga.thrivewellness.in/join/m/${userId}`
+                `https://thriveyoga.thrivewellness.in/join/sp/m/${userId}`
             ],
 
             source: "new-landing-page form",
@@ -101,7 +101,7 @@ export const day0SessionEvening = async ({
                     parameters: [
                         {
                             type: "text",
-                            text: `/e/${userId}`
+                            text: `sp/e/${userId}`
                         }
                     ]
                 }
