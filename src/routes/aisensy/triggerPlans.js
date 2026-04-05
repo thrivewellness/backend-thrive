@@ -2,6 +2,7 @@ import { supabase } from "../../lib/supabase.js";
 import { delay } from "../../utils/delay.js";
 import { sendThriveYogaPlansMessage } from "./campaigns/promtions/sendThriveYogaPlansMessage.js";
 import {sendThriveYogaPlans1day} from "./campaigns/promtions/sendThriveYogaPlans1day.js"; 
+import {sendVideoMessage15day } from "./campaigns/promtions/sendVideoMessage15day.js";
 
 
 const YOGA_CAMPAIGN_JOIN_CUTOFF = "2026-02-28T23:59:59Z";
@@ -42,7 +43,7 @@ export const triggerPlans = async ( dayNumber) => {
       try {
         if (isPresent) {
           presentCount++;
-          await sendThriveYogaPlans1day(id, whatsappPhone, name, dayNumber);
+          await sendVideoMessage15day(id, whatsappPhone, name, dayNumber);
         } else {
           //console.log(`> User ${id} Skipping.`);
           continue;
