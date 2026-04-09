@@ -9,23 +9,42 @@ const router = express.Router();
  * CREATE ORDER
  */
 router.post("/create-order", async (req, res) => {
-  const { amount, user, program, duration } = req.body;
+  const {
+    amount,
+    user,
+    program,
+    duration,
+    currency = "INR",
+    region,
+    planType,
+  } = req.body;
 
   try {
+    const normalizedCurrency = String(currency).toUpperCase();
+
     const order = await razorpay.orders.create({
-      amount: amount * 100,
-      currency: "INR",
+      amount: Math.round(Number(amount) * 100),
+      currency: normalizedCurrency,
       receipt: `rcpt_${Date.now()}`,
     });
 
     res.json({
       ...order,
-      meta: { user, program, duration, amount },
+      meta: {
+        user,
+        program,
+        duration,
+        amount,
+        currency: normalizedCurrency,
+        region,
+        planType,
+      },
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
+
 
 /**
  * VERIFY PAYMENT + SAVE TO SUPABASE
@@ -55,24 +74,28 @@ router.post("/verify", async (req, res) => {
     /**
      * INSERT INTO SUPABASE
      */
-      const { data, error } = await supabase
-          .from("payments")
-          .insert({
-              full_name: meta.user.fullName,
-              email: meta.user.email,
-              phone: meta.user.phone,
-              condition: meta.user.condition,
-              program: meta.program,
-              duration: meta.duration,
-              ref_id: meta.user.ref_id || null,
-              part_id: meta.user.part_id || null,
-              amount: meta.amount,
-              razorpay_order_id,
-              razorpay_payment_id,
-              status: "SUCCESS",
-          })
-          .select("id")
-          .single();
+    const { data, error } = await supabase
+      .from("payments")
+      .insert({
+        full_name: meta.user.fullName,
+        email: meta.user.email,
+        phone: meta.user.phone,
+        condition: meta.user.condition,
+        program: meta.program,
+        duration: meta.duration,
+        ref_id: meta.user.ref_id || null,
+        part_id: meta.user.part_id || null,
+        amount: meta.amount,
+        currency: meta.currency || "INR",
+        region: meta.region || null,
+        plan_type: meta.planType || null,
+        razorpay_order_id,
+        razorpay_payment_id,
+        status: "SUCCESS",
+      })
+      .select("id")
+      .single();
+
 
       if (error) {
           console.error("Supabase insert error:", error);
