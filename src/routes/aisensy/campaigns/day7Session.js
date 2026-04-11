@@ -20,7 +20,7 @@ export const day7Session = async ({
                 "Science of Metabolic Health",
                 "Today",
                 "11:00 AM | 6 PM",
-                `https://thriveyoga.thrivewellness.in/join/sp/m/${userId}`
+                `https://thriveyoga.thrivewellness.in/join/m/${userId}`
             ],
 
             source: "new-landing-page form",
@@ -71,7 +71,7 @@ export const day7SessionEvening = async ({
                 "Science of Metabolic Health",
                 "Today",
                 "11:00 AM | 6 PM",
-                `https://thriveyoga.thrivewellness.in/join/sp/e/${userId}`
+                `https://thriveyoga.thrivewellness.in/join/e/${userId}`
             ],
 
             source: "new-landing-page form",
