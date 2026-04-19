@@ -101,7 +101,7 @@ export const day0SessionEvening = async ({
                     parameters: [
                         {
                             type: "text",
-                            text: `sp/e/${userId}`
+                            text: `/sp/e/${userId}`
                         }
                     ]
                 }

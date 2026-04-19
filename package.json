@@ -13,13 +13,14 @@
     "node": ">=18.0.0"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.39.5",
-    "axios": "^1.13.2",
+    "@supabase/supabase-js": "^2.103.3",
+    "axios": "^1.15.0",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
-    "dayjs": "^1.11.19",
+    "dayjs": "^1.11.20",
     "dotenv": "^16.6.1",
     "express": "^4.22.1",
+    "googleapis": "^171.4.0",
     "node-cron": "^4.2.1",
     "razorpay": "^2.9.6",
     "supabase": "^2.72.8"

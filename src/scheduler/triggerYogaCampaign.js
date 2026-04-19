@@ -19,8 +19,8 @@ import { GutHealthProgram } from "../routes/aisensy/campaigns/gutHealth.js"
 import { delay } from "../utils/delay.js";
 import { morningSessions, eveningSessions } from "./utils/paramToFuntionMatching.js";
 
-const YOGA_CAMPAIGN_JOIN_CUTOFF = "2026-03-29T23:59:59Z";
-const YOGA_CAMPAIGN_JOIN_END_DATE = "2026-04-05T23:59:59Z";
+const YOGA_CAMPAIGN_JOIN_CUTOFF = "2026-04-05T23:59:59Z";
+const YOGA_CAMPAIGN_JOIN_END_DATE = "2026-04-19T23:59:59Z";
 
 const YOGA_CAMPAIGN_JOIN_WELCOME_CUTOFF = "2026-04-05T23:59:59Z";
 

@@ -6,8 +6,8 @@ import {sendVideoMessage15day } from "./campaigns/promtions/sendVideoMessage15da
 import { sendChineseMsg } from "./campaigns/promtions/sendChineseMsg.js"; 
 
 
-const YOGA_CAMPAIGN_JOIN_CUTOFF = "2026-02-28T23:59:59Z";
-const YOGA_CAMPAIGN_JOIN_END_DATE = "2026-03-29T23:59:59Z";
+const YOGA_CAMPAIGN_JOIN_CUTOFF = "2026-03-29T23:59:59Z";
+const YOGA_CAMPAIGN_JOIN_END_DATE = "2026-04-05T23:59:59Z";
 
 // 🎯 Plans Trigger Function
 export const triggerPlans = async ( dayNumber) => {
@@ -44,7 +44,7 @@ export const triggerPlans = async ( dayNumber) => {
       try {
         if (isPresent) {
           presentCount++;
-          await sendChineseMsg(id, whatsappPhone, name, dayNumber);
+          await sendVideoMessage15day(id, whatsappPhone, name, dayNumber);
         } else {
           //console.log(`> User ${id} Skipping.`);
           continue;
