@@ -35,7 +35,7 @@ export const triggerPlans = async ( dayNumber) => {
     for (const user of users) {
       const { id, name, country_code, phone, attendance } = user;
 
-      // 📱 Convert to WhatsApp-ready number
+      // Convert to WhatsApp-ready number
       const whatsappPhone = `${country_code}${phone}`.replace(/\D/g, "");
 
      const isPresent = Array.isArray(attendance) && attendance.length > 1;
