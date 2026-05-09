@@ -22,7 +22,7 @@ import { morningSessions, eveningSessions } from "./utils/paramToFuntionMatching
 const YOGA_CAMPAIGN_JOIN_CUTOFF = "2026-04-05T23:59:59Z";
 const YOGA_CAMPAIGN_JOIN_END_DATE = "2026-04-19T23:59:59Z";
 
-const YOGA_CAMPAIGN_JOIN_WELCOME_CUTOFF = "2026-04-05T23:59:59Z";
+const YOGA_CAMPAIGN_JOIN_WELCOME_CUTOFF = "2026-04-19T23:59:59Z";
 
 export const triggerYogaCampaignmorning = async (dayNumber) => {
   console.log("> Yoga campaign started");
