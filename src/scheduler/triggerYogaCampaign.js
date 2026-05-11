@@ -62,7 +62,7 @@ export const triggerYogaCampaignmorning = async (dayNumber) => {
     } catch (err) {
       console.error(`> Failed for ${user.id}`, err.message);
     }
-
+    
     // WhatsApp safety delay
     await delay(200);
   }

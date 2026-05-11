@@ -145,11 +145,12 @@ router.post("/yoga/signup", async (req, res, next) => {
 });
 
 // to get yoga signups
-router.get('/get-yoga', async (req, res, next) => {
+router.get('/get-yoga/new', async (req, res, next) => {
   try {
     const { data, error } = await supabase
       .from('yoga_signups')
       .select('*')
+      .gt('created_at', '2026-04-19T23:59:59Z') 
       .order('created_at', { ascending: false });
 
     if (error) {
@@ -168,5 +169,8 @@ router.get('/get-yoga', async (req, res, next) => {
     next(err);
   }
 });
+
+
+
 
 export default router;

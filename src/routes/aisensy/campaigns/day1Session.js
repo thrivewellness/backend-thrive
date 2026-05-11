@@ -59,6 +59,8 @@ export const day1SessionEvening = async ({
 }) => {
 
     console.log("recvied user data day 1 evening: ", whatsappPhone, name, userId)
+  
+ 
     try {
 
         const payload = {
