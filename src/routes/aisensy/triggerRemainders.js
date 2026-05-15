@@ -1,7 +1,7 @@
 import { supabase } from "../../lib/supabase.js";
 import { delay } from "../../utils/delay.js";
 import { fiveMinSessionRemainderGutHealth, fiveMinSessionRemainderGutHealthEvening, liveNowRemainderGutHealth } from "./campaigns/remainders/gutHealthSessionRemainders.js";
-import { tommarowSessionRemainders } from "./campaigns/remainders/TommarowSessionRemainders.js";
+import { tommarowSessionRemainders } from "./campaigns/remainders/tommarowSessionRemainders.js";
 import { fiveMinSessionRemainder, liveNowRemainder } from "./campaigns/remainders/welcomeSessionRemainders.js";
 
 
