@@ -123,7 +123,7 @@ export const GutHealthDay6 = async ({
                 `${name}`,
                 "Science of Gut Health",
                 "Today",
-                "11:00 AM | 8:30 PM",
+                "11:00 AM | 4:00 PM (IST)",
                 `https://thriveyoga.thrivewellness.in/join/sp/m/${userId}`
             ],
 
@@ -175,7 +175,7 @@ export const GutHealthDay6Evening = async ({
                 `${name}`,
                 "Science of Gut Health",
                 "Today",
-                "11:00 AM | 8:30 PM",
+                "11:00 AM | 4:00 PM (IST)",
                 `https://thriveyoga.thrivewellness.in/join/sp/e/${userId}`
             ],
 
