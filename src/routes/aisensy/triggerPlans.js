@@ -4,6 +4,7 @@ import { sendThriveYogaPlansMessage } from "./campaigns/promtions/sendThriveYoga
 import {sendThriveYogaPlans1day} from "./campaigns/promtions/sendThriveYogaPlans1day.js"; 
 import {sendVideoMessage15day } from "./campaigns/promtions/sendVideoMessage15day.js";
 import { sendChineseMsg } from "./campaigns/promtions/sendChineseMsg.js"; 
+import { sendThriveYogaPlans2day } from "./campaigns/promtions/sendThriveYogaPlans2day.js";
 
 
 
@@ -39,13 +40,13 @@ export const triggerPlans = async ( dayNumber) => {
       // Convert to WhatsApp-ready number
       const whatsappPhone = `${country_code}${phone}`.replace(/\D/g, "");
 
-     const isPresent = Array.isArray(attendance) && attendance.length > 1;
+     const isPresent = Array.isArray(attendance) && attendance.length > 2;
 
 
       try {
         if (isPresent) {
           presentCount++;
-          await sendVideoMessage15day(id, whatsappPhone, name, dayNumber);
+          await sendThriveYogaPlans1day(id, whatsappPhone, name, dayNumber);
         } else {
           //console.log(`> User ${id} Skipping.`);
           continue;

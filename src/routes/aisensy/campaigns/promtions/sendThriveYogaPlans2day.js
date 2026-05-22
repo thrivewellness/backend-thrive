@@ -1,9 +1,9 @@
 
 import axios from "axios";
 
-export const sendThriveYogaPlans1day = async (id, whatsappPhone, name, dayNumber) => {
+export const sendThriveYogaPlans2day = async (id, whatsappPhone, name, dayNumber) => {
 
-    console.log("sendThriveYogaPlans1day called with: user", { id, whatsappPhone, name });
+    console.log("sendThriveYogaPlans2day called with: user", { id, whatsappPhone, name });
 
     const payload = {
         apiKey: process.env.AISENSY_API_KEY,
@@ -13,15 +13,15 @@ export const sendThriveYogaPlans1day = async (id, whatsappPhone, name, dayNumber
 
         templateParams: [
             `${name} Ji 🙏`,
-            "1 Day",
+            "2 Day",
             "https://payment.thrivewellness.in/payment/yoga/basic",
             "https://payment.thrivewellness.in/payment/yoga/advanced"
         ],
 
         source: "new-landing-page form",
-         media: {
+        media: {
             "url": "https://d3jt6ku4g6z5l8.cloudfront.net/VIDEO/696b61f2951b730d7655fef4/4361648_FEEDBACK 3.mp4",
-            "filename": "FEEDBACK@ (3).mp4"
+    "filename": "FEEDBACK@ (3).mp4"
         },
         buttons: [
             {
@@ -31,7 +31,7 @@ export const sendThriveYogaPlans1day = async (id, whatsappPhone, name, dayNumber
                 parameters: [
                     {
                         type: "text",
-                        text: `talk-to-expert?ref=trigger_plan_1day_left`  // dynamic value (e.g., user ID, order ID, etc.)
+                        text: `talk-to-expert?ref=trigger_plan_2day_left`  // dynamic value (e.g., user ID, order ID, etc.)
                     }
                 ]
             }
@@ -55,7 +55,7 @@ export const sendThriveYogaPlans1day = async (id, whatsappPhone, name, dayNumber
         }
     );
 
-    console.log("sendThriveYogaPlans1day response:", response.data);
+    console.log("sendThriveYogaPlans2day response:", response.data);
     return response.data;
 
 }
