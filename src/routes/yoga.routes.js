@@ -170,6 +170,69 @@ router.get('/get-yoga/new', async (req, res, next) => {
 });
 
 
+router.post("/free-yoga/restart", async (req, res, next) => {
+  try {
+    const { id } = req.body;
+
+    if (!id) {
+      return res.status(400).json({
+        success: false,
+        message: "id is required",
+      });
+    }
+
+    const { data: signup, error: fetchError } = await supabase
+      .from("yoga_signups")
+      .select("ref_user_id, is_active")
+      .eq("ref_user_id", id)
+      .maybeSingle();
+
+    if (fetchError) {
+      return res.status(500).json({
+        success: false,
+        message: "Failed to check signup status",
+      });
+    }
+
+    if (!signup) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    if (signup.is_active === true) {
+      return res.status(200).json({
+        success: true,
+        message: "already activated",
+      });
+    }
+
+    const { error: updateError } = await supabase
+      .from("yoga_signups")
+      .update({
+        current_session_date: "2026-06-01",
+        is_active: true,
+      })
+      .eq("ref_user_id", id);
+
+    if (updateError) {
+      return res.status(500).json({
+        success: false,
+        message: "Failed to activate user",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "activated",
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
+
 
 
 export default router;
