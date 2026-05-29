@@ -29,4 +29,4 @@ jobs:
             git reset --hard origin/main
             git clean -fd
             npm install --omit=dev
-            pm2 reload backend-thrive --update-env
+            pm2 reload backend --update-env
