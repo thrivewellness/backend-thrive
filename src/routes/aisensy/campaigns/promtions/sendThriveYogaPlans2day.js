@@ -21,7 +21,7 @@ export const sendThriveYogaPlans2day = async (id, whatsappPhone, name, dayNumber
         source: "new-landing-page form",
         media: {
             "url": "https://d3jt6ku4g6z5l8.cloudfront.net/VIDEO/696b61f2951b730d7655fef4/4361648_FEEDBACK 3.mp4",
-    "filename": "FEEDBACK@ (3).mp4"
+            "filename": "FEEDBACK@ (3).mp4"
         },
         buttons: [
             {

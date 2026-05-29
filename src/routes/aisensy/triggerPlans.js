@@ -46,7 +46,7 @@ export const triggerPlans = async ( dayNumber) => {
       try {
         if (isPresent) {
           presentCount++;
-          await sendVideoMessage15day(id, whatsappPhone, name, dayNumber);
+          await sendThriveYogaPlansMessage(id, whatsappPhone, name, dayNumber);
         } else {
           //console.log(`> User ${id} Skipping.`);
           continue;
@@ -54,8 +54,7 @@ export const triggerPlans = async ( dayNumber) => {
       } catch (err) {
         console.error(`> Failed for ${user.id}`, err.message);
       }
-
-      await delay(500);
+      await delay(1000);
     }
 
     console.log(`> Total Sent: ${presentCount}`);

@@ -150,8 +150,7 @@ router.get('/get-yoga/new', async (req, res, next) => {
     const { data, error } = await supabase
       .from('yoga_signups')
       .select('*')
-      .gt('created_at', '2026-04-19T23:59:59Z') 
-      .order('created_at', { ascending: false });
+      .eq('id', 403)
 
     if (error) {
       return res.status(500).json({
