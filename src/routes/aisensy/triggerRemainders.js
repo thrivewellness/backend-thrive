@@ -1,10 +1,8 @@
 import { supabase } from "../../lib/supabase.js";
 import { delay } from "../../utils/delay.js";
 import { fiveMinSessionRemainderGutHealth, fiveMinSessionRemainderGutHealthEvening, liveNowRemainderGutHealth } from "./campaigns/remainders/gutHealthSessionRemainders.js";
-import { tommarowSessionRemainders, tommarowWelcomeSessionRemainder } from "./campaigns/remainders/tommarowSessionRemainders.js";
-import { fiveMinSessionRemainder, liveNowRemainder } from "./campaigns/remainders/welcomeSessionRemainders.js";
-
-
+import { tommarowDay1SessionRemainders, tommarowSessionRemainders, tommarowWelcomeSessionRemainder } from "./campaigns/remainders/tommarowSessionRemainders.js";
+import { fiveMinWelcomeSessionRemainderEvening, fiveMinWelcomeSessionRemainderMorning, liveNowRemainder } from "./campaigns/remainders/welcomeSessionRemainders.js";
 
 export const triggerFiveRem = async (dayNumber) => {
   console.log("> Yoga campaign started");
@@ -25,7 +23,7 @@ export const triggerFiveRem = async (dayNumber) => {
     const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
 
     try {
-      await fiveMinSessionRemainderGutHealth({
+      await fiveMinWelcomeSessionRemainderMorning({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,
@@ -63,7 +61,7 @@ export const triggerFiveRemEve = async (dayNumber) => {
     const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
 
     try {
-      await fiveMinSessionRemainderGutHealthEvening({
+      await fiveMinWelcomeSessionRemainderEvening({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,
@@ -90,8 +88,9 @@ export const triggerTommarowrem = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .eq('is_active', true)
-    .order("id", { ascending: false })
+    .eq('id', 403)
+    //.eq('is_active', true)
+    //.order("id", { ascending: false })
 
   if (!users?.length) {
     console.log("> No users found");
@@ -102,7 +101,7 @@ export const triggerTommarowrem = async (dayNumber) => {
     const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
 
     try {
-      await tommarowWelcomeSessionRemainder({
+      await tommarowDay1SessionRemainders({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,
@@ -142,7 +141,7 @@ export const triggerLiveNowRem = async (dayNumber) => {
     const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
 
     try {
-      await liveNowRemainderGutHealth({
+      await liveNowRemainder({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,

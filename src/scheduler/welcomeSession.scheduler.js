@@ -11,7 +11,6 @@ import {
 import { triggerAttendance } from "../routes/aisensy/triggerAttendance.js";
 import { triggerPlans } from "../routes/aisensy/triggerPlans.js";
 import { triggerconsultaion } from "../routes/aisensy/triggerconsultaion.js";
-import { fiveMinSessionRemainder } from "../routes/aisensy/campaigns/remainders/welcomeSessionRemainders.js";
 import { triggerFiveRem, triggerFiveRemEve, triggerLiveNowRem, triggerTommarowrem } from "../routes/aisensy/triggerRemainders.js";
 
 const HANDLERS = {

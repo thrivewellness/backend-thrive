@@ -3,7 +3,44 @@ import axios from "axios";
 
 
 
-export const fiveMinSessionRemainder = async ({ userId, whatsappPhone, name, dayNumber }) => {
+export const fiveMinWelcomeSessionRemainderEvening = async ({ userId, whatsappPhone, name, dayNumber }) => {
+      console.log("received user data : ", whatsappPhone, name, userId, dayNumber);
+    const payload = {
+            apiKey: process.env.AISENSY_API_KEY,
+            campaignName: "5_min_before_rem",
+            destination: whatsappPhone,
+            userName: "Thrive Integrated Lifestyle Private Limited",
+
+            templateParams: [
+                `*Welcome Session*`,
+                `https://thriveyoga.thrivewellness.in/join/sp/e/${userId}`,
+            ],
+            source: "new-landing-page form",
+            media: {},
+            buttons: [],
+            carouselCards: [],
+            location: {},
+            attributes: {},
+            paramsFallbackValue: {
+                FirstName: "user"
+            }
+        };
+
+        const response = await axios.post(
+            "https://backend.aisensy.com/campaign/t1/api/v2",
+            payload,
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+        console.log(`Aisensy 5 min session remainder response for ${userId}:`, response.data);
+        return response.data;
+}
+
+
+export const fiveMinWelcomeSessionRemainderMorning = async ({ userId, whatsappPhone, name, dayNumber }) => {
       console.log("received user data : ", whatsappPhone, name, userId, dayNumber);
     const payload = {
             apiKey: process.env.AISENSY_API_KEY,
@@ -39,8 +76,6 @@ export const fiveMinSessionRemainder = async ({ userId, whatsappPhone, name, day
         return response.data;
 }
 
-
-
 export const liveNowRemainder = async ({ userId, whatsappPhone, name, dayNumber }) => {
         console.log("received user data for live now rem : ", whatsappPhone, name, userId, dayNumber);  
     const payload = {
@@ -73,4 +108,3 @@ export const liveNowRemainder = async ({ userId, whatsappPhone, name, dayNumber 
         console.log(`Aisensy live now remainder response for ${userId}:`, response);
         return response.data;
 }
-
