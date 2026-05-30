@@ -14,16 +14,16 @@ export const day0SessionMorning = async ({
 
         const payload = {
             apiKey: process.env.AISENSY_API_KEY,
-            campaignName: "welcome_stn_mor",
+            campaignName: "welcome_stn_mor_new",
             destination: whatsappPhone,
             userName: "Thrive Integrated Lifestyle Private Limited",
 
             templateParams: [
-                `${name}`,
-                `11 AM`,    
-                `6 PM (IST)`,    
-                `11:58 AM`,            
-                `https://thriveyoga.thrivewellness.in/join/sp/m/${userId}`
+                `*${name}* Ji 🙏`,
+                `*11 AM* & *6 PM* (IST)`,
+                `11:58 AM`,
+                `https://thriveyoga.thrivewellness.in/join/sp/m/${userId}`,
+                `14-Day Program | Trainers | Longevity Tips`
             ],
 
             source: "new-landing-page form",
@@ -82,8 +82,8 @@ export const day0SessionEvening = async ({
 
             templateParams: [
                 `${name}`,
-                `11 AM`,    
-                `6 PM (IST)`,   
+                `11 AM`,
+                `6 PM (IST)`,
             ],
 
             source: "new-landing-page form",

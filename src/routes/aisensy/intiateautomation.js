@@ -10,7 +10,7 @@ export const sendAiSensyYogaSignup = async ({
   try {
     const payload = {
       apiKey: process.env.AISENSY_API_KEY,
-      campaignName: "first_meassage",
+      campaignName: "first_meassage_new",
       destination: whatsappPhone,
       userName: name,
       source: "yoga_signup",
@@ -21,8 +21,8 @@ export const sendAiSensyYogaSignup = async ({
       ],
 
       media: {
-        url: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/5058507_110.jpg",
-        filename: "1(10).jpg",
+        url: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/528811_14.jpg.jpeg",
+        filename: "14.jpg.jpeg",
       },
 
       tags: [String(startDate), "free_yoga", "yoga_signup"],

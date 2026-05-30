@@ -4,10 +4,6 @@ import { absentFunction } from "./campaigns/attendence/absentFunction.js";
 import { processPhone } from "../../utils/phoneUtils.js";
 import { delay } from "../../utils/delay.js";
 
-
-const YOGA_CAMPAIGN_JOIN_CUTOFF = "2026-04-19T23:59:59Z";
-const YOGA_CAMPAIGN_JOIN_END_DATE = "2026-05-11T23:59:59Z";
-
 // 🎯 Attendance Trigger Function
 export const triggerAttendance = async (triggeredToday, dayNumber) => {
   console.log("> Running Attendance Function");
@@ -19,10 +15,8 @@ export const triggerAttendance = async (triggeredToday, dayNumber) => {
     const { data: users, error } = await supabase
       .from("yoga_signups")
       .select("*")
-      .gt("created_at", YOGA_CAMPAIGN_JOIN_CUTOFF)
-      .lte("created_at", YOGA_CAMPAIGN_JOIN_END_DATE)
-      .order("created_at", { ascending: false })
-      .range(0, 5000);
+      .eq('is_active', true)
+      .order("id", { ascending: false })
 
 
     if (error) {

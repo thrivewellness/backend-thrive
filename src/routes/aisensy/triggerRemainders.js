@@ -1,11 +1,10 @@
 import { supabase } from "../../lib/supabase.js";
 import { delay } from "../../utils/delay.js";
 import { fiveMinSessionRemainderGutHealth, fiveMinSessionRemainderGutHealthEvening, liveNowRemainderGutHealth } from "./campaigns/remainders/gutHealthSessionRemainders.js";
-import { tommarowSessionRemainders } from "./campaigns/remainders/tommarowSessionRemainders.js";
+import { tommarowSessionRemainders, tommarowWelcomeSessionRemainder } from "./campaigns/remainders/tommarowSessionRemainders.js";
 import { fiveMinSessionRemainder, liveNowRemainder } from "./campaigns/remainders/welcomeSessionRemainders.js";
 
 
-const YOGA_CAMPAIGN_JOIN_WELCOME_CUTOFF = "2026-04-19T23:59:59Z";
 
 export const triggerFiveRem = async (dayNumber) => {
   console.log("> Yoga campaign started");
@@ -14,9 +13,8 @@ export const triggerFiveRem = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .gt("created_at", YOGA_CAMPAIGN_JOIN_WELCOME_CUTOFF)
-    .order("created_at", { ascending: false })
-    .range(0, 5000);
+    .eq('is_active', true)
+    .order("id", { ascending: false })
 
   if (!users?.length) {
     console.log("> No users found");
@@ -53,9 +51,8 @@ export const triggerFiveRemEve = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .gt("created_at", YOGA_CAMPAIGN_JOIN_WELCOME_CUTOFF)
-    .order("created_at", { ascending: false })
-    .range(0, 5000);
+    .eq('is_active', true)
+    .order("id", { ascending: false })
 
   if (!users?.length) {
     console.log("> No users found");
@@ -93,9 +90,8 @@ export const triggerTommarowrem = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .gt("created_at", YOGA_CAMPAIGN_JOIN_WELCOME_CUTOFF)
-    .order("created_at", { ascending: false })
-    .range(0, 5000);
+    .eq('is_active', true)
+    .order("id", { ascending: false })
 
   if (!users?.length) {
     console.log("> No users found");
@@ -106,7 +102,7 @@ export const triggerTommarowrem = async (dayNumber) => {
     const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
 
     try {
-      await tommarowSessionRemainders({
+      await tommarowWelcomeSessionRemainder({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,
@@ -133,10 +129,8 @@ export const triggerLiveNowRem = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .eq("id", 403)
-    .gt("created_at", YOGA_CAMPAIGN_JOIN_WELCOME_CUTOFF)
-    .order("created_at", { ascending: false })
-    .range(0, 5000);
+    .eq('is_active', true)
+    .order("id", { ascending: false })
 
 
   if (!users?.length) {
