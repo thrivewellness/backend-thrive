@@ -18,6 +18,7 @@ import { day14Session, day14SessionEvening } from "../routes/aisensy/campaigns/d
 import { GutHealthProgram } from "../routes/aisensy/campaigns/gutHealth.js"
 import { delay } from "../utils/delay.js";
 import { morningSessions, eveningSessions } from "./utils/paramToFuntionMatching.js";
+import dayjs from "dayjs";
 
 export const triggerYogaCampaignmorning = async (dayNumber) => {
   console.log("> Yoga campaign started");
@@ -67,6 +68,9 @@ export const triggerYogaCampaignmorning = async (dayNumber) => {
 export const triggerYogaCampaignevening = async (dayNumber) => {
   console.log("> Yoga campaign started");
   console.log("> day number: ", dayNumber);
+  const todayDate = dayjs().format("YYYY-MM-DD");
+
+  console.log("Today's date:", todayDate);  
 
   const sessionFunction = eveningSessions[dayNumber];
 
@@ -88,6 +92,14 @@ export const triggerYogaCampaignevening = async (dayNumber) => {
   }
 
   for (const user of users) {
+    const hasTodayAttendance =
+      Array.isArray(user.attendance) && user.attendance.includes(todayDate);
+
+    if (hasTodayAttendance) {
+      console.log(`> Skipped ${user.id} (attendance already marked for ${todayDate})`);
+      continue;
+    }
+
     const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
 
     try {
@@ -97,12 +109,12 @@ export const triggerYogaCampaignevening = async (dayNumber) => {
         userId: user.ref_user_id,
       });
 
-      console.log(`> Sent to ${user.id}`);
+    
     } catch (err) {
       console.error(`> Failed for ${user.id}`, err.message);
     }
 
-    await delay(200);
+    await delay(10);
   }
 
   console.log("> Yoga campaign finished");
