@@ -56,12 +56,10 @@ export const triggerAttendance = async (triggeredToday, dayNumber) => {
     const { data: users, error } = await supabase
       .from("yoga_signups")
       .select("*")
-      .eq('id', 403)
-      {/*
       .eq("current_session_date", '2026-06-01')
       .eq("is_active", true)
       .order("id", { ascending: false });
-      */}
+    
 
     if (error) {
       console.error("Supabase Fetch Error:", error);
