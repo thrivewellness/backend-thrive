@@ -12,6 +12,7 @@ import { triggerAttendance } from "../routes/aisensy/triggerAttendance.js";
 import { triggerPlans } from "../routes/aisensy/triggerPlans.js";
 import { triggerconsultaion } from "../routes/aisensy/triggerconsultaion.js";
 import { triggerFiveRem, triggerFiveRemEve, triggerLiveNowRem, triggerTommarowrem } from "../routes/aisensy/triggerRemainders.js";
+import { triggerInstTestimonails } from "../routes/aisensy/triggertestimonails.js";
 
 const HANDLERS = {
   triggerYogaCampaignmorning,
@@ -26,8 +27,10 @@ const HANDLERS = {
   triggerFiveRem,
   triggerLiveNowRem,
   triggerTommarowrem,
-  triggerFiveRemEve
+  triggerFiveRemEve,
+  triggerInstTestimonails
 };
+
 
 cron.schedule("* * * * *", async () => {
   const now = new Date().toISOString(); // Always use ISO
@@ -77,7 +80,7 @@ cron.schedule("* * * * *", async () => {
 
 // Separate cron for attendance at 08:45 PM IST
 cron.schedule(
-  "45 20 * * *",
+  "35 20 * * *",
   async () => {
     console.log("> Checking campaigns for attendance...");
 

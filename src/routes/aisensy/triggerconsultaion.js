@@ -16,11 +16,9 @@ export const triggerconsultaion = async ( dayNumber) => {
     const { data: users, error } = await supabase
       .from("yoga_signups")
       .select("*")
-      .gt("created_at", YOGA_CAMPAIGN_JOIN_CUTOFF)
-      .lte("created_at", YOGA_CAMPAIGN_JOIN_END_DATE)
-      .order("created_at", { ascending: false })
-      .range(0, 5000);
-     
+      .eq("current_session_date", '2026-06-01')
+      .eq("is_active", true)
+      .order("id", { ascending: false });
 
 
     if (error) {

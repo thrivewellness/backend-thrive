@@ -16,8 +16,9 @@ export const triggerPlans = async ( dayNumber) => {
     const { data: users, error } = await supabase
       .from("yoga_signups")
       .select("*")
-      .eq('is_active', true)
-      .order("id", { ascending: false })
+      .eq("current_session_date", '2026-06-01')
+      .eq("is_active", true)
+      .order("id", { ascending: false });
 
 
 

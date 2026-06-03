@@ -46,7 +46,7 @@ export const tommarowSessionRemainders = async ({ userId, whatsappPhone, name, d
 }
 
 export const tommarowDay1SessionRemainders = async ({ userId, whatsappPhone, name, dayNumber }) => {
-    console.log("received user data tomarow rem : ", whatsappPhone, name, userId, dayNumber);
+    console.log("id: ",userId);
     const payload = {
         apiKey: process.env.AISENSY_API_KEY,
         campaignName: "day1_session_reminder_txt",

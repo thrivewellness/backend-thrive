@@ -10,9 +10,10 @@ export const triggerFiveRem = async (dayNumber) => {
 
   const { data: users } = await supabase
     .from("yoga_signups")
-    .select("*")
-    .eq('is_active', true)
-    .order("id", { ascending: false })
+      .select("*")
+      .eq("current_session_date", '2026-06-01')
+      .eq("is_active", true)
+      .order("id", { ascending: false });
 
   if (!users?.length) {
     console.log("> No users found");
@@ -48,9 +49,10 @@ export const triggerFiveRemEve = async (dayNumber) => {
 
   const { data: users } = await supabase
     .from("yoga_signups")
-    .select("*")
-    .eq('is_active', true)
-    .order("id", { ascending: false })
+      .select("*")
+      .eq("current_session_date", '2026-06-01')
+      .eq("is_active", true)
+      .order("id", { ascending: false });
 
   if (!users?.length) {
     console.log("> No users found");
@@ -87,16 +89,18 @@ export const triggerTommarowrem = async (dayNumber) => {
 
   const { data: users } = await supabase
     .from("yoga_signups")
-    .select("*")
-    .eq('id', 403)
-    //.eq('is_active', true)
-    //.order("id", { ascending: false })
+      .select("*")
+      .eq("current_session_date", '2026-06-01')
+      .eq("is_active", true)
+      .order("id", { ascending: false });
+
 
   if (!users?.length) {
     console.log("> No users found");
     return;
   }
 
+  let count = 0;
   for (const user of users) {
     const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
 
@@ -109,11 +113,14 @@ export const triggerTommarowrem = async (dayNumber) => {
       });
 
       console.log(`> Sent to ${user.id}`);
+      count++;
     } catch (err) {
       console.error(`> Failed for ${user.id}`, err.message);
     }
 
     // WhatsApp safety delay
+
+    console.log("count: ", count);
     await delay(200);
   }
 
@@ -127,9 +134,10 @@ export const triggerLiveNowRem = async (dayNumber) => {
 
   const { data: users } = await supabase
     .from("yoga_signups")
-    .select("*")
-    .eq('is_active', true)
-    .order("id", { ascending: false })
+      .select("*")
+      .eq("current_session_date", '2026-06-01')
+      .eq("is_active", true)
+      .order("id", { ascending: false });
 
 
   if (!users?.length) {

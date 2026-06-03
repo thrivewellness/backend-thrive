@@ -3,23 +3,45 @@ import { presentFunction } from "./campaigns/attendence/presentFunction.js";
 import { absentFunction } from "./campaigns/attendence/absentFunction.js";
 import { delay } from "../../utils/delay.js";
 
-const getRequiredDates = async (dayNumber, fallbackDate) => {
+const formatDate = (date) => date.toISOString().slice(0, 10);
+
+const addDays = (dateString, days) => {
+  const [year, month, day] = dateString.split("-").map(Number);
+  const date = new Date(Date.UTC(year, month - 1, day));
+  date.setUTCDate(date.getUTCDate() + days);
+  return formatDate(date);
+};
+
+const getDatesEndingOn = (endDate, totalDays) => {
+  return Array.from({ length: totalDays }, (_, index) => addDays(endDate, index - totalDays + 1));
+};
+
+const getAttendanceContext = (dayNumber, triggeredToday) => {
   const day = Number(dayNumber);
-  const targetDays = [day - 2, day - 1, day].filter((d) => d > 0);
+  const weekPosition = ((day - 1) % 7) + 1;
+  const trackerDates = getDatesEndingOn(triggeredToday, weekPosition);
+  const consecutiveAbsentDates = getDatesEndingOn(triggeredToday, Math.min(day, 3));
+  const badgeDates = [3, 7, 14].includes(day) ? getDatesEndingOn(triggeredToday, day) : [];
 
-  const { data, error } = await supabase
-    .from("campaigns_data")
-    .select("day_number, campaign_date")
-    .in("day_number", targetDays);
+  return { trackerDates, consecutiveAbsentDates, badgeDates };
+};
 
-  if (error || !data?.length) {
-    return [fallbackDate];
+const getConsecutiveAbsentCount = (dates, attendanceList) => {
+  let count = 0;
+
+  for (const date of [...dates].reverse()) {
+    if (attendanceList.includes(date)) {
+      break;
+    }
+
+    count += 1;
   }
 
-  const dateByDay = new Map(data.map((row) => [Number(row.day_number), row.campaign_date]));
-  const requiredDates = targetDays.map((d) => dateByDay.get(d)).filter(Boolean);
+  return count;
+};
 
-  return requiredDates.length ? requiredDates : [fallbackDate];
+const hasFullAttendance = (dates, attendanceList) => {
+  return dates.length > 0 && dates.every((date) => attendanceList.includes(date));
 };
 
 // Attendance Trigger Function
@@ -29,13 +51,17 @@ export const triggerAttendance = async (triggeredToday, dayNumber) => {
   console.log("> Day Number:", dayNumber);
 
   try {
-    const requiredDates = await getRequiredDates(dayNumber, triggeredToday);
+    const { trackerDates, consecutiveAbsentDates, badgeDates } = getAttendanceContext(dayNumber, triggeredToday);
 
     const { data: users, error } = await supabase
       .from("yoga_signups")
       .select("*")
+      .eq('id', 403)
+      {/*
+      .eq("current_session_date", '2026-06-01')
       .eq("is_active", true)
       .order("id", { ascending: false });
+      */}
 
     if (error) {
       console.error("Supabase Fetch Error:", error);
@@ -43,19 +69,23 @@ export const triggerAttendance = async (triggeredToday, dayNumber) => {
     }
 
     for (const user of users) {
-      const { id, name, country_code, phone, attendance } = user;
+      const { id, name, country_code, phone, attendance, ref_user_id } = user;
       const whatsappPhone = `${country_code}${phone}`.replace(/\D/g, "");
       const attendanceList = Array.isArray(attendance) ? attendance : [];
       const isPresent = attendanceList.includes(triggeredToday);
 
-      const isConsecutive3DaysAbsent =
-        requiredDates.length === 3 && requiredDates.every((date) => !attendanceList.includes(date));
+      const tracker = trackerDates
+        .map((date) => (attendanceList.includes(date) ? "\u2705" : "\u2B1C"))
+        .join("");
+
+      const consecutiveAbsentCount = isPresent ? 0 : getConsecutiveAbsentCount(consecutiveAbsentDates, attendanceList);
+      const isBadgeEligible = hasFullAttendance(badgeDates, attendanceList);
 
       try {
         if (isPresent) {
-          await presentFunction(id, whatsappPhone, name, dayNumber);
+          await presentFunction(id, whatsappPhone, name, dayNumber, tracker, isBadgeEligible, ref_user_id);
         } else {
-          await absentFunction(id, whatsappPhone, name, dayNumber, isConsecutive3DaysAbsent);
+          await absentFunction(id, whatsappPhone, name, dayNumber, consecutiveAbsentCount, ref_user_id);
         }
       } catch (err) {
         console.error(`> Failed for ${user.id}`, err.message);

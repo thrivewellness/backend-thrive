@@ -33,9 +33,10 @@ export const triggerYogaCampaignmorning = async (dayNumber) => {
 
   const { data: users } = await supabase
     .from("yoga_signups")
-    .select("*")
-    .eq('is_active', true)
-    .order("id", { ascending: false })
+      .select("*")
+      .eq("current_session_date", '2026-06-01')
+      .eq("is_active", true)
+      .order("id", { ascending: false });
 
   if (!users?.length) {
     console.log("> No users found");
