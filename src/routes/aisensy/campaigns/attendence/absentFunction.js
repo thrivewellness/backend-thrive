@@ -99,7 +99,7 @@ const sendThreeDayAbsentCampaign = async ({ userId, whatsappPhone, name, ref_use
   return response;
 };
 
-export const absentFunction = async (userId, whatsappPhone, name, dayNumber, ref_user_id, consecutiveAbsentCount = 1) => {
+export const absentFunction = async (userId, whatsappPhone, name, dayNumber, consecutiveAbsentCount = 1, ref_user_id) => {
   const absentCount = Number(consecutiveAbsentCount) || 1;
 
   try {

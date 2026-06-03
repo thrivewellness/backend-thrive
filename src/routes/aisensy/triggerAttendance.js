@@ -59,8 +59,7 @@ export const triggerAttendance = async (triggeredToday, dayNumber) => {
       .eq("current_session_date", '2026-06-01')
       .eq("is_active", true)
       .order("id", { ascending: false });
-    
-
+      
     if (error) {
       console.error("Supabase Fetch Error:", error);
       return;

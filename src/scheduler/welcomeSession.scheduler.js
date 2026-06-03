@@ -29,8 +29,7 @@ const HANDLERS = {
   triggerTommarowrem,
   triggerFiveRemEve,
   triggerInstTestimonails
-};
-
+};  
 
 cron.schedule("* * * * *", async () => {
   const now = new Date().toISOString(); // Always use ISO
