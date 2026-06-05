@@ -24,7 +24,7 @@ export const triggerFiveRem = async (dayNumber) => {
     const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
 
     try {
-      await fiveMinWelcomeSessionRemainderMorning({
+      await fiveMinSessionRemainderGutHealth({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,
@@ -37,7 +37,7 @@ export const triggerFiveRem = async (dayNumber) => {
     }
 
     // WhatsApp safety delay
-    await delay(200);
+    await delay(10);
   }
 
   console.log("> Yoga campaign finished");
@@ -63,7 +63,7 @@ export const triggerFiveRemEve = async (dayNumber) => {
     const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
 
     try {
-      await fiveMinWelcomeSessionRemainderEvening({
+      await fiveMinSessionRemainderGutHealthEvening({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,
@@ -76,7 +76,7 @@ export const triggerFiveRemEve = async (dayNumber) => {
     }
 
     // WhatsApp safety delay
-    await delay(200);
+    await delay(10);
   }
 
   console.log("> Yoga campaign finished");
@@ -105,7 +105,7 @@ export const triggerTommarowrem = async (dayNumber) => {
     const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
 
     try {
-      await tommarowDay1SessionRemainders({
+      await sendVideoMessage15day({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,
@@ -161,7 +161,7 @@ export const triggerLiveNowRem = async (dayNumber) => {
       console.error(`> Failed for ${user.id}`, err.message);
     }
 
-    await delay(200);
+    await delay(10);
   }
 
   console.log("> Yoga campaign finished");

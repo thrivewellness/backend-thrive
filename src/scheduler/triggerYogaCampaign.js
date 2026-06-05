@@ -81,10 +81,11 @@ export const triggerYogaCampaignevening = async (dayNumber) => {
   }
 
   const { data: users } = await supabase
-    .from("yoga_signups")
-    .select("*")
-    .eq('is_active', true)
-    .order("id", { ascending: false })
+  .from("yoga_signups")
+      .select("*")
+      .eq("current_session_date", '2026-06-01')
+      .eq("is_active", true)
+      .order("id", { ascending: false });
 
 
   if (!users?.length) {
@@ -115,7 +116,7 @@ export const triggerYogaCampaignevening = async (dayNumber) => {
       console.error(`> Failed for ${user.id}`, err.message);
     }
 
-    await delay(10);
+    await delay(200);
   }
 
   console.log("> Yoga campaign finished");
@@ -127,9 +128,10 @@ export const triggerGutHealthProgram = async (dayNumber) => {
 
   const { data: users } = await supabase
     .from("yoga_signups")
-    .select("*")
-    .eq('is_active', true)
-    .order("id", { ascending: false })
+      .select("*")
+      .eq("current_session_date", '2026-06-01')
+      .eq("is_active", true)
+      .order("id", { ascending: false });
 
   if (!users?.length) {
     console.log("> No users found");
@@ -152,7 +154,7 @@ export const triggerGutHealthProgram = async (dayNumber) => {
     }
 
     // WhatsApp safety delay
-    await delay(1000);
+    await delay(200);
   }
 
   console.log("> Yoga campaign finished");
@@ -165,9 +167,10 @@ export const triggerGutHealthProgramEvening = async (dayNumber) => {
 
   const { data: users } = await supabase
     .from("yoga_signups")
-    .select("*")
-    .eq('is_active', true)
-    .order("id", { ascending: false })
+      .select("*")
+      .eq("current_session_date", '2026-06-01')
+      .eq("is_active", true)
+      .order("id", { ascending: false });
 
   if (!users?.length) {
     console.log("> No users found");
@@ -190,7 +193,7 @@ export const triggerGutHealthProgramEvening = async (dayNumber) => {
     }
 
     // WhatsApp safety delay
-    await delay(1000);
+    await delay(200);
   }
 
   console.log("> Yoga campaign finished");
@@ -203,9 +206,10 @@ export const triggerwelcomenmorning = async (dayNumber) => {
 
   const { data: users } = await supabase
     .from("yoga_signups")
-    .select("*")
-    .eq('is_active', true)
-    .order("id", { ascending: false })
+      .select("*")
+      .eq("current_session_date", '2026-06-01')
+      .eq("is_active", true)
+      .order("id", { ascending: false });
 
   if (!users?.length) {
     console.log("> No users found");
@@ -241,9 +245,10 @@ export const triggerwelcomeevening = async (dayNumber) => {
 
   const { data: users } = await supabase
     .from("yoga_signups")
-    .select("*")
-    .eq('is_active', true)
-    .order("id", { ascending: false })
+      .select("*")
+      .eq("current_session_date", '2026-06-01')
+      .eq("is_active", true)
+      .order("id", { ascending: false });
 
 
   if (!users?.length) {
