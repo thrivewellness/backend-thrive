@@ -25,10 +25,28 @@ const getISTDateTime = () => {
   return { currentTime, todayDate, currentDateTime };
 };
 
-const recordActivity = async ({ id, existingActivity, todayDate, currentDateTime }) => {
+const MORNING_ATTENDANCE_SLOTS = [
+  { start: "06:45", end: "07:50", presentMessageTime: "08:00" },
+  { start: "07:50", end: "08:50", presentMessageTime: "09:00" },
+  { start: "08:50", end: "09:50", presentMessageTime: "10:00" },
+];
+
+const SPECIAL_MORNING_ATTENDANCE_SLOTS = [
+  { start: "11:00", end: "11:40", presentMessageTime: "11:45" },
+];
+
+const getAttendanceSlot = (currentTime, dayNumber) => {
+  const slots = [7, 14].includes(Number(dayNumber))
+    ? SPECIAL_MORNING_ATTENDANCE_SLOTS
+    : MORNING_ATTENDANCE_SLOTS;
+
+  return slots.find((slot) => currentTime >= slot.start && currentTime < slot.end);
+};
+
+const recordActivity = async ({ id, existingActivity, activity }) => {
   const updatedActivity = [
     ...(existingActivity || []),
-    { date: todayDate, time: currentDateTime },
+    activity,
   ];
 
   const { error } = await supabase
@@ -85,25 +103,55 @@ router.post("/", async (req, res) => {
 
     const campaignLink = campaignData?.link ?? null;
     const dayNumber = Number(campaignData?.day_number);
-    const isSpecialDay = dayNumber === 7 || dayNumber === 14;
-
-    // Time range check
-    const isMorningTime = isSpecialDay
-      ? currentTime >= "11:00" && currentTime <= "12:00"
-      : currentTime >= "06:55" && currentTime <= "09:50";
+    const attendanceSlot = getAttendanceSlot(currentTime, dayNumber);
+    const isMorningTime = Boolean(attendanceSlot);
 
     const attendance = Array.isArray(existingUser.attendance)
       ? existingUser.attendance
       : [];
+    const activity = Array.isArray(existingUser.activity)
+      ? existingUser.activity
+      : [];
     const hasTodayAttendance = attendance.includes(todayDate);
+    const hasSlotAttendanceActivity = activity.some(
+      (item) =>
+        item?.type === "attendance" &&
+        item?.date === todayDate &&
+        item?.session_type === "morning" &&
+        item?.present_message_time === attendanceSlot?.presentMessageTime
+    );
 
-    if (isMorningTime && !hasTodayAttendance) {
+    const activityRecord = isMorningTime
+      ? {
+          date: todayDate,
+          time: currentDateTime,
+          type: hasSlotAttendanceActivity ? "duplicate_attendance_attempt" : "attendance",
+          session_type: "morning",
+          slot_start: attendanceSlot.start,
+          slot_end: attendanceSlot.end,
+          present_message_time: attendanceSlot.presentMessageTime,
+          present_message_sent: false,
+          present_message_sent_at: null,
+        }
+      : {
+          date: todayDate,
+          time: currentDateTime,
+          type: "invalid_attendance_attempt",
+          session_type: "morning",
+          reason: "outside_session_time",
+        };
+
+    if (isMorningTime) {
       // ---- UPDATE ATTENDANCE ----
       const updatedAttendance = [...new Set([...attendance, todayDate])];
+      const updatedActivity = [...activity, activityRecord];
 
       const { error } = await supabase
         .from("yoga_signups")
-        .update({ attendance: updatedAttendance })
+        .update({
+          attendance: hasTodayAttendance ? attendance : updatedAttendance,
+          activity: updatedActivity,
+        })
         .eq("ref_user_id", id);
 
       if (error) throw error;
@@ -120,9 +168,8 @@ router.post("/", async (req, res) => {
       // ---- UPDATE ACTIVITY ----
       await recordActivity({
         id,
-        existingActivity: existingUser.activity,
-        todayDate,
-        currentDateTime,
+        existingActivity: activity,
+        activity: activityRecord,
       });
 
       console.log("link", campaignLink);

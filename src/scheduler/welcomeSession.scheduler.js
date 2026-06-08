@@ -78,25 +78,50 @@ cron.schedule("* * * * *", async () => {
 });
 
 
-// Separate cron for attendance at 08:45 PM IST
-cron.schedule(
-  "35 20 * * *",
-  async () => {
-    console.log("> Checking campaigns for attendance...");
+const triggerAttendanceSlot = async (presentMessageTime, sendAbsent = false) => {
+  console.log(`> Checking campaigns for attendance slot ${presentMessageTime}...`);
 
-    const campaign = await checkCampaignTriggeredToday(supabase);
+  const campaign = await checkCampaignTriggeredToday(supabase);
 
-    if (campaign) {
-      console.log("> Campaign was triggered today.");
-      await triggerAttendance(campaign.campaign_date, campaign.day_number);
-    } else {
-      console.log("> No campaign triggered today. Skipping.");
-    }
-  },
-  {
-    timezone: "Asia/Kolkata",
+  if (campaign) {
+    console.log("> Campaign was triggered today.");
+    await triggerAttendance(campaign.campaign_date, campaign.day_number, presentMessageTime, { sendAbsent });
+  } else {
+    console.log("> No campaign triggered today. Skipping.");
   }
-);
+};
+
+cron.schedule("0 8 * * *", () => triggerAttendanceSlot("08:00"), {
+  timezone: "Asia/Kolkata",
+});
+
+cron.schedule("0 9 * * *", () => triggerAttendanceSlot("09:00"), {
+  timezone: "Asia/Kolkata",
+});
+
+cron.schedule("0 10 * * *", () => triggerAttendanceSlot("10:00"), {
+  timezone: "Asia/Kolkata",
+});
+
+cron.schedule("45 11 * * *", () => triggerAttendanceSlot("11:45"), {
+  timezone: "Asia/Kolkata",
+});
+
+cron.schedule("45 16 * * *", () => triggerAttendanceSlot("16:45"), {
+  timezone: "Asia/Kolkata",
+});
+
+cron.schedule("30 18 * * *", () => triggerAttendanceSlot("18:30"), {
+  timezone: "Asia/Kolkata",
+});
+
+cron.schedule("30 19 * * *", () => triggerAttendanceSlot("19:30"), {
+  timezone: "Asia/Kolkata",
+});
+
+cron.schedule("35 20 * * *", () => triggerAttendanceSlot("20:35", true), {
+  timezone: "Asia/Kolkata",
+});
 
 
 // Helper to check if any campaign was triggered today  
