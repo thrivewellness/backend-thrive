@@ -118,7 +118,7 @@ router.post("/", async (req, res) => {
         item?.type === "attendance" &&
         item?.date === todayDate &&
         item?.session_type === "morning" &&
-        item?.present_message_time === attendanceSlot?.presentMessageTime
+        item?.slot_start === attendanceSlot?.start
     );
 
     const activityRecord = isMorningTime

@@ -1,4 +1,4 @@
-﻿import { supabase } from "../../lib/supabase.js";
+import { supabase } from "../../lib/supabase.js";
 import { presentFunction } from "./campaigns/attendence/presentFunction.js";
 import { absentFunction } from "./campaigns/attendence/absentFunction.js";
 import { delay } from "../../utils/delay.js";
@@ -68,23 +68,26 @@ const hasFullAttendance = (dates, attendanceList) => {
   return dates.length > 0 && dates.every((date) => attendanceList.includes(date));
 };
 
-const hasPendingPresentActivity = (activityList, date, presentMessageTime) =>
-  activityList.some(
+const hasPendingPresentActivity = (activityList, date, presentMessageTime) => {
+  const times = Array.isArray(presentMessageTime) ? presentMessageTime : [presentMessageTime];
+  return activityList.some(
     (item) =>
       item?.type === "attendance" &&
       item?.date === date &&
-      item?.present_message_time === presentMessageTime &&
+      times.includes(item?.present_message_time) &&
       item?.present_message_sent !== true
   );
+};
 
 const markPresentActivitySent = async (user, date, presentMessageTime) => {
+  const times = Array.isArray(presentMessageTime) ? presentMessageTime : [presentMessageTime];
   const nowIST = getNowIST();
   const activityList = Array.isArray(user.activity) ? user.activity : [];
   const updatedActivity = activityList.map((item) => {
     if (
       item?.type === "attendance" &&
       item?.date === date &&
-      item?.present_message_time === presentMessageTime &&
+      times.includes(item?.present_message_time) &&
       item?.present_message_sent !== true
     ) {
       return {

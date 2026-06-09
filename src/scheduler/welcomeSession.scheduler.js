@@ -91,15 +91,7 @@ const triggerAttendanceSlot = async (presentMessageTime, sendAbsent = false) => 
   }
 };
 
-cron.schedule("0 8 * * *", () => triggerAttendanceSlot("08:00"), {
-  timezone: "Asia/Kolkata",
-});
-
-cron.schedule("0 9 * * *", () => triggerAttendanceSlot("09:00"), {
-  timezone: "Asia/Kolkata",
-});
-
-cron.schedule("0 10 * * *", () => triggerAttendanceSlot("10:00"), {
+cron.schedule("0 10 * * *", () => triggerAttendanceSlot(["08:00", "09:00", "10:00"]), {
   timezone: "Asia/Kolkata",
 });
 
@@ -111,15 +103,7 @@ cron.schedule("45 16 * * *", () => triggerAttendanceSlot("16:45"), {
   timezone: "Asia/Kolkata",
 });
 
-cron.schedule("30 18 * * *", () => triggerAttendanceSlot("18:30"), {
-  timezone: "Asia/Kolkata",
-});
-
-cron.schedule("30 19 * * *", () => triggerAttendanceSlot("19:30"), {
-  timezone: "Asia/Kolkata",
-});
-
-cron.schedule("35 20 * * *", () => triggerAttendanceSlot("20:35", true), {
+cron.schedule("35 20 * * *", () => triggerAttendanceSlot(["18:30", "19:30", "20:35"], true), {
   timezone: "Asia/Kolkata",
 });
 
@@ -149,5 +133,3 @@ export const checkCampaignTriggeredToday = async (supabase) => {
 
   return data;
 };
-
-
