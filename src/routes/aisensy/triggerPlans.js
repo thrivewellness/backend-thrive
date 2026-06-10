@@ -5,6 +5,7 @@ import {sendThriveYogaPlans1day} from "./campaigns/promtions/sendThriveYogaPlans
 import {sendVideoMessage15day } from "./campaigns/promtions/sendVideoMessage15day.js";
 import { sendChineseMsg } from "./campaigns/promtions/sendChineseMsg.js"; 
 import { sendThriveYogaPlans2day } from "./campaigns/promtions/sendThriveYogaPlans2day.js";
+import { sendThriveconsultaion3day } from "./campaigns/promtions/sendThriveconsultaion3day.js";
 
 
 // Plans Trigger Function
@@ -41,7 +42,7 @@ export const triggerPlans = async ( dayNumber) => {
       try {
         if (isPresent) {
           presentCount++;
-          await sendThriveYogaPlansMessage(id, whatsappPhone, name, dayNumber);
+          await sendThriveconsultaion3day(id, whatsappPhone, name, dayNumber);
         } else {
           //console.log(`> User ${id} Skipping.`);
           continue;
