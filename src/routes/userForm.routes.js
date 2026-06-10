@@ -1,4 +1,5 @@
 import express from 'express';
+import { randomUUID } from 'crypto';
 import { supabase } from '../lib/supabase.js';
 
 const router = express.Router();
@@ -66,20 +67,18 @@ router.post('/user/form', async (req, res, next) => {
 
 router.post('/user/form/open', async (req, res, next) => {
   try {
-    const { user_id, form } = req.body;
-
-    if (!user_id) {
-      return res.status(400).json({
-        success: false,
-        error: 'user_id is required'
-      });
-    }
+    let { user_id, form } = req.body;
 
     if (!form || typeof form !== 'object') {
       return res.status(400).json({
         success: false,
         error: 'form is required and must be an object'
       });
+    }
+
+    // Generate random user_id if not provided
+    if (!user_id) {
+      user_id = randomUUID();
     }
 
     const { data: existing, error: fetchError } = await supabase
@@ -110,7 +109,7 @@ router.post('/user/form/open', async (req, res, next) => {
         });
       }
 
-      return res.status(200).json({ success: true, updated: true });
+      return res.status(200).json({ success: true, updated: true, user_id });
     }
 
     const { error: insertError } = await supabase
@@ -124,7 +123,7 @@ router.post('/user/form/open', async (req, res, next) => {
       });
     }
 
-    res.status(200).json({ success: true, inserted: true });
+    res.status(200).json({ success: true, inserted: true, user_id });
   } catch (err) {
     next(err);
   }
