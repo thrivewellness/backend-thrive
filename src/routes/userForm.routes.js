@@ -66,55 +66,15 @@ router.post('/user/form', async (req, res, next) => {
 });
 
 router.post('/user/form/open', async (req, res, next) => {
+
   try {
-    let { user_id, form } = req.body;
+    const { ...formFields } = req.body;
 
-    if (!form || typeof form !== 'object') {
-      return res.status(400).json({
-        success: false,
-        error: 'form is required and must be an object'
-      });
-    }
-
-    // Generate random user_id if not provided
-    if (!user_id) {
-      user_id = randomUUID();
-    }
-
-    const { data: existing, error: fetchError } = await supabase
-      .from('user_forms')
-      .select('form')
-      .eq('user_id', user_id)
-      .single();
-
-    if (fetchError && fetchError.code !== 'PGRST116') {
-      return res.status(500).json({
-        success: false,
-        error: fetchError.message
-      });
-    }
-
-    if (existing) {
-      const updatedForms = [...(existing.form || []), form];
-
-      const { error: updateError } = await supabase
-        .from('user_forms')
-        .update({ form: updatedForms })
-        .eq('user_id', user_id);
-
-      if (updateError) {
-        return res.status(500).json({
-          success: false,
-          error: updateError.message
-        });
-      }
-
-      return res.status(200).json({ success: true, updated: true, user_id });
-    }
-
+    const user_id = randomUUID();
+    
     const { error: insertError } = await supabase
       .from('user_forms')
-      .insert([{ user_id, form: [form] }]);
+    .insert([{ user_id, form: [formFields] }]);
 
     if (insertError) {
       return res.status(500).json({
