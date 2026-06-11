@@ -1,15 +1,15 @@
 import { supabase } from "../../lib/supabase.js";
 import { delay } from "../../utils/delay.js";
 import { sendThriveYogaPlansMessage } from "./campaigns/promtions/sendThriveYogaPlansMessage.js";
-import {sendThriveYogaPlans1day} from "./campaigns/promtions/sendThriveYogaPlans1day.js"; 
-import {sendVideoMessage15day } from "./campaigns/promtions/sendVideoMessage15day.js";
-import { sendChineseMsg } from "./campaigns/promtions/sendChineseMsg.js"; 
+import { sendThriveYogaPlans1day } from "./campaigns/promtions/sendThriveYogaPlans1day.js";
+import { sendVideoMessage15day } from "./campaigns/promtions/sendVideoMessage15day.js";
+import { sendChineseMsg } from "./campaigns/promtions/sendChineseMsg.js";
 import { sendThriveYogaPlans2day } from "./campaigns/promtions/sendThriveYogaPlans2day.js";
 import { sendThriveconsultaion3day } from "./campaigns/promtions/sendThriveconsultaion3day.js";
 
 
 // Plans Trigger Function
-export const triggerPlans = async ( dayNumber) => {
+export const triggerPlans = async (dayNumber) => {
   console.log("> Running Plans Function");
 
   try {
@@ -36,13 +36,13 @@ export const triggerPlans = async ( dayNumber) => {
       // Convert to WhatsApp-ready number
       const whatsappPhone = `${country_code}${phone}`.replace(/\D/g, "");
 
-     const isPresent = Array.isArray(attendance) && attendance.length > 1;
+      const isPresent = Array.isArray(attendance) && attendance.length > 1;
 
 
       try {
         if (isPresent) {
           presentCount++;
-          await sendThriveconsultaion3day(id, whatsappPhone, name, dayNumber);
+          await sendThriveYogaPlans2day(id, whatsappPhone, name, dayNumber);
         } else {
           //console.log(`> User ${id} Skipping.`);
           continue;
