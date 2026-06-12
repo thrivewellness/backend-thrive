@@ -6,12 +6,14 @@ import {
   triggerGutHealthProgram,
   triggerGutHealthProgramEvening,
   triggerwelcomenmorning,
-  triggerwelcomeevening
+  triggerwelcomeevening,
+  trigger14ComProgram,
+  trigger14ComProgramEvening
 } from "./triggerYogaCampaign.js";
 import { triggerAttendance } from "../routes/aisensy/triggerAttendance.js";
 import { triggerPlans } from "../routes/aisensy/triggerPlans.js";
 import { triggerconsultaion } from "../routes/aisensy/triggerconsultaion.js";
-import { triggerFiveRem, triggerFiveRemEve, triggerLiveNowRem, triggerTommarowrem, triggerTommarowremmetabolic } from "../routes/aisensy/triggerRemainders.js";
+import { triggerFiveRem, triggerFiveRemEve, triggerLiveNowRem, triggerTommarowrem, triggerTommarowremmetabolic, triggerTommarowrem14con } from "../routes/aisensy/triggerRemainders.js";
 import { triggerInstTestimonails } from "../routes/aisensy/triggertestimonails.js";
 
 const HANDLERS = {
@@ -29,8 +31,11 @@ const HANDLERS = {
   triggerTommarowrem,
   triggerFiveRemEve,
   triggerInstTestimonails,
-  triggerTommarowremmetabolic
-}; 
+  triggerTommarowrem14con,
+  triggerTommarowremmetabolic,
+  trigger14ComProgram,
+  trigger14ComProgramEvening
+};
 
 cron.schedule("* * * * *", async () => {
   const now = new Date().toISOString(); // Always use ISO
@@ -119,7 +124,7 @@ export const checkCampaignTriggeredToday = async (supabase) => {
   const { data, error } = await supabase
     .from("campaigns_data")
     .select("id, campaign_date, day_number")
-    .eq("campaign_date", todayIST) 
+    .eq("campaign_date", todayIST)
     .eq("triggered_status", true)
     .limit(1)
     .single();

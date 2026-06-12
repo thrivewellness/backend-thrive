@@ -19,6 +19,7 @@ import { GutHealthProgram } from "../routes/aisensy/campaigns/gutHealth.js"
 import { delay } from "../utils/delay.js";
 import { morningSessions, eveningSessions } from "./utils/paramToFuntionMatching.js";
 import dayjs from "dayjs";
+import { continue14Session, continue14SessionEvening } from "../routes/aisensy/campaigns/continue14Session.js";
 
 export const triggerYogaCampaignmorning = async (dayNumber) => {
   console.log("> Yoga campaign started");
@@ -276,3 +277,82 @@ export const triggerwelcomeevening = async (dayNumber) => {
 
   console.log("> Yoga campaign finished");
 };
+
+
+export const trigger14ComProgram = async (dayNumber) => {
+  console.log("> Yoga campaign started");
+  console.log("> day number: ", dayNumber);
+
+  const { data: users } = await supabase
+    .from("yoga_signups")
+      .select("*")
+      .eq("current_session_date", '2026-06-01')
+      .eq("is_active", true)
+      .order("id", { ascending: false });
+
+  if (!users?.length) {
+    console.log("> No users found");
+    return;
+  }
+
+  for (const user of users) {
+    const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
+
+    try {
+      await continue14Session({
+        whatsappPhone,
+        name: user.name,
+        userId: user.ref_user_id,
+      });
+
+      console.log(`> Sent to ${user.id}`);
+    } catch (err) {
+      console.error(`> Failed for ${user.id}`, err.message);
+    }
+
+    // WhatsApp safety delay
+    await delay(40);
+  }
+
+  console.log("> Yoga campaign finished");
+};
+
+
+export const trigger14ComProgramEvening = async (dayNumber) => {
+  console.log("> Yoga campaign started");
+  console.log("> day number: ", dayNumber);
+
+  const { data: users } = await supabase
+    .from("yoga_signups")
+      .select("*")
+      .eq("current_session_date", '2026-06-01')
+      .eq("is_active", true)
+      .order("id", { ascending: false });
+
+  if (!users?.length) {
+    console.log("> No users found");
+    return;
+  }
+
+  for (const user of users) {
+    const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
+
+    try {
+      await continue14SessionEvening({
+        whatsappPhone,
+        name: user.name,
+        userId: user.ref_user_id,
+      });
+
+      console.log(`> Sent to ${user.id}`);
+    } catch (err) {
+      console.error(`> Failed for ${user.id}`, err.message);
+    }
+
+    // WhatsApp safety delay
+    await delay(40);
+  }
+
+  console.log("> Yoga campaign finished");
+};
+
