@@ -208,8 +208,7 @@ export const triggerwelcomenmorning = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
       .select("*")
-      .eq("current_session_date", '2026-06-01')
-      .eq("is_active", true)
+      .gt("id", 4224)
       .order("id", { ascending: false });
 
   if (!users?.length) {
@@ -247,8 +246,7 @@ export const triggerwelcomeevening = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
       .select("*")
-      .eq("current_session_date", '2026-06-01')
-      .eq("is_active", true)
+      .gt("id", 4224)
       .order("id", { ascending: false });
 
 
