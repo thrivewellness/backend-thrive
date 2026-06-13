@@ -13,7 +13,7 @@ import {
 import { triggerAttendance } from "../routes/aisensy/triggerAttendance.js";
 import { triggerPlans } from "../routes/aisensy/triggerPlans.js";
 import { triggerconsultaion } from "../routes/aisensy/triggerconsultaion.js";
-import { triggerFiveRem, triggerFiveRemEve, triggerLiveNowRem, triggerTommarowrem, triggerTommarowremmetabolic, triggerTommarowrem14con } from "../routes/aisensy/triggerRemainders.js";
+import { triggerFiveRem, triggerFiveRemEve, triggerLiveNowRem, triggerTommarowrem, triggerTommarowremmetabolic, triggerTommarowrem14con, triggerFiveRemWelEve, triggerFiveRemWel } from "../routes/aisensy/triggerRemainders.js";
 import { triggerInstTestimonails } from "../routes/aisensy/triggertestimonails.js";
 
 const HANDLERS = {
@@ -34,7 +34,9 @@ const HANDLERS = {
   triggerTommarowrem14con,
   triggerTommarowremmetabolic,
   trigger14ComProgram,
-  trigger14ComProgramEvening
+  trigger14ComProgramEvening,
+  triggerFiveRemWelEve,
+  triggerFiveRemWel
 };
 
 cron.schedule("* * * * *", async () => {
@@ -81,7 +83,6 @@ cron.schedule("* * * * *", async () => {
     }
   }
 });
-
 
 const triggerAttendanceSlot = async (presentMessageTime, sendAbsent = false) => {
   console.log(`> Checking campaigns for attendance slot ${presentMessageTime}...`);

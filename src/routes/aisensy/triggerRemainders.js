@@ -93,8 +93,7 @@ export const triggerTommarowrem = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .eq("current_session_date", '2026-06-01')
-    .eq("is_active", true)
+    .gt("id", 4224)
     .order("id", { ascending: false });
 
 
@@ -108,7 +107,7 @@ export const triggerTommarowrem = async (dayNumber) => {
     const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
 
     try {
-      await sendVideoMessage15day({
+      await tommarowWelcomeSessionRemainder({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,
@@ -253,6 +252,83 @@ export const triggerTommarowrem14con = async (dayNumber) => {
 
     console.log("count: ", count);
     await delay(200);
+  }
+
+  console.log("> Yoga campaign finished");
+};
+
+
+export const triggerFiveRemWel = async (dayNumber) => {
+  console.log("> Yoga campaign started");
+  console.log("> day number: ", dayNumber);
+
+  const { data: users } = await supabase
+    .from("yoga_signups")
+    .select("*")
+    .gt("id", 4224)
+    .order("id", { ascending: false });
+
+  if (!users?.length) {
+    console.log("> No users found");
+    return;
+  }
+
+  for (const user of users) {
+    const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
+
+    try {
+      await fiveMinWelcomeSessionRemainderMorning({
+        whatsappPhone,
+        name: user.name,
+        userId: user.ref_user_id,
+        dayNumber
+      });
+
+      console.log(`> Sent to ${user.id}`);
+    } catch (err) {
+      console.error(`> Failed for ${user.id}`, err.message);
+    }
+
+    // WhatsApp safety delay
+    await delay(10);
+  }
+
+  console.log("> Yoga campaign finished");
+};
+
+export const triggerFiveRemWelEve = async (dayNumber) => {
+  console.log("> Yoga campaign started");
+  console.log("> day number: ", dayNumber);
+
+  const { data: users } = await supabase
+    .from("yoga_signups")
+    .select("*")
+    .gt("id", 4224)
+    .order("id", { ascending: false });
+
+  if (!users?.length) {
+    console.log("> No users found");
+    return;
+  }
+
+  for (const user of users) {
+    const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
+
+    try {
+      await fiveMinWelcomeSessionRemainderEvening({
+        whatsappPhone,
+        name: user.name,
+        userId: user.ref_user_id,
+        dayNumber
+      });
+
+      console.log(`> Sent to ${user.id}`);
+    } catch (err) {
+      console.error(`> Failed for ${user.id}`, err.message);
+    }
+
+    // WhatsApp safety delay
+    await delay(10);
   }
 
   console.log("> Yoga campaign finished");

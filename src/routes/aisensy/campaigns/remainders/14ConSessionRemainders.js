@@ -11,7 +11,7 @@ export const fiveMinSessionRemainder14Con = async ({ userId, whatsappPhone, name
 
             templateParams: [
                 `A Special on *How to Continue Your Journey After 14 Days*`,
-                `https://thriveyoga.thrivewellness.in/join/sp/m/${userId}`,
+                `https://thriveyoga.thrivewellness.in/join/m/${userId}`,
             ],
             source: "new-landing-page form",
             media: {},
@@ -47,7 +47,7 @@ export const fiveMinSessionRemainder14ConEve = async ({ userId, whatsappPhone, n
 
             templateParams: [
                 `A Special on *How to Continue Your Journey After 14 Days*`,
-                `https://thriveyoga.thrivewellness.in/join/sp/e/${userId}`,
+                `https://thriveyoga.thrivewellness.in/join/e/${userId}`,
             ],
             source: "new-landing-page form",
             media: {},
@@ -92,8 +92,8 @@ export const tommarowSessionRemainders14Con = async ({ userId, whatsappPhone, na
         ],
         source: "new-landing-page form",
         media: {
-            "url": "https://d3jt6ku4g6z5l8.cloudfront.net/VIDEO/696b61f2951b730d7655fef4/9116418_14rem.mp4",
-            "filename": "14_rem.mp4"
+            "url": "https://d3jt6ku4g6z5l8.cloudfront.net/VIDEO/696b61f2951b730d7655fef4/4060320_14rem1.mp4",
+            "filename": "14_rem_1.mp4"
         },
         buttons: [],
         carouselCards: [],
