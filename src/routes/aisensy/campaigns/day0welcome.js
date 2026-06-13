@@ -20,7 +20,7 @@ export const day0SessionMorning = async ({
 
             templateParams: [
                 `*${name}* Ji 🙏`,
-                `*11 AM* & *6 PM* (IST)`,
+                `*11 AM* & *4 PM* (IST)`,
                 `11:58 AM`,
                 `https://thriveyoga.thrivewellness.in/join/sp/m/${userId}`,
                 `14-Day Program | Trainers | Longevity Tips`
@@ -83,7 +83,7 @@ export const day0SessionEvening = async ({
             templateParams: [
                 `${name}`,
                 `11 AM`,
-                `6 PM (IST)`,
+                `4 PM (IST)`,
             ],
 
             source: "new-landing-page form",
