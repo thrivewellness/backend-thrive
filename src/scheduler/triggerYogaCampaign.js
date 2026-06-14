@@ -35,7 +35,7 @@ export const triggerYogaCampaignmorning = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
       .select("*")
-      .eq("current_session_date", '2026-06-01')
+      .eq("current_session_date", '2026-06-15')
       .eq("is_active", true)
       .order("id", { ascending: false });
 
@@ -84,7 +84,7 @@ export const triggerYogaCampaignevening = async (dayNumber) => {
   const { data: users } = await supabase
   .from("yoga_signups")
       .select("*")
-      .eq("current_session_date", '2026-06-01')
+      .eq("current_session_date", '2026-06-15')
       .eq("is_active", true)
       .order("id", { ascending: false });
 
@@ -130,7 +130,7 @@ export const triggerGutHealthProgram = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
       .select("*")
-      .eq("current_session_date", '2026-06-01')
+      .eq("current_session_date", '2026-06-15')
       .eq("is_active", true)
       .order("id", { ascending: false });
 
@@ -169,7 +169,7 @@ export const triggerGutHealthProgramEvening = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
       .select("*")
-      .eq("current_session_date", '2026-06-01')
+      .eq("current_session_date", '2026-06-15')
       .eq("is_active", true)
       .order("id", { ascending: false });
 
@@ -284,7 +284,7 @@ export const trigger14ComProgram = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
       .select("*")
-      .eq("current_session_date", '2026-06-01')
+      .eq("current_session_date", '2026-06-15')
       .eq("is_active", true)
       .order("id", { ascending: false });
 
@@ -323,7 +323,7 @@ export const trigger14ComProgramEvening = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
       .select("*")
-      .eq("current_session_date", '2026-06-01')
+      .eq("current_session_date", '2026-06-15')
       .eq("is_active", true)
       .order("id", { ascending: false });
 
