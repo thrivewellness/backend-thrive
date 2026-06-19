@@ -10,7 +10,7 @@ export const fiveMinSessionRemainder14Con = async ({ userId, whatsappPhone, name
             userName: "Thrive Integrated Lifestyle Private Limited",
 
             templateParams: [
-                `A Special on *How to Continue Your Journey After 14 Days*`,
+                `*Day 5 (Muscle Activation Without Weights)*`,
                 `https://thriveyoga.thrivewellness.in/join/m/${userId}`,
             ],
             source: "new-landing-page form",
@@ -46,7 +46,7 @@ export const fiveMinSessionRemainder14ConEve = async ({ userId, whatsappPhone, n
             userName: "Thrive Integrated Lifestyle Private Limited",
 
             templateParams: [
-                `A Special on *How to Continue Your Journey After 14 Days*`,
+                `*Day 5 (Muscle Activation Without Weights) Session*`,
                 `https://thriveyoga.thrivewellness.in/join/e/${userId}`,
             ],
             source: "new-landing-page form",

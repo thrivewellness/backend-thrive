@@ -2,31 +2,42 @@ import { supabase } from "../../lib/supabase.js";
 import { delay } from "../../utils/delay.js";
 import { send15MinDrill } from "./campaigns/intractions/send15MinDrill.js";
 import { sendInstTestimonails } from "./campaigns/intractions/sendtestimonails.js";
+import { sendYtVid } from "./campaigns/intractions/sendtYtVid.js";
 
 export const triggerInstTestimonails = async (dayNumber) => {
   console.log("> Yoga campaign started");
   console.log("> day number:", dayNumber);
 
-  const { data: users } = await supabase
-    .from("yoga_signups")
-    .select("*")
-    .gt("id", 4224); // only users after ID 4224
+  const { data: users, error } = await supabase
+  .from("yoga_signups")
+  .select("*");
+
+const remainingUsers = users.filter(
+  user =>
+    user.current_session_date === "2026-06-01" ||
+    user.is_active === true
+).filter(
+  user =>
+    !(user.current_session_date === "2026-06-01" &&
+      user.is_active === true)
+);
+   
 
   if (!users?.length) {
     console.log("> No users found");
     return;
   }
 
-  console.log(`> Total users found: ${users.length}`);
+  console.log(`> Total users found: ${remainingUsers.length}`);
 
   let successCount = 0;
   let failureCount = 0;
 
-  for (const user of users) {
+  for (const user of remainingUsers) {
     const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
 
     try {
-      await send15MinDrill({
+      await sendYtVid({
         whatsappPhone,
         name: user.name,
         dayNumber,

@@ -42,7 +42,7 @@ export const triggerPlans = async (dayNumber) => {
       try {
         if (isPresent) {
           presentCount++;
-          await sendVideoMessage15day(id, whatsappPhone, name, dayNumber);
+          await sendChineseMsg(id, whatsappPhone, name, dayNumber);
         } else {
           //console.log(`> User ${id} Skipping.`);
           continue;
