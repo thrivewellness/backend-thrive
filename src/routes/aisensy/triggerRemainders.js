@@ -27,7 +27,7 @@ export const triggerFiveRem = async (dayNumber) => {
     const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
 
     try {
-      await fiveMinSessionRemainder14Con({
+      await fiveMinSessionRemainderGutHealth({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,
@@ -66,7 +66,7 @@ export const triggerFiveRemEve = async (dayNumber) => {
     const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
 
     try {
-      await fiveMinSessionRemainder14ConEve({
+      await fiveMinSessionRemainderGutHealthEvening({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,
