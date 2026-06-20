@@ -92,8 +92,8 @@ export const tommarowSessionRemaindersMetabolHealth = async ({ userId, whatsappP
         ],
         source: "new-landing-page form",
         media: {
-            "url": "https://d3jt6ku4g6z5l8.cloudfront.net/VIDEO/696b61f2951b730d7655fef4/9945042_guthaelthreminder.mp4",
-            "filename": "gut_haelth_reminder.mp4"
+            "url": "https://d3jt6ku4g6z5l8.cloudfront.net/VIDEO/696b61f2951b730d7655fef4/4876527_metabolicvideorem.mp4",
+            "filename": "metabolic_video_rem.mp4"
         },
         buttons: [],
         carouselCards: [],
