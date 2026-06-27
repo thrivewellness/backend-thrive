@@ -27,7 +27,7 @@ export const triggerFiveRem = async (dayNumber) => {
     const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
 
     try {
-      await fiveMinSessionRemainderMetabolHealth({
+      await fiveMinSessionRemainder14Con({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,
@@ -66,7 +66,7 @@ export const triggerFiveRemEve = async (dayNumber) => {
     const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
 
     try {
-      await fiveMinSessionRemainderMetabolHealthEvening({
+      await fiveMinSessionRemainder14ConEve({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,
@@ -107,7 +107,7 @@ export const triggerTommarowrem = async (dayNumber) => {
     const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
 
     try {
-      await tommarowWelcomeSessionRemainder({
+      await tommarowDay1SessionRemainders({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,
@@ -265,7 +265,7 @@ export const triggerFiveRemWel = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .gt("id", 4224)
+    .gt("id", 5053)
     .order("id", { ascending: false });
 
   if (!users?.length) {
@@ -303,7 +303,7 @@ export const triggerFiveRemWelEve = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .gt("id", 4224)
+    .gt("id", 5053)
     .order("id", { ascending: false });
 
   if (!users?.length) {
