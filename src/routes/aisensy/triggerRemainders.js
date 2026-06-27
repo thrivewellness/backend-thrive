@@ -93,7 +93,7 @@ export const triggerTommarowrem = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .gt("id", 4224)
+    .gt("id", 5053)
     .order("id", { ascending: false });
 
 
