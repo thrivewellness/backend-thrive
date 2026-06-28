@@ -83,7 +83,7 @@ export const day0SessionEvening = async ({
             templateParams: [
                 `${name}`,
                 `11 AM`,
-                `4 PM (IST)`,
+                `6 PM (IST)`,
             ],
 
             source: "new-landing-page form",

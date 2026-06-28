@@ -14,7 +14,7 @@ export const triggerFiveRem = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .eq("current_session_date", '2026-06-15')
+    .eq("current_session_date", '2026-06-29')
     .eq("is_active", true)
     .order("id", { ascending: false });
 
@@ -53,7 +53,7 @@ export const triggerFiveRemEve = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .eq("current_session_date", '2026-06-15')
+    .eq("current_session_date", '2026-06-29')
     .eq("is_active", true)
     .order("id", { ascending: false });
 
@@ -137,7 +137,7 @@ export const triggerLiveNowRem = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .eq("current_session_date", '2026-06-15')
+    .eq("current_session_date", '2026-06-29')
     .eq("is_active", true)
     .order("id", { ascending: false });
 
@@ -176,7 +176,7 @@ export const triggerTommarowremmetabolic = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .eq("current_session_date", '2026-06-15')
+    .eq("current_session_date", '2026-06-29')
     .eq("is_active", true)
     .order("id", { ascending: false });
 
@@ -220,7 +220,7 @@ export const triggerTommarowrem14con = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .eq("current_session_date", '2026-06-15')
+    .eq("current_session_date", '2026-06-29')
     .eq("is_active", true)
     .order("id", { ascending: false });
 
