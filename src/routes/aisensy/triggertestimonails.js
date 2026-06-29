@@ -9,35 +9,26 @@ export const triggerInstTestimonails = async (dayNumber) => {
   console.log("> day number:", dayNumber);
 
   const { data: users, error } = await supabase
-  .from("yoga_signups")
-  .select("*");
+    .from("yoga_signups")
+    .select("*")
+    .eq("current_session_date", '2026-06-29')
+    .eq("is_active", true)
+    .order("id", { ascending: false });
 
-const remainingUsers = users.filter(
-  user =>
-    user.current_session_date === "2026-06-01" ||
-    user.is_active === true
-).filter(
-  user =>
-    !(user.current_session_date === "2026-06-01" &&
-      user.is_active === true)
-);
-   
 
   if (!users?.length) {
     console.log("> No users found");
     return;
   }
 
-  console.log(`> Total users found: ${remainingUsers.length}`);
-
   let successCount = 0;
   let failureCount = 0;
 
-  for (const user of remainingUsers) {
+  for (const user of users) {
     const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
 
     try {
-      await sendYtVid({
+      await sendInstTestimonails({
         whatsappPhone,
         name: user.name,
         dayNumber,

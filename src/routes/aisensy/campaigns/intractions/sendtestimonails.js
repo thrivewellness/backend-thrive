@@ -13,13 +13,13 @@ export const sendInstTestimonails = async ({ whatsappPhone, name, dayNumber }) =
 
         templateParams: [
             `${name} 👋`,
-            `Silky Lost 10 kgs at the age of 45 & reduced inflammation`,
-            "https://www.instagram.com/reel/DU0f2iekaGM/?igsh=N2E1dzE5dDdnMDl4"
+            `How Archana Lost 14 Kgs At the age of 48.`,
+            "https://www.instagram.com/reel/DT8B45bkfRa/?igsh=MWV5bzEybHBnODZkMA=="
         ],
         source: "new-landing-page form",
         media: {
-            "url": "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/6788923_testimoals2.jpeg",
-            "filename": "testimoals_2.jpeg"
+            "url": "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/6168911_7.jpg.jpeg",
+            "filename": "7.jpg.jpeg"
         },
         buttons: [],
         carouselCards: [],
