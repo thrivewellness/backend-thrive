@@ -1,32 +1,34 @@
 
 import axios from "axios";
 
-export const sendInstTestimonails = async ({ whatsappPhone, name, dayNumber }) => {
+export const sendPlansOfferMsg = async (id, whatsappPhone, name, dayNumber) => {
 
-    console.log("sendInstTestimonails called with:", { whatsappPhone, name, dayNumber });
+    console.log("sendPlansOfferMsg called with: user", { id, whatsappPhone, name });
 
     const payload = {
         apiKey: process.env.AISENSY_API_KEY,
-        campaignName: "send_inst_testimony",
+        campaignName: "plans_offer_msg",
         destination: whatsappPhone,
         userName: "Thrive Integrated Lifestyle Private Limited",
 
         templateParams: [
-            `${name} 👋`,
-            `How Archana Lost 14 Kgs At the age of 48.`,
-            "https://www.instagram.com/reel/DT8B45bkfRa/?igsh=MWV5bzEybHBnODZkMA=="
+            `${name} Ji 🙏`,
+            "https://payment.thrivewellness.in/payment/yoga/basic",
         ],
+
         source: "new-landing-page form",
-        media: {
-            "url": "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/6168911_7.jpg.jpeg",
-            "filename": "7.jpg.jpeg"
+         media: {
+            "url": "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/5775572_plansoffermsg.jpg",
+            "filename": "plans_offer_msg.jpg"
         },
-        buttons: [],
+        buttons: [
+        ],
         carouselCards: [],
         location: {},
         attributes: {},
 
         paramsFallbackValue: {
+            FirstName: "user"
         }
     };
 
@@ -40,9 +42,9 @@ export const sendInstTestimonails = async ({ whatsappPhone, name, dayNumber }) =
         }
     );
 
-
-    console.log(`Aisensy sendInstTestimonails response for ${whatsappPhone}:`, response);  
+    console.log("sendThriveYogaPlans1day response:", response.data);
     return response.data;
+
 }
 
 

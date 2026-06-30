@@ -13,15 +13,15 @@ export const sendYtVid = async ({ whatsappPhone, name, dayNumber }) => {
 
         templateParams: [
             `*${name} 👋*`,
-            `🌿*How To Improve Your Gut Health Naturally*`,
-            `✨ Signs of an unhealthy gut`,
-            `✨ Habits that damage gut health`,
-            "https://www.youtube.com/watch?v=ePzKYZ8n1wI"
+            `🌿*14 KG Weight Loss Transformation + Diet & Workout Secrets*`,
+            `✨ Insights of an weight loss journey`,
+            `✨ Secrets that helped in losing 14 KG in 3 months`,
+            "https://youtu.be/XX6Cc4vHPZQ"
         ],
         source: "new-landing-page form",
         media: {
-            "url": "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/9943958_ytthumbnail.jpg",
-            "filename": "ytthumbnail.jpg"
+            "url": "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/6168911_7.jpg.jpeg",
+            "filename": "7.jpg.jpeg"
         },
         buttons: [],
         carouselCards: [],

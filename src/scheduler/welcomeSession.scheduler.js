@@ -39,6 +39,7 @@ const HANDLERS = {
   triggerFiveRemWel
 };
 
+
 cron.schedule("* * * * *", async () => {
   const now = new Date().toISOString(); // Always use ISO
   console.log("> Server time:", now);

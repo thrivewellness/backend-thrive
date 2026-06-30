@@ -28,7 +28,7 @@ export const triggerInstTestimonails = async (dayNumber) => {
     const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
 
     try {
-      await sendInstTestimonails({
+      await sendYtVid({
         whatsappPhone,
         name: user.name,
         dayNumber,
@@ -42,7 +42,7 @@ export const triggerInstTestimonails = async (dayNumber) => {
     }
 
     // WhatsApp safety delay
-    await delay(200);
+    await delay(20);
   }
 
   console.log("> Yoga campaign finished");
