@@ -11,7 +11,7 @@ export const day13Session = async ({
 
         const payload = {
             apiKey: process.env.AISENSY_API_KEY,
-            campaignName: "good_morning",
+            campaignName: "morning_session_message",
             destination: whatsappPhone,
             userName: "Thrive Wellness",
 
@@ -23,7 +23,10 @@ export const day13Session = async ({
 
             source: "new-landing-page form",
 
-            media: {},
+            media: {
+                url: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/7992368_day13.jpg",
+                filename: "day13.jpg",
+            },
             buttons: [],
             carouselCards: [],
             location: {},

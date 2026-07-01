@@ -37,6 +37,7 @@ export const presentFunction = async (
   name,
   dayNumber,
   attendanceTracker = "",
+  totalPresentDays = 0,
   isBadgeEligible = false,
   ref_user_id = ""
 ) => {
@@ -111,10 +112,17 @@ export const presentFunction = async (
       }
     : {
         apiKey: process.env.AISENSY_API_KEY,
-        campaignName: "present_free_yoga",
+        campaignName: "free_present_msg",
         destination: whatsappPhone,
         userName: "Thrive Wellness",
-        templateParams: [`${name} Ji`, dayLine, "Present \u2714\uFE0F", tracker, quote],
+        templateParams: [
+          `${name} Ji`,
+          dayLine,
+          "Present \u2714\uFE0F",
+          tracker,
+          `Total Thrive yoga days: ${totalPresentDays}`,
+          quote,
+        ],
         source: "new-landing-page form",
         media: {},
         buttons: [],

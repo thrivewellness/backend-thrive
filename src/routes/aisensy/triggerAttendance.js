@@ -68,6 +68,10 @@ const hasFullAttendance = (dates, attendanceList) => {
   return dates.length > 0 && dates.every((date) => attendanceList.includes(date));
 };
 
+const getTotalPresentDays = (attendanceList) => {
+  return new Set(attendanceList.filter(Boolean)).size;
+};
+
 const hasPendingPresentActivity = (activityList, date, presentMessageTime) => {
   const times = Array.isArray(presentMessageTime) ? presentMessageTime : [presentMessageTime];
   return activityList.some(
@@ -184,12 +188,13 @@ export const triggerAttendance = async (
         .map((date) => (attendanceList.includes(date) ? "\u2705" : "\u2B1C"))
         .join("");
 
+      const totalPresentDays = getTotalPresentDays(attendanceList);
       const consecutiveAbsentCount = isPresent ? 0 : getConsecutiveAbsentCount(consecutiveAbsentDates, attendanceList);
       const isBadgeEligible = hasFullAttendance(badgeDates, attendanceList);
 
       try {
         if (shouldSendPresent) {
-          await presentFunction(id, whatsappPhone, name, dayNumber, tracker, isBadgeEligible, ref_user_id);
+          await presentFunction(id, whatsappPhone, name, dayNumber, tracker, totalPresentDays, isBadgeEligible, ref_user_id);
           if (presentMessageTime) {
             await markPresentActivitySent(user, triggeredToday, presentMessageTime);
           }
