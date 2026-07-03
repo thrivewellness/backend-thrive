@@ -84,8 +84,8 @@ export const tommarowSessionRemaindersMetabolHealth = async ({ userId, whatsappP
         templateParams: [
             `*${name} Ji*`,
             `A Special *Metabolic Health Session*`,
-            `*11 AM | 6 PM (IST)*`,
-            `*40 Min*`,
+            `*11 AM | 4 PM (IST)*`,
+            `*30 Min*`,
             `• What Metabolic health really means`,
             `• Common metаbolic issues like weight gain, diabetes, fatigue, and hormonal imbalances`,
             `• Lifestyle and nutrition solutions to improve metabolic health naturally`
