@@ -137,12 +137,15 @@ const triggerLandingPageMessages = async ({ userId, formFields, createdAt }) => 
         countryCode: formFields.countryCode
       }),
       duration: toTemplateValue(formFields.duration || formFields.dateTime),
+      ageGroup: toTemplateValue(formFields.ageGroup),
       created_at: formatLeadCreatedAt(createdAt),
       goal: toTemplateValue(formFields.goal || formFields.customGoal || formFields.message),
       symptoms: toTemplateValue(formFields.symptoms),
       readiness: toTemplateValue(formFields.readiness),
       service: toTemplateValue(formFields.service),
-      ref: toTemplateValue(formFields.ref || formFields.cr_ref)
+      ref: toTemplateValue(formFields.ref || formFields.cr_ref),
+      approach: toTemplateValue(formFields.approach),
+      invest: toTemplateValue(formFields.invest)
     })
   );
 

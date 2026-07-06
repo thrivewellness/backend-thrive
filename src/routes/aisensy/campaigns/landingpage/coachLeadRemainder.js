@@ -7,31 +7,36 @@ export const coachLeadRemainder = async ({
     name,
     phnumber,
     duration,
+    ageGroup,
     created_at,
     goal,
     symptoms,
     readiness,
     service,
     ref,
+    approach,
+    invest
 }) => {
 
     console.log("coachLeadRemainder called with: user", { id, whatsappPhone, name });
 
     const payload = {
         apiKey: process.env.AISENSY_API_KEY,
-        campaignName: "caoch_lead_noti",
+        campaignName: "caoch_lead_notify",
         destination: whatsappPhone,
         userName: "Thrive Integrated Lifestyle Private Limited",
 
         templateParams: [
             name,
             phnumber,
-            duration,
+            ageGroup,
             created_at,
             goal,
             symptoms,
             duration,
             readiness,
+            approach,
+            invest,
             service,
             ref,
             `https://admin.thrivewellness.in/leads/update?id=${id}`,
