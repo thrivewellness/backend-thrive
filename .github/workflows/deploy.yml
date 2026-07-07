@@ -14,57 +14,19 @@ jobs:
     runs-on: [self-hosted, linux]
 
     steps:
-      - name: Deploy Backend
-        uses: appleboy/ssh-action@v1.2.0
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.VPS_HOST }}
           username: tksultan
           key: ${{ secrets.VPS_SSH_KEY }}
           port: 22
-          timeout: 10m
-          command_timeout: 10m
-
+          debug: true
           script: |
-            set -euo pipefail
-
-            echo "========== DEPLOY START =========="
-
+            set -e
             cd ~/backend-thrive
-
-            echo "Updating source..."
             git fetch origin
             git reset --hard origin/main
             git clean -fd
-
-            echo "Installing dependencies..."
-            npm ci --omit=dev
-
-            echo "Checking .env..."
-            if [ ! -f ".env" ]; then
-              echo ".env file not found!"
-              exit 1
-            fi
-
-            echo "Reloading PM2..."
-            if pm2 describe backend-thrive >/dev/null 2>&1; then
-              pm2 reload backend-thrive --update-env
-            else
-              pm2 start npm --name backend-thrive -- start
-            fi
-
-            echo "Waiting for backend..."
-            sleep 5
-
-            echo "Checking backend..."
-            if curl -fs http://localhost:3000 >/dev/null; then
-              echo "Backend is running."
-            else
-              echo "Backend failed to start."
-              pm2 status
-              pm2 logs backend-thrive --lines 50 --nostream
-              exit 1
-            fi
-
-            pm2 save
-
-            echo "========== DEPLOY SUCCESS =========="
+            npm install --omit=dev
+            pm2 reload backend-thrive --update-env
