@@ -21,10 +21,13 @@ jobs:
           username: tksultan
           key: ${{ secrets.VPS_SSH_KEY }}
           port: 22
+          timeout: 10m
+          command_timeout: 10m
+
           script: |
             set -euo pipefail
 
-            echo "===== Deploy Started ====="
+            echo "========== DEPLOY START =========="
 
             cd ~/backend-thrive
 
@@ -38,25 +41,30 @@ jobs:
 
             echo "Checking .env..."
             if [ ! -f ".env" ]; then
-              echo "ERROR: .env file not found!"
+              echo ".env file not found!"
               exit 1
             fi
 
             echo "Reloading PM2..."
-            pm2 reload backend-thrive --update-env || pm2 restart backend-thrive --update-env
+            if pm2 describe backend-thrive >/dev/null 2>&1; then
+              pm2 reload backend-thrive --update-env
+            else
+              pm2 start npm --name backend-thrive -- start
+            fi
 
-            echo "Waiting for app..."
+            echo "Waiting for backend..."
             sleep 5
 
-            echo "Checking health..."
+            echo "Checking backend..."
             if curl -fs http://localhost:3000 >/dev/null; then
               echo "Backend is running."
             else
-              echo "Backend failed to start!"
-              pm2 logs backend-thrive --lines 100
+              echo "Backend failed to start."
+              pm2 status
+              pm2 logs backend-thrive --lines 50 --nostream
               exit 1
             fi
 
             pm2 save
 
-            echo "===== Deploy Complete ====="
+            echo "========== DEPLOY SUCCESS =========="
