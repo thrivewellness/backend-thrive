@@ -20,7 +20,7 @@ router.post("/yoga/signup", async (req, res, next) => {
       });
     }
 
-    // PROCESS PHONE FOR ANY COUNTRY
+    // PROCESS PHONE FOR 
     const phoneData = processPhone(phone, countryCode);
     if (!phoneData) {
       return res.status(400).json({
