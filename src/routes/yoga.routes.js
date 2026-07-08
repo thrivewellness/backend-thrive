@@ -211,7 +211,6 @@ router.post("/free-yoga/restart", async (req, res, next) => {
     const { error: updateError } = await supabase
       .from("yoga_signups")
       .update({
-        current_session_date: "2026-06-01",
         is_active: true,
       })
       .eq("ref_user_id", id);
