@@ -43,7 +43,7 @@ export const triggerPlans = async (dayNumber) => {
       try {
         if (isPresent) {
           presentCount++;
-          await sendPlansOfferMsg(id, whatsappPhone, name, dayNumber);
+          await sendThriveconsultaion3day(id, whatsappPhone, name, dayNumber);
         } else {
           //console.log(`> User ${id} Skipping.`);
           continue;
