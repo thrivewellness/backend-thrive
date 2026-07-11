@@ -85,7 +85,7 @@ export const tommarowSessionRemainders14Con = async ({ userId, whatsappPhone, na
             `*${name} Ji*`,
             `A Special on *How to Continue Your Journey After 14 Days*`,
             `*11 AM | 4 PM (IST)*`,
-            `*40 Min*`,
+            `*30 Min*`,
             `• Learn to be consistent`,
             `• How Thrive Wellness Can improve Your quality of Life`,
             `• How Thrive Wellness Can help you reduce Medical expenses`

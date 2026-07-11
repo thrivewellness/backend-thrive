@@ -13,7 +13,7 @@ export const tommarowDay1SessionRemainders = async ({ userId, whatsappPhone, nam
 
         templateParams: [
             `*${name} Ji*`,
-            `*Day 1 of thrive yoga*`,
+            `*Day 1 of Thrive Yoga*`,
             `*7 AM | 5:30 PM (IST)*`,
             `*50 Min*`,
             `• Builds overall strength and stability`,
@@ -59,7 +59,7 @@ export const tommarowWelcomeSessionRemainder = async ({ userId, whatsappPhone, n
         templateParams: [
             `*${name} Ji*`,
             `*Welcome Session*`,
-            `28 June 2026`,
+            `12 July 2026`,
             `11 AM | 6 PM (IST)`,
             `40 Min`,
             `🧘 Understand the Thrive Yoga philosophy`,

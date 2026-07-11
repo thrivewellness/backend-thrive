@@ -20,7 +20,7 @@ export const day0SessionMorning = async ({
 
             templateParams: [
                 `*${name}* Ji 🙏`,
-                `*11 AM* & *6 PM* (IST)`,
+                `*11 AM* & *4 PM* (IST)`,
                 `10:58 AM`,
                 `https://thriveyoga.thrivewellness.in/join/sp/m/${userId}`,
                 `14-Day Program | Trainers | Longevity Tips`
@@ -29,8 +29,8 @@ export const day0SessionMorning = async ({
             source: "new-landing-page form",
 
             media: {
-                url: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/8754792_Welcome%20session.jpg.jpeg",
-                filename: "Welcome session.jpg.jpeg",
+                url: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/398944_day0.jpg",
+                filename: "day0.jpg",
             },
 
             buttons: [],
@@ -83,14 +83,14 @@ export const day0SessionEvening = async ({
             templateParams: [
                 `${name}`,
                 `11 AM`,
-                `6 PM (IST)`,
+                `4 PM (IST)`,
             ],
 
             source: "new-landing-page form",
-
+            
             media: {
-                url: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/8754792_Welcome%20session.jpg.jpeg",
-                filename: "Welcome session.jpg.jpeg",
+                url: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/398944_day0.jpg",
+                filename: "day0.jpg",
             },
 
             buttons: [
