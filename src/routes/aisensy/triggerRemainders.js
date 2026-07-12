@@ -94,6 +94,7 @@ export const triggerTommarowrem = async (dayNumber) => {
     .from("yoga_signups")
     .select("*")
     .gt("id", 6103) 
+    .range(0, 9999); 
 
   if (!users?.length) {
     console.log("> No users found");
