@@ -35,7 +35,7 @@ export const triggerYogaCampaignmorning = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
       .select("*")
-      .eq("current_session_date", '2026-06-29')
+      .eq("current_session_date", '2026-07-13')
       .eq("is_active", true)
       .order("id", { ascending: false });
 
@@ -84,7 +84,7 @@ export const triggerYogaCampaignevening = async (dayNumber) => {
   const { data: users } = await supabase
   .from("yoga_signups")
       .select("*")
-      .eq("current_session_date", '2026-06-29')
+      .eq("current_session_date", '2026-07-13')
       .eq("is_active", true)
       .order("id", { ascending: false });
 
@@ -130,7 +130,7 @@ export const triggerGutHealthProgram = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
       .select("*")
-      .eq("current_session_date", '2026-06-29')
+      .eq("current_session_date", '2026-07-13')
       .eq("is_active", true)
       .order("id", { ascending: false });
 
@@ -169,7 +169,7 @@ export const triggerGutHealthProgramEvening = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
       .select("*")
-      .eq("current_session_date", '2026-06-29')
+      .eq("current_session_date", '2026-07-13')
       .eq("is_active", true)
       .order("id", { ascending: false });
 
@@ -210,7 +210,6 @@ export const triggerwelcomenmorning = async (dayNumber) => {
       .select("*")
       .gt("id", 6103)
       .order("id", { ascending: false })
-      .range(0, 9999); 
 
   if (!users?.length) {
     console.log("> No users found");
@@ -249,13 +248,14 @@ export const triggerwelcomeevening = async (dayNumber) => {
       .select("*")
       .gt("id", 6103)
       .order("id", { ascending: false })
-      .range(0, 9999); 
 
 
   if (!users?.length) {
     console.log("> No users found");
     return;
   }
+
+  let count = 0;
 
   for (const user of users) {
     const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
@@ -272,10 +272,11 @@ export const triggerwelcomeevening = async (dayNumber) => {
       console.error(`> Failed for ${user.id}`, err.message);
     }
 
+    count++;
     await delay(200);
   }
 
-  console.log("> Yoga campaign finished");
+  console.log(`> Yoga campaign finished. Total users processed: ${count}`);
 };
 
 
@@ -286,7 +287,7 @@ export const trigger14ComProgram = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
       .select("*")
-      .eq("current_session_date", '2026-06-29')
+      .eq("current_session_date", '2026-07-13')
       .eq("is_active", true)
       .order("id", { ascending: false });
 
@@ -325,7 +326,7 @@ export const trigger14ComProgramEvening = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
       .select("*")
-      .eq("current_session_date", '2026-06-29')
+      .eq("current_session_date", '2026-07-13')
       .eq("is_active", true)
       .order("id", { ascending: false });
 

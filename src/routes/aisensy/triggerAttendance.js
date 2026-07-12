@@ -163,7 +163,7 @@ export const triggerAttendance = async (
     const { data: users, error } = await supabase
       .from("yoga_signups")
       .select("*")
-      .eq("current_session_date", '2026-06-29')
+      .eq("current_session_date", '2026-07-13')
       .eq("is_active", true)
       .order("id", { ascending: false });
       
