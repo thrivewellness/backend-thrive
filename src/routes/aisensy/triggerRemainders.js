@@ -264,7 +264,8 @@ export const triggerFiveRemWel = async (dayNumber) => {
     .from("yoga_signups")
     .select("*")
     .gt("id", 6103)
-    .order("id", { ascending: false });
+    .order("id", { ascending: false })
+    .range(0, 9999); 
 
   if (!users?.length) {
     console.log("> No users found");
@@ -302,7 +303,8 @@ export const triggerFiveRemWelEve = async (dayNumber) => {
     .from("yoga_signups")
     .select("*")
     .gt("id", 6103)
-    .order("id", { ascending: false });
+    .order("id", { ascending: false })
+    .range(0, 9999); 
 
   if (!users?.length) {
     console.log("> No users found");
