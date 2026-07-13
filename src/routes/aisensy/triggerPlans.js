@@ -40,7 +40,7 @@ export const triggerPlans = async (dayNumber) => {
       try {
         if (isPresent) {
           presentCount++;
-          await sendThriveYogaPlansMessage(id, whatsappPhone, name, dayNumber);
+          await sendChineseMsg(id, whatsappPhone, name, dayNumber);
         } else {
           //console.log(`> User ${id} Skipping.`);
           continue;
