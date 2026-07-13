@@ -7,13 +7,16 @@ export const sendInstTestimonails = async ({ whatsappPhone, name, dayNumber }) =
 
     const payload = {
         apiKey: process.env.AISENSY_API_KEY,
-        campaignName: "send_inst_testimony",
+        campaignName: "send_vid_img",
         destination: whatsappPhone,
         userName: "Thrive Integrated Lifestyle Private Limited",
 
         templateParams: [
             `${name} 👋`,
-            `How Archana Lost 14 Kgs At the age of 48.`,
+            '💚 Meet our Thrive Hero *Archana* ',
+            `She *Lost 14 Kgs* At the age of 48`,
+            '✨How she transformed her body after 40 with simple lifestyle changes.',
+            '✨The habits that helped her reduce weight and inflammation naturally.',
             "https://www.instagram.com/reel/DT8B45bkfRa/?igsh=MWV5bzEybHBnODZkMA=="
         ],
         source: "new-landing-page form",
@@ -41,7 +44,7 @@ export const sendInstTestimonails = async ({ whatsappPhone, name, dayNumber }) =
     );
 
 
-    console.log(`Aisensy sendInstTestimonails response for ${whatsappPhone}:`, response);  
+    console.log(`Aisensy sendInstTestimonails response for ${whatsappPhone}:`, response.data);  
     return response.data;
 }
 

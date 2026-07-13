@@ -14,7 +14,7 @@ export const send15MinDrill = async ({ whatsappPhone, name, dayNumber }) => {
         templateParams: [
             `${name} 👋`,
             `Your 14 Days Free Thrive Yoga Journey`,
-            "Monday (15th June 2026)",
+            "Monday (20th July 2026)",
             "You can start practising this 15 Min Thrive Yoga Session from today itself",
             "https://youtu.be/KpbIfcaKdX4"
         ],

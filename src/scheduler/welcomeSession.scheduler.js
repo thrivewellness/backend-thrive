@@ -14,7 +14,7 @@ import { triggerAttendance } from "../routes/aisensy/triggerAttendance.js";
 import { triggerPlans } from "../routes/aisensy/triggerPlans.js";
 import { triggerconsultaion } from "../routes/aisensy/triggerconsultaion.js";
 import { triggerFiveRem, triggerFiveRemEve, triggerLiveNowRem, triggerTommarowrem, triggerTommarowremmetabolic, triggerTommarowrem14con, triggerFiveRemWelEve, triggerFiveRemWel } from "../routes/aisensy/triggerRemainders.js";
-import { triggerInstTestimonails } from "../routes/aisensy/triggertestimonails.js";
+import { triggerInstTestimonails, triggerYtVid } from "../routes/aisensy/triggertestimonails.js";
 
 const HANDLERS = {
   triggerYogaCampaignmorning,
@@ -36,7 +36,8 @@ const HANDLERS = {
   trigger14ComProgram,
   trigger14ComProgramEvening,
   triggerFiveRemWelEve,
-  triggerFiveRemWel
+  triggerFiveRemWel,
+  triggerYtVid
 };
 
 cron.schedule("* * * * *", async () => {
