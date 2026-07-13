@@ -42,7 +42,7 @@ export const triggerInstTestimonails = async (dayNumber) => {
     }
 
     // WhatsApp safety delay
-    await delay(20);
+    await delay(200);
   }
 
   console.log("> Yoga campaign finished");
