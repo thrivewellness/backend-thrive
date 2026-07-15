@@ -7,6 +7,7 @@ import { sendChineseMsg } from "./campaigns/promtions/sendChineseMsg.js";
 import { sendThriveYogaPlans2day } from "./campaigns/promtions/sendThriveYogaPlans2day.js";
 import { sendThriveconsultaion3day } from "./campaigns/promtions/sendThriveconsultaion3day.js";
 import { sendPlansOfferMsg } from "./campaigns/promtions/sendPlansOfferMsg.js";
+import { processPhone } from "../../utils/phoneUtils.js";
 
 
 // Plans Trigger Function
@@ -32,7 +33,8 @@ export const triggerPlans = async (dayNumber) => {
       const { id, name, country_code, phone, attendance } = user;
 
       // Convert to WhatsApp-ready number
-      const whatsappPhone = `${country_code}${phone}`.replace(/\D/g, "");
+      const phoneData = processPhone(user.phone, user.country_code);
+      const { localPhone, whatsappPhone } = phoneData;
 
       const isPresent = Array.isArray(attendance) && attendance.length > 1;
 

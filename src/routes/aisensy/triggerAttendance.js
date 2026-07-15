@@ -2,6 +2,7 @@ import { supabase } from "../../lib/supabase.js";
 import { presentFunction } from "./campaigns/attendence/presentFunction.js";
 import { absentFunction } from "./campaigns/attendence/absentFunction.js";
 import { delay } from "../../utils/delay.js";
+import { processPhone } from "../../utils/phoneUtils.js";
 
 const formatDate = (date) => date.toISOString().slice(0, 10);
 
@@ -166,7 +167,7 @@ export const triggerAttendance = async (
       .eq("current_session_date", '2026-07-13')
       .eq("is_active", true)
       .order("id", { ascending: false });
-      
+
     if (error) {
       console.error("Supabase Fetch Error:", error);
       return;
@@ -174,7 +175,8 @@ export const triggerAttendance = async (
 
     for (const user of users) {
       const { id, name, country_code, phone, attendance, activity, ref_user_id } = user;
-      const whatsappPhone = `${country_code}${phone}`.replace(/\D/g, "");
+      const phoneData = processPhone(phone, country_code);
+      const { localPhone, whatsappPhone } = phoneData;
       const attendanceList = Array.isArray(attendance) ? attendance : [];
       const activityList = Array.isArray(activity) ? activity : [];
       const isPresent = attendanceList.includes(triggeredToday);

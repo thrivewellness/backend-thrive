@@ -1,8 +1,10 @@
 import { supabase } from "../../lib/supabase.js";
 import { delay } from "../../utils/delay.js";
+import { processPhone } from "../../utils/phoneUtils.js";
 import { send15MinDrill } from "./campaigns/intractions/send15MinDrill.js";
 import { sendInstTestimonails } from "./campaigns/intractions/sendtestimonails.js";
 import { sendYtVid } from "./campaigns/intractions/sendtYtVid.js";
+import { sendtYtVidManual } from "./campaigns/intractions/sendtYtVidManual.js";
 
 export const triggerInstTestimonails = async (dayNumber) => {
   console.log("> Yoga campaign started");
@@ -25,7 +27,8 @@ export const triggerInstTestimonails = async (dayNumber) => {
   let failureCount = 0;
 
   for (const user of users) {
-    const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
+    const phoneData = processPhone(user.phone, user.country_code);
+    const { localPhone, whatsappPhone } = phoneData;
 
     try {
       await sendInstTestimonails({
@@ -42,7 +45,7 @@ export const triggerInstTestimonails = async (dayNumber) => {
     }
 
     // WhatsApp safety delay
-    await delay(200);
+    await delay(10);
   }
 
   console.log("> Yoga campaign finished");
@@ -59,7 +62,8 @@ export const triggerYtVid = async (dayNumber) => {
   const { data: users, error } = await supabase
     .from("yoga_signups")
     .select("*")
-    .eq("id", 7829)
+    .eq("id", 1229)
+
 
 
   if (!users?.length) {
@@ -71,10 +75,12 @@ export const triggerYtVid = async (dayNumber) => {
   let failureCount = 0;
 
   for (const user of users) {
-    const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
+
+    const phoneData = processPhone(user.phone, user.country_code);
+    const { localPhone, whatsappPhone } = phoneData;
 
     try {
-      await send15MinDrill({
+      await sendtYtVidManual({
         whatsappPhone,
         name: user.name,
         dayNumber,

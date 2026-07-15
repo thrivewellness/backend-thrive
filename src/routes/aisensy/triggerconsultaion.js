@@ -1,5 +1,6 @@
 import { supabase } from "../../lib/supabase.js";
 import { delay } from "../../utils/delay.js";
+import { processPhone } from "../../utils/phoneUtils.js";
 import { sendThriveconsultaion3day } from "./campaigns/promtions/sendThriveconsultaion3day.js";
 
 
@@ -8,7 +9,7 @@ const YOGA_CAMPAIGN_JOIN_CUTOFF = "2026-02-28T23:59:59Z";
 const YOGA_CAMPAIGN_JOIN_END_DATE = "2026-03-29T23:59:59Z";
 
 // 🎯 Plans Trigger Function
-export const triggerconsultaion = async ( dayNumber) => {
+export const triggerconsultaion = async (dayNumber) => {
   console.log("> Running consultaion Function");
 
   try {
@@ -31,10 +32,10 @@ export const triggerconsultaion = async ( dayNumber) => {
     for (const user of users) {
       const { id, name, country_code, phone, attendance } = user;
 
-      // 📱 Convert to WhatsApp-ready number
-      const whatsappPhone = `${country_code}${phone}`.replace(/\D/g, "");
+      const phoneData = processPhone(user.phone, user.country_code);
+      const { localPhone, whatsappPhone } = phoneData;
 
-     const isPresent = Array.isArray(attendance) && attendance.length > 1;
+      const isPresent = Array.isArray(attendance) && attendance.length > 1;
 
 
       try {

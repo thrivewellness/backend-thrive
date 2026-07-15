@@ -5,6 +5,7 @@ import { tommarowDay1SessionRemainders, tommarowWelcomeSessionRemainder } from "
 import { fiveMinWelcomeSessionRemainderEvening, fiveMinWelcomeSessionRemainderMorning, liveNowRemainder } from "./campaigns/remainders/welcomeSessionRemainders.js";
 import { fiveMinSessionRemainderMetabolHealth, fiveMinSessionRemainderMetabolHealthEvening, liveNowRemainderMetabolHealth, tommarowSessionRemaindersMetabolHealth } from "./campaigns/remainders/MetabolHealthSessionRemainders.js";
 import { fiveMinSessionRemainder14Con, fiveMinSessionRemainder14ConEve, tommarowSessionRemainders14Con } from "./campaigns/remainders/14ConSessionRemainders.js";
+import { processPhone } from "../../utils/phoneUtils.js";
 
 
 export const triggerFiveRem = async (dayNumber) => {
@@ -24,7 +25,8 @@ export const triggerFiveRem = async (dayNumber) => {
   }
 
   for (const user of users) {
-    const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
+    const phoneData = processPhone(user.phone, user.country_code);
+    const { localPhone, whatsappPhone } = phoneData;
 
     try {
       await fiveMinSessionRemainder14Con({
@@ -63,7 +65,8 @@ export const triggerFiveRemEve = async (dayNumber) => {
   }
 
   for (const user of users) {
-    const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
+    const phoneData = processPhone(user.phone, user.country_code);
+    const { localPhone, whatsappPhone } = phoneData;
 
     try {
       await fiveMinSessionRemainder14ConEve({
@@ -93,8 +96,8 @@ export const triggerTommarowrem = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .gt("id", 6103) 
-    .range(0, 9999); 
+    .gt("id", 6103)
+    .range(0, 9999);
 
   if (!users?.length) {
     console.log("> No users found");
@@ -103,7 +106,8 @@ export const triggerTommarowrem = async (dayNumber) => {
 
   let count = 0;
   for (const user of users) {
-    const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
+    const phoneData = processPhone(user.phone, user.country_code);
+    const { localPhone, whatsappPhone } = phoneData;
 
     try {
       await tommarowDay1SessionRemainders({
@@ -147,7 +151,8 @@ export const triggerLiveNowRem = async (dayNumber) => {
   }
 
   for (const user of users) {
-    const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
+    const phoneData = processPhone(user.phone, user.country_code);
+    const { localPhone, whatsappPhone } = phoneData;
 
     try {
       await liveNowRemainder({
@@ -187,7 +192,8 @@ export const triggerTommarowremmetabolic = async (dayNumber) => {
 
   let count = 0;
   for (const user of users) {
-    const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
+    const phoneData = processPhone(user.phone, user.country_code);
+    const { localPhone, whatsappPhone } = phoneData;
 
     try {
       await tommarowSessionRemaindersMetabolHealth({
@@ -231,7 +237,8 @@ export const triggerTommarowrem14con = async (dayNumber) => {
 
   let count = 0;
   for (const user of users) {
-    const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
+    const phoneData = processPhone(user.phone, user.country_code);
+    const { localPhone, whatsappPhone } = phoneData;
 
     try {
       await tommarowSessionRemainders14Con({
@@ -266,7 +273,7 @@ export const triggerFiveRemWel = async (dayNumber) => {
     .select("*")
     .gt("id", 6103)
     .order("id", { ascending: false })
-    .range(0, 9999); 
+    .range(0, 9999);
 
   if (!users?.length) {
     console.log("> No users found");
@@ -274,7 +281,8 @@ export const triggerFiveRemWel = async (dayNumber) => {
   }
 
   for (const user of users) {
-    const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
+    const phoneData = processPhone(user.phone, user.country_code);
+    const { localPhone, whatsappPhone } = phoneData;
 
     try {
       await fiveMinWelcomeSessionRemainderMorning({
@@ -305,7 +313,7 @@ export const triggerFiveRemWelEve = async (dayNumber) => {
     .select("*")
     .gt("id", 6103)
     .order("id", { ascending: false })
-    .range(0, 9999); 
+    .range(0, 9999);
 
   if (!users?.length) {
     console.log("> No users found");
@@ -313,7 +321,8 @@ export const triggerFiveRemWelEve = async (dayNumber) => {
   }
 
   for (const user of users) {
-    const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
+    const phoneData = processPhone(user.phone, user.country_code);
+    const { localPhone, whatsappPhone } = phoneData;
 
     try {
       await fiveMinWelcomeSessionRemainderEvening({

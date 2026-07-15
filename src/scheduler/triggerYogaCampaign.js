@@ -20,6 +20,7 @@ import { delay } from "../utils/delay.js";
 import { morningSessions, eveningSessions } from "./utils/paramToFuntionMatching.js";
 import dayjs from "dayjs";
 import { continue14Session, continue14SessionEvening } from "../routes/aisensy/campaigns/continue14Session.js";
+import { processPhone } from "../utils/phoneUtils.js";
 
 export const triggerYogaCampaignmorning = async (dayNumber) => {
   console.log("> Yoga campaign started");
@@ -34,10 +35,10 @@ export const triggerYogaCampaignmorning = async (dayNumber) => {
 
   const { data: users } = await supabase
     .from("yoga_signups")
-      .select("*")
-      .eq("current_session_date", '2026-07-13')
-      .eq("is_active", true)
-      .order("id", { ascending: false });
+    .select("*")
+    .eq("current_session_date", '2026-07-13')
+    .eq("is_active", true)
+    .order("id", { ascending: false });
 
   if (!users?.length) {
     console.log("> No users found");
@@ -45,7 +46,8 @@ export const triggerYogaCampaignmorning = async (dayNumber) => {
   }
 
   for (const user of users) {
-    const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
+    const phoneData = processPhone(user.phone, user.country_code);
+    const { localPhone, whatsappPhone } = phoneData;
 
     try {
       await sessionFunction({
@@ -72,7 +74,7 @@ export const triggerYogaCampaignevening = async (dayNumber) => {
   console.log("> day number: ", dayNumber);
   const todayDate = dayjs().format("YYYY-MM-DD");
 
-  console.log("Today's date:", todayDate);  
+  console.log("Today's date:", todayDate);
 
   const sessionFunction = eveningSessions[dayNumber];
 
@@ -82,11 +84,11 @@ export const triggerYogaCampaignevening = async (dayNumber) => {
   }
 
   const { data: users } = await supabase
-  .from("yoga_signups")
-      .select("*")
-      .eq("current_session_date", '2026-07-13')
-      .eq("is_active", true)
-      .order("id", { ascending: false });
+    .from("yoga_signups")
+    .select("*")
+    .eq("current_session_date", '2026-07-13')
+    .eq("is_active", true)
+    .order("id", { ascending: false });
 
 
   if (!users?.length) {
@@ -103,7 +105,8 @@ export const triggerYogaCampaignevening = async (dayNumber) => {
       continue;
     }
 
-    const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
+    const phoneData = processPhone(user.phone, user.country_code);
+    const { localPhone, whatsappPhone } = phoneData;
 
     try {
       await sessionFunction({
@@ -112,7 +115,7 @@ export const triggerYogaCampaignevening = async (dayNumber) => {
         userId: user.ref_user_id,
       });
 
-    
+
     } catch (err) {
       console.error(`> Failed for ${user.id}`, err.message);
     }
@@ -129,10 +132,10 @@ export const triggerGutHealthProgram = async (dayNumber) => {
 
   const { data: users } = await supabase
     .from("yoga_signups")
-      .select("*")
-      .eq("current_session_date", '2026-07-13')
-      .eq("is_active", true)
-      .order("id", { ascending: false });
+    .select("*")
+    .eq("current_session_date", '2026-07-13')
+    .eq("is_active", true)
+    .order("id", { ascending: false });
 
   if (!users?.length) {
     console.log("> No users found");
@@ -140,7 +143,8 @@ export const triggerGutHealthProgram = async (dayNumber) => {
   }
 
   for (const user of users) {
-    const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
+    const phoneData = processPhone(user.phone, user.country_code);
+    const { localPhone, whatsappPhone } = phoneData;
 
     try {
       await GutHealthDay6({
@@ -168,10 +172,10 @@ export const triggerGutHealthProgramEvening = async (dayNumber) => {
 
   const { data: users } = await supabase
     .from("yoga_signups")
-      .select("*")
-      .eq("current_session_date", '2026-07-13')
-      .eq("is_active", true)
-      .order("id", { ascending: false });
+    .select("*")
+    .eq("current_session_date", '2026-07-13')
+    .eq("is_active", true)
+    .order("id", { ascending: false });
 
   if (!users?.length) {
     console.log("> No users found");
@@ -179,7 +183,8 @@ export const triggerGutHealthProgramEvening = async (dayNumber) => {
   }
 
   for (const user of users) {
-    const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
+    const phoneData = processPhone(user.phone, user.country_code);
+    const { localPhone, whatsappPhone } = phoneData;
 
     try {
       await GutHealthDay6Evening({
@@ -207,9 +212,9 @@ export const triggerwelcomenmorning = async (dayNumber) => {
 
   const { data: users } = await supabase
     .from("yoga_signups")
-      .select("*")
-      .gt("id", 6103)
-      .order("id", { ascending: false })
+    .select("*")
+    .gt("id", 6103)
+    .order("id", { ascending: false })
 
   if (!users?.length) {
     console.log("> No users found");
@@ -217,7 +222,8 @@ export const triggerwelcomenmorning = async (dayNumber) => {
   }
 
   for (const user of users) {
-    const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
+    const phoneData = processPhone(user.phone, user.country_code);
+    const { localPhone, whatsappPhone } = phoneData;
 
     try {
       await day0SessionMorning({
@@ -245,9 +251,9 @@ export const triggerwelcomeevening = async (dayNumber) => {
 
   const { data: users } = await supabase
     .from("yoga_signups")
-      .select("*")
-      .gt("id", 6103)
-      .order("id", { ascending: false })
+    .select("*")
+    .gt("id", 6103)
+    .order("id", { ascending: false })
 
 
   if (!users?.length) {
@@ -258,7 +264,8 @@ export const triggerwelcomeevening = async (dayNumber) => {
   let count = 0;
 
   for (const user of users) {
-    const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
+    const phoneData = processPhone(user.phone, user.country_code);
+    const { localPhone, whatsappPhone } = phoneData;
 
     try {
       await day0SessionEvening({
@@ -286,10 +293,10 @@ export const trigger14ComProgram = async (dayNumber) => {
 
   const { data: users } = await supabase
     .from("yoga_signups")
-      .select("*")
-      .eq("current_session_date", '2026-07-13')
-      .eq("is_active", true)
-      .order("id", { ascending: false });
+    .select("*")
+    .eq("current_session_date", '2026-07-13')
+    .eq("is_active", true)
+    .order("id", { ascending: false });
 
   if (!users?.length) {
     console.log("> No users found");
@@ -297,7 +304,8 @@ export const trigger14ComProgram = async (dayNumber) => {
   }
 
   for (const user of users) {
-    const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
+    const phoneData = processPhone(user.phone, user.country_code);
+    const { localPhone, whatsappPhone } = phoneData;
 
     try {
       await continue14Session({
@@ -325,10 +333,10 @@ export const trigger14ComProgramEvening = async (dayNumber) => {
 
   const { data: users } = await supabase
     .from("yoga_signups")
-      .select("*")
-      .eq("current_session_date", '2026-07-13')
-      .eq("is_active", true)
-      .order("id", { ascending: false });
+    .select("*")
+    .eq("current_session_date", '2026-07-13')
+    .eq("is_active", true)
+    .order("id", { ascending: false });
 
   if (!users?.length) {
     console.log("> No users found");
@@ -336,7 +344,8 @@ export const trigger14ComProgramEvening = async (dayNumber) => {
   }
 
   for (const user of users) {
-    const whatsappPhone = `${user.country_code}${user.phone}`.replace(/\D/g, "");
+    const phoneData = processPhone(user.phone, user.country_code);
+    const { localPhone, whatsappPhone } = phoneData;
 
     try {
       await continue14SessionEvening({
