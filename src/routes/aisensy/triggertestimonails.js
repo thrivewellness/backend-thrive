@@ -62,7 +62,7 @@ export const triggerYtVid = async (dayNumber) => {
   const { data: users, error } = await supabase
     .from("yoga_signups")
     .select("*")
-    .eq("id", 1229)
+    .gte("id", 7829)
 
 
 
@@ -80,7 +80,7 @@ export const triggerYtVid = async (dayNumber) => {
     const { localPhone, whatsappPhone } = phoneData;
 
     try {
-      await sendtYtVidManual({
+      await sendYtVid({
         whatsappPhone,
         name: user.name,
         dayNumber,
