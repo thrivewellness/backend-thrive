@@ -15,7 +15,7 @@ export const triggerFiveRem = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .eq("current_session_date", '2026-06-29')
+    .eq("current_session_date", '2026-07-13')
     .eq("is_active", true)
     .order("id", { ascending: false });
 
@@ -29,7 +29,7 @@ export const triggerFiveRem = async (dayNumber) => {
     const { localPhone, whatsappPhone } = phoneData;
 
     try {
-      await fiveMinSessionRemainder14Con({
+      await fiveMinSessionRemainderGutHealth({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,
@@ -55,7 +55,7 @@ export const triggerFiveRemEve = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .eq("current_session_date", '2026-06-29')
+    .eq("current_session_date", '2026-07-13')
     .eq("is_active", true)
     .order("id", { ascending: false });
 
@@ -69,7 +69,7 @@ export const triggerFiveRemEve = async (dayNumber) => {
     const { localPhone, whatsappPhone } = phoneData;
 
     try {
-      await fiveMinSessionRemainder14ConEve({
+      await fiveMinSessionRemainderGutHealthEvening({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,
@@ -141,7 +141,7 @@ export const triggerLiveNowRem = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .eq("current_session_date", '2026-06-29')
+    .eq("current_session_date", '2026-07-13')
     .eq("is_active", true)
     .order("id", { ascending: false });
 
@@ -181,7 +181,7 @@ export const triggerTommarowremmetabolic = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .eq("current_session_date", '2026-06-29')
+    .eq("current_session_date", '2026-07-13')
     .eq("is_active", true)
     .order("id", { ascending: false });
 
@@ -226,7 +226,7 @@ export const triggerTommarowrem14con = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .eq("current_session_date", '2026-06-29')
+    .eq("current_session_date", '2026-07-13')
     .eq("is_active", true)
     .order("id", { ascending: false });
 
