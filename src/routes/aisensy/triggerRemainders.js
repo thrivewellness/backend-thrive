@@ -96,8 +96,9 @@ export const triggerTommarowrem = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .gt("id", 6103)
-    .range(0, 9999);
+    .eq("current_session_date", '2026-07-13')
+    .eq("is_active", true)
+    .order("id", { ascending: false });
 
   if (!users?.length) {
     console.log("> No users found");
@@ -110,7 +111,7 @@ export const triggerTommarowrem = async (dayNumber) => {
     const { localPhone, whatsappPhone } = phoneData;
 
     try {
-      await tommarowDay1SessionRemainders({
+      await tommarowSessionRemaindersGutHealth({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,
