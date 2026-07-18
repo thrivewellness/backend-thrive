@@ -29,7 +29,7 @@ export const triggerFiveRem = async (dayNumber) => {
     const { localPhone, whatsappPhone } = phoneData;
 
     try {
-      await fiveMinSessionRemainderGutHealth({
+      await fiveMinSessionRemainderMetabolHealth({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,
@@ -69,7 +69,7 @@ export const triggerFiveRemEve = async (dayNumber) => {
     const { localPhone, whatsappPhone } = phoneData;
 
     try {
-      await fiveMinSessionRemainderGutHealthEvening({
+      await fiveMinSessionRemainderMetabolHealthEvening({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,
@@ -271,9 +271,8 @@ export const triggerFiveRemWel = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .gt("id", 6103)
-    .order("id", { ascending: false })
-    .range(0, 9999);
+    .gte("id", 7829)
+    .order("id", { ascending: false });
 
   if (!users?.length) {
     console.log("> No users found");
@@ -311,9 +310,8 @@ export const triggerFiveRemWelEve = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .gt("id", 6103)
-    .order("id", { ascending: false })
-    .range(0, 9999);
+    .gte("id", 7829)
+    .order("id", { ascending: false });
 
   if (!users?.length) {
     console.log("> No users found");

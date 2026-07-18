@@ -213,7 +213,7 @@ export const triggerwelcomenmorning = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .gt("id", 6103)
+    .gte("id", 7829)
     .order("id", { ascending: false })
 
   if (!users?.length) {
@@ -252,7 +252,7 @@ export const triggerwelcomeevening = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .gt("id", 6103)
+    .gte("id", 7829)
     .order("id", { ascending: false })
 
 
