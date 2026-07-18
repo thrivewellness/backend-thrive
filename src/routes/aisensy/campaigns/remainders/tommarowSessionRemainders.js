@@ -59,18 +59,15 @@ export const tommarowWelcomeSessionRemainder = async ({ userId, whatsappPhone, n
         templateParams: [
             `*${name} Ji*`,
             `*Welcome Session*`,
-            `12 July 2026`,
-            `11 AM | 6 PM (IST)`,
+            `19 July 2026`,
+            `11 AM | 4 PM (IST)`,
             `40 Min`,
             `🧘 Understand the Thrive Yoga philosophy`,
             `🌿 Get familiar with the session structure and flow`,
             `❓ Clear all your doubts before starting`
         ],
         source: "new-landing-page form",
-        media: {
-            "url": "https://d3jt6ku4g6z5l8.cloudfront.net/VIDEO/696b61f2951b730d7655fef4/9945042_guthaelthreminder.mp4",
-            "filename": "gut_haelth_reminder.mp4"
-        },
+        media: {},
         buttons: [],
         carouselCards: [],
         location: {},
