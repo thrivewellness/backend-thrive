@@ -3,6 +3,27 @@ import { supabase } from '../../../lib/supabase.js';
 
 const router = express.Router();
 
+const getTodayIST = () => new Date().toLocaleDateString('en-CA', {
+  timeZone: 'Asia/Kolkata'
+});
+
+const calculateDayNumber = (currentSessionDate, todayDate) => {
+  if (!currentSessionDate) {
+    return null;
+  }
+
+  const sessionDate = currentSessionDate.toString().slice(0, 10);
+  const sessionStart = new Date(`${sessionDate}T00:00:00+05:30`);
+  const today = new Date(`${todayDate}T00:00:00+05:30`);
+
+  if (Number.isNaN(sessionStart.getTime()) || Number.isNaN(today.getTime())) {
+    return null;
+  }
+
+  const millisecondsPerDay = 24 * 60 * 60 * 1000;
+  return Math.floor((today - sessionStart) / millisecondsPerDay) + 1;
+};
+
 // POST /webhook/day-number
 router.post('/day-number/evening', async (req, res) => {
     console.log('Received request for day number webhook with body:', req.query);
@@ -33,7 +54,7 @@ router.post('/day-number/evening', async (req, res) => {
 
     const { data: userById, error: userByIdError } = await supabase
       .from('yoga_signups')
-      .select('id, phone, country_code')
+      .select('id, phone, country_code, current_session_date')
       .eq('id', user_id)
       .single();
 
@@ -42,7 +63,7 @@ router.post('/day-number/evening', async (req, res) => {
     } else {
       const { data: userByPhone, error: userByPhoneError } = await supabase
         .from('yoga_signups')
-        .select('id, phone, country_code')
+        .select('id, phone, country_code, current_session_date')
         .eq('phone', phoneNumber)
         .eq('country_code', countryCode)
         .single();
@@ -59,28 +80,20 @@ router.post('/day-number/evening', async (req, res) => {
       });
     }
 
-    const todayIST = new Date().toLocaleDateString('en-CA', {
-      timeZone: 'Asia/Kolkata'
-    });
+    const todayIST = getTodayIST();
+    const dayNumber = calculateDayNumber(user.current_session_date, todayIST);
 
-    const { data: campaign, error: campaignError } = await supabase
-      .from('campaigns_data')
-      .select('day_number')
-      .eq('campaign_date', todayIST)
-      .eq('session_name', 'evening') 
-      .single();
-
-    if (campaignError || !campaign) {
+    if (!dayNumber || dayNumber < 1) {
       return res.status(404).json({
         success: false,
-        error: 'no campaign data for today'
+        error: 'current_session_date not found or invalid for user'
       });
     }
 
     return res.status(200).json({
       success: true,
       user_exists: true,
-      day_number: campaign.day_number
+      day_number: dayNumber
     });
   } catch (err) {
     console.error('day-number webhook error:', err);
@@ -120,7 +133,7 @@ router.post('/day-number/morning', async (req, res) => {
 
     const { data: userById, error: userByIdError } = await supabase
       .from('yoga_signups')
-      .select('id, phone, country_code')
+      .select('id, phone, country_code, current_session_date')
       .eq('id', user_id)
       .single();
 
@@ -129,7 +142,7 @@ router.post('/day-number/morning', async (req, res) => {
     } else {
       const { data: userByPhone, error: userByPhoneError } = await supabase
         .from('yoga_signups')
-        .select('id, phone, country_code')
+        .select('id, phone, country_code, current_session_date')
         .eq('phone', phoneNumber)
         .eq('country_code', countryCode)
         .single();
@@ -146,28 +159,20 @@ router.post('/day-number/morning', async (req, res) => {
       });
     }
 
-    const todayIST = new Date().toLocaleDateString('en-CA', {
-      timeZone: 'Asia/Kolkata'
-    });
+    const todayIST = getTodayIST();
+    const dayNumber = calculateDayNumber(user.current_session_date, todayIST);
 
-    const { data: campaign, error: campaignError } = await supabase
-      .from('campaigns_data')
-      .select('day_number')
-      .eq('campaign_date', todayIST)
-      .eq('session_name', 'morning') 
-      .single();
-
-    if (campaignError || !campaign) {
+    if (!dayNumber || dayNumber < 1) {
       return res.status(404).json({
         success: false,
-        error: 'no campaign data for today'
+        error: 'current_session_date not found or invalid for user'
       });
     }
 
     return res.status(200).json({
       success: true,
       user_exists: true,
-      day_number: campaign.day_number
+      day_number: dayNumber
     });
   } catch (err) {
     console.error('day-number webhook error:', err);
