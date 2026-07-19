@@ -62,7 +62,7 @@ export const triggerYogaCampaignmorning = async (dayNumber) => {
     }
 
     // WhatsApp safety delay
-    await delay(200);
+    await delay(50);
   }
 
   console.log("> Yoga campaign finished");
@@ -120,7 +120,7 @@ export const triggerYogaCampaignevening = async (dayNumber) => {
       console.error(`> Failed for ${user.id}`, err.message);
     }
 
-    await delay(200);
+    await delay(50);
   }
 
   console.log("> Yoga campaign finished");
@@ -466,7 +466,7 @@ export const triggerYogaCampaigneveningnew = async (dayNumber) => {
       console.error(`> Failed for ${user.id}`, err.message);
     }
 
-    await delay(200);
+    await delay(50);
   }
 
   console.log("> Yoga campaign finished");
