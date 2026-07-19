@@ -110,7 +110,7 @@ export const triggerTommarowrem = async (dayNumber) => {
     const { localPhone, whatsappPhone } = phoneData;
 
     try {
-      await tommarowWelcomeSessionRemainder({
+      await tommarowDay1SessionRemainders({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,

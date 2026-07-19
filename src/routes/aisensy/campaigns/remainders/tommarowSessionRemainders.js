@@ -14,7 +14,7 @@ export const tommarowDay1SessionRemainders = async ({ userId, whatsappPhone, nam
         templateParams: [
             `*${name} Ji*`,
             `*Day 1 of Thrive Yoga*`,
-            `*7 AM | 5:30 PM (IST)*`,
+            `*7 AM | 8 AM | 9 AM  & 5:30 | 6:30 | 7:30 PM (IST)*`,
             `*50 Min*`,
             `• Builds overall strength and stability`,
             `• Enhances full-body awareness`,
@@ -22,10 +22,7 @@ export const tommarowDay1SessionRemainders = async ({ userId, whatsappPhone, nam
         ],
         
         source: "new-landing-page form",
-        media: {
-            "url": "https://d3jt6ku4g6z5l8.cloudfront.net/VIDEO/696b61f2951b730d7655fef4/9945042_guthaelthreminder.mp4",
-            "filename": "gut_haelth_reminder.mp4"
-        },
+        media: {},
         buttons: [],
         carouselCards: [],
         location: {},

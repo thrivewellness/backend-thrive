@@ -12,8 +12,8 @@ export const sendJoinCummunity = async ({ whatsappPhone, name, dayNumber }) => {
         userName: "Thrive Integrated Lifestyle Private Limited",
 
         templateParams: [
-            `${name} 👋`,
-            `https://chat.whatsapp.com/KpSuwuiqzwzDEv8ZFmEn44`,
+            `*${name}* 🙏`,
+            `https://chat.whatsapp.com/LYPaO1mXKAjEmtrlvhfF13`,
             "https://www.facebook.com/share/g/1D414kk5qj/?mibextid=wwXIfr",
         ],
         source: "new-landing-page form",
