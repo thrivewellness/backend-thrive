@@ -366,3 +366,108 @@ export const trigger14ComProgramEvening = async (dayNumber) => {
   console.log("> Yoga campaign finished");
 };
 
+
+
+export const triggerYogaCampaignmorningnew = async (dayNumber) => {
+  console.log("> Yoga new campaign started");
+  console.log("> day number: ", dayNumber);
+
+  const sessionFunction = morningSessions[dayNumber];
+
+  if (!sessionFunction) {
+    console.log("> Invalid day number");
+    return;
+  }
+
+  const { data: users } = await supabase
+    .from("yoga_signups")
+    .select("*")
+    .eq("current_session_date", '2026-07-20')
+    .eq("is_active", true)
+    .order("id", { ascending: false });
+
+  if (!users?.length) {
+    console.log("> No users found");
+    return;
+  }
+
+  for (const user of users) {
+    const phoneData = processPhone(user.phone, user.country_code);
+    const { localPhone, whatsappPhone } = phoneData;
+
+    try {
+      await sessionFunction({
+        whatsappPhone,
+        name: user.name,
+        userId: user.ref_user_id,
+      });
+
+      console.log(`> Sent to ${user.id}`);
+    } catch (err) {
+      console.error(`> Failed for ${user.id}`, err.message);
+    }
+
+    // WhatsApp safety delay
+    await delay(50);
+  }
+
+  console.log("> Yoga campaign finished");
+};
+
+
+export const triggerYogaCampaigneveningnew = async (dayNumber) => {
+  console.log("> Yoga campaign new started");
+  console.log("> day number: ", dayNumber);
+  const todayDate = dayjs().format("YYYY-MM-DD");
+
+  console.log("Today's date:", todayDate);
+
+  const sessionFunction = eveningSessions[dayNumber];
+
+  if (!sessionFunction) {
+    console.log("> Invalid day number");
+    return;
+  }
+
+  const { data: users } = await supabase
+    .from("yoga_signups")
+    .select("*")
+    .eq("current_session_date", '2026-07-20')
+    .eq("is_active", true)
+    .order("id", { ascending: false });
+
+
+  if (!users?.length) {
+    console.log("> No users found");
+    return;
+  }
+
+  for (const user of users) {
+    const hasTodayAttendance =
+      Array.isArray(user.attendance) && user.attendance.includes(todayDate);
+
+    if (hasTodayAttendance) {
+      console.log(`> Skipped ${user.id} (attendance already marked for ${todayDate})`);
+      continue;
+    }
+
+    const phoneData = processPhone(user.phone, user.country_code);
+    const { localPhone, whatsappPhone } = phoneData;
+
+    try {
+      await sessionFunction({
+        whatsappPhone,
+        name: user.name,
+        userId: user.ref_user_id,
+      });
+
+
+    } catch (err) {
+      console.error(`> Failed for ${user.id}`, err.message);
+    }
+
+    await delay(200);
+  }
+
+  console.log("> Yoga campaign finished");
+};

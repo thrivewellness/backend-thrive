@@ -8,7 +8,9 @@ import {
   triggerwelcomenmorning,
   triggerwelcomeevening,
   trigger14ComProgram,
-  trigger14ComProgramEvening
+  trigger14ComProgramEvening,
+  triggerYogaCampaignmorningnew,
+  triggerYogaCampaigneveningnew
 } from "./triggerYogaCampaign.js";
 import { triggerAttendance } from "../routes/aisensy/triggerAttendance.js";
 import { triggerPlans } from "../routes/aisensy/triggerPlans.js";

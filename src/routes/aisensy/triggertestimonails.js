@@ -62,9 +62,7 @@ export const triggerYtVid = async (dayNumber) => {
   const { data: users, error } = await supabase
     .from("yoga_signups")
     .select("*")
-    .gte("id", 7829)
-
-
+    .gte("id", 8439)
 
   if (!users?.length) {
     console.log("> No users found");
@@ -80,7 +78,7 @@ export const triggerYtVid = async (dayNumber) => {
     const { localPhone, whatsappPhone } = phoneData;
 
     try {
-      await sendYtVid({
+      await send15MinDrill({
         whatsappPhone,
         name: user.name,
         dayNumber,
