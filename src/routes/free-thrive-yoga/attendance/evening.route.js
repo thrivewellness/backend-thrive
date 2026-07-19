@@ -25,6 +25,23 @@ const getISTDateTime = () => {
   return { currentTime, todayDate, currentDateTime };
 };
 
+const calculateDayNumber = (currentSessionDate, todayDate) => {
+  if (!currentSessionDate) {
+    return null;
+  }
+
+  const sessionDate = currentSessionDate.toString().slice(0, 10);
+  const sessionStart = new Date(`${sessionDate}T00:00:00+05:30`);
+  const today = new Date(`${todayDate}T00:00:00+05:30`);
+
+  if (Number.isNaN(sessionStart.getTime()) || Number.isNaN(today.getTime())) {
+    return null;
+  }
+
+  const millisecondsPerDay = 24 * 60 * 60 * 1000;
+  return Math.floor((today - sessionStart) / millisecondsPerDay) + 1;
+};
+
 const EVENING_ATTENDANCE_SLOTS = [
   { start: "17:15", end: "18:20", presentMessageTime: "18:30" },
   { start: "18:20", end: "19:20", presentMessageTime: "19:30" },
@@ -75,7 +92,7 @@ router.post("/", async (req, res) => {
     // Fetch existing record
     const { data: existingUser, error: fetchError } = await supabase
       .from("yoga_signups")
-      .select("attendance, activity")
+      .select("attendance, activity, current_session_date")
       .eq("ref_user_id", id)
       .single();
 
@@ -91,19 +108,27 @@ router.post("/", async (req, res) => {
       return res.status(400).json({ error: "Invalid ID" });
     }
 
-    // Fetch today's campaign link
+    const dayNumber = calculateDayNumber(existingUser.current_session_date, todayDate);
+
+    if (!dayNumber || dayNumber < 1) {
+      return res.status(400).json({
+        error: "current_session_date not found or invalid for user",
+      });
+    }
+
+    // Fetch this user's campaign link for today and their calculated day number.
     const { data: campaignData, error: campaignError } = await supabase
       .from("campaigns_data")
       .select("link, day_number")
       .eq("campaign_date", todayDate)
       .eq("session_name", "evening")
+      .eq("day_number", dayNumber)
       .single();
 
 
     if (campaignError && campaignError.code !== "PGRST116") throw campaignError;
 
     const campaignLink = campaignData?.link ?? null;
-    const dayNumber = Number(campaignData?.day_number);
     const attendanceSlot = getAttendanceSlot(currentTime, dayNumber);
     const isEveningTime = Boolean(attendanceSlot);
 
