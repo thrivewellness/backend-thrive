@@ -50,7 +50,7 @@ cron.schedule("* * * * *", async () => {
   const now = new Date().toISOString(); // Always use ISO
   console.log("> Server time:", now);
 
-  // 1️⃣ Get campaigns ready to trigger
+  // Get campaigns ready to trigger
   const { data: campaigns, error } = await supabase
     .from("campaigns_data")
     .select("*")
