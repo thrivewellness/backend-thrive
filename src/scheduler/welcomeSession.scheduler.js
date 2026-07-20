@@ -41,7 +41,9 @@ const HANDLERS = {
   triggerFiveRemWelEve,
   triggerFiveRemWel,
   triggerYtVid,
-  triggerJoinComunity
+  triggerJoinComunity,
+  triggerYogaCampaignmorningnew,
+  triggerYogaCampaigneveningnew
 };
 
 cron.schedule("* * * * *", async () => {
