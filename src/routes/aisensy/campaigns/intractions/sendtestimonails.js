@@ -13,16 +13,16 @@ export const sendInstTestimonails = async ({ whatsappPhone, name, dayNumber }) =
 
         templateParams: [
             `${name} 👋`,
-            '💚 Video for Today',
-            `Reason Behind Your Knee Pain + Exercises`,
-            '✨Understand why your knees hurt even without injury.',
-            '✨Learn simple exercises to strengthen and protect your knees.',
-            "https://www.instagram.com/reel/DR99Bi3Etil/?igsh=MTZ1Y2VuOHlpenNvZQ=="
+            '💚 Meet our Thrive Hero, Archana',
+            `She Lost 14 Kgs at Age 48`,
+            '✨How she transformed her body after 40 with simple lifestyle changes.',
+            '✨The habits that helped her reduce weight and inflammation naturally.',
+            "https://www.instagram.com/reel/DT8B45bkfRa/?igsh=MWV5bzEybHBnODZkMA=="
         ],
         source: "new-landing-page form",
         media: {
-            "url": "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/1847650_Image423.jpg",
-            "filename": "Image-423.jpg"
+            "url": "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/9076501_archanaytvid.jpg",
+            "filename": "archanaytvid.jpg"
         },
         buttons: [],
         carouselCards: [],

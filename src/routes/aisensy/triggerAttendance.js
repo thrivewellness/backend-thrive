@@ -37,6 +37,36 @@ const addDays = (dateString, days) => {
   return formatDate(date);
 };
 
+const getDatePart = (dateString) => dateString?.toString().slice(0, 10);
+
+const getDateAtUTCNoon = (dateString) => {
+  const [year, month, day] = getDatePart(dateString).split("-").map(Number);
+  return new Date(Date.UTC(year, month - 1, day, 12));
+};
+
+const calculateDayNumber = (currentSessionDate, todayDate) => {
+  if (!currentSessionDate || !todayDate) {
+    return null;
+  }
+
+  const sessionStart = getDateAtUTCNoon(currentSessionDate);
+  const today = getDateAtUTCNoon(todayDate);
+
+  if (Number.isNaN(sessionStart.getTime()) || Number.isNaN(today.getTime())) {
+    return null;
+  }
+
+  const millisecondsPerDay = 24 * 60 * 60 * 1000;
+  return Math.floor((today - sessionStart) / millisecondsPerDay) + 1;
+};
+
+const getAttendanceDayNumbersForDate = (dateString) => {
+  const day = getDateAtUTCNoon(dateString).getUTCDay();
+  const weekPosition = day === 0 ? 7 : day;
+
+  return [weekPosition, weekPosition + 7];
+};
+
 const getDatesEndingOn = (endDate, totalDays) => {
   return Array.from({ length: totalDays }, (_, index) => addDays(endDate, index - totalDays + 1));
 };
@@ -154,17 +184,22 @@ export const triggerAttendance = async (
 
   console.log("> Running Attendance Function");
   console.log("> Triggered Campaign:", triggeredToday);
-  console.log("> Day Number:", dayNumber);
   console.log("> Present Message Time:", presentMessageTime || "all");
   console.log("> Send Absent:", sendAbsent);
 
   try {
-    const { trackerDates, consecutiveAbsentDates, badgeDates } = getAttendanceContext(dayNumber, triggeredToday);
+    const targetDayNumbers = getAttendanceDayNumbersForDate(triggeredToday);
+    const targetSessionDates = targetDayNumbers.map((targetDayNumber) =>
+      addDays(triggeredToday, -(targetDayNumber - 1))
+    );
+
+    console.log("> Target Day Numbers:", targetDayNumbers.join(", "));
+    console.log("> Target Session Dates:", targetSessionDates.join(", "));
 
     const { data: users, error } = await supabase
       .from("yoga_signups")
       .select("*")
-      .eq("current_session_date", '2026-07-13')
+      .in("current_session_date", targetSessionDates)
       .eq("is_active", true)
       .order("id", { ascending: false });
 
@@ -175,6 +210,13 @@ export const triggerAttendance = async (
 
     for (const user of users) {
       const { id, name, country_code, phone, attendance, activity, ref_user_id } = user;
+      const userDayNumber = calculateDayNumber(user.current_session_date, triggeredToday);
+
+      if (!targetDayNumbers.includes(userDayNumber)) {
+        continue;
+      }
+
+      const { trackerDates, consecutiveAbsentDates, badgeDates } = getAttendanceContext(userDayNumber, triggeredToday);
       const phoneData = processPhone(phone, country_code);
       const { localPhone, whatsappPhone } = phoneData;
       const attendanceList = Array.isArray(attendance) ? attendance : [];
@@ -196,12 +238,12 @@ export const triggerAttendance = async (
 
       try {
         if (shouldSendPresent) {
-          await presentFunction(id, whatsappPhone, name, dayNumber, tracker, totalPresentDays, isBadgeEligible, ref_user_id);
+          await presentFunction(id, whatsappPhone, name, userDayNumber, tracker, totalPresentDays, isBadgeEligible, ref_user_id);
           if (presentMessageTime) {
             await markPresentActivitySent(user, triggeredToday, presentMessageTime);
           }
         } else if (shouldSendAbsent) {
-          await absentFunction(id, whatsappPhone, name, dayNumber, consecutiveAbsentCount, ref_user_id);
+          await absentFunction(id, whatsappPhone, name, userDayNumber, consecutiveAbsentCount, ref_user_id);
           await markAbsentMessageSent(user, triggeredToday);
         }
       } catch (err) {
