@@ -13,16 +13,16 @@ export const sendInstTestimonails = async ({ whatsappPhone, name, dayNumber }) =
 
         templateParams: [
             `${name} 👋`,
-            '💚 Meet our Thrive Hero, Archana',
-            `She Lost 14 Kgs at Age 48`,
-            '✨How she transformed her body after 40 with simple lifestyle changes.',
-            '✨The habits that helped her reduce weight and inflammation naturally.',
-            "https://www.instagram.com/reel/DT8B45bkfRa/?igsh=MWV5bzEybHBnODZkMA=="
+            '💚 Meet our Thrive Hero, Shatha Venkatraman',
+            `She Improved Her Strength & Sugar Levels at the Age of 80 💪`,
+            '✨How she improved her strength, and has seen positive changes in her sugar levels.',
+            '✨How she able to confidently lifts 2.5-3 kg in each hand',
+            "https://www.instagram.com/reel/DZfZO_iR7KJ/"
         ],
         source: "new-landing-page form",
         media: {
-            "url": "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/9076501_archanaytvid.jpg",
-            "filename": "archanaytvid.jpg"
+            "url": "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/9399044_testimonials.png",
+            "filename": "testimonials.png"
         },
         buttons: [],
         carouselCards: [],
@@ -48,5 +48,49 @@ export const sendInstTestimonails = async ({ whatsappPhone, name, dayNumber }) =
     return response.data;
 }
 
+export const sendInstTestimonailsnew = async ({ whatsappPhone, name, dayNumber }) => {
+
+    console.log("sendInstTestimonails called with:", { whatsappPhone, name, dayNumber });
+
+    const payload = {
+        apiKey: process.env.AISENSY_API_KEY,
+        campaignName: "send_vid_img",
+        destination: whatsappPhone,
+        userName: "Thrive Integrated Lifestyle Private Limited",
+
+        templateParams: [
+            `${name} 👋`,
+            '💚 Video For Today',
+            `5 Food Items For Women Above 35`,
+            '✨These foods will make your bones stronger',
+            '✨Learn how these help you support overall well being and energy.',
+            "https://www.instagram.com/reel/DaJ_7PJTrWi/"
+        ],
+        source: "new-landing-page form",
+        media: {
+            "url": "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/8240236_5foods.jpg",
+            "filename": "5foods.jpg"
+        },
+        buttons: [],
+        carouselCards: [],
+        location: {},
+        attributes: {},
+
+        paramsFallbackValue: {
+        }
+    };
+
+    const response = await axios.post(
+        "https://backend.aisensy.com/campaign/t1/api/v2",
+        payload,
+        {
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }
+    );
 
 
+    console.log(`Aisensy sendInstTestimonails response for ${whatsappPhone}:`, response.data);  
+    return response.data;
+}

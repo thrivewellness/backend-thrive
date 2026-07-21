@@ -13,16 +13,16 @@ export const sendYtVid = async ({ whatsappPhone, name, dayNumber }) => {
 
         templateParams: [
             `${name} 👋`,
-            'Your thrive yoga starts in 3 days (20th july 2026). Watch this informative video that helps you better understanding of healthy lifestyle',
-            `Why Belly Fat Won’t Go Away 🔥`,
-            '✨The hidden reasons your belly fat is holding on.',
-            '✨Stop starving yourself and learn what actually works.',
-            "https://youtu.be/QXdvWhi1GE8"
+            'Your thrive yoga starts in 5 days (27th july 2026). Watch this informative video that helps you better understanding of healthy lifestyle',
+            `Fix Your Thyroid Naturally | Boost Metabolism & Balance Hormones Fast 🔥`,
+            '✨Why your weight won’t move despite trying everything.',
+            '✨ Simple habits to support your thyroid and energy.',
+            "https://youtu.be/CFAPvOdaUqw"
         ],
         source: "new-landing-page form",
         media: {
-            "url": "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/8440299_whyyoucantlosebellyfat.jpg",
-            "filename": "whyyoucantlosebellyfat.jpg"
+            "url": "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/630005_4.jpg.jpeg",
+            "filename": "4.jpg.jpeg"
         },
         buttons: [],
         carouselCards: [],
