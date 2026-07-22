@@ -19,7 +19,7 @@ export const triggerPlans = async (dayNumber) => {
     const { data: users, error } = await supabase
       .from("yoga_signups")
       .select("*")
-      .eq("current_session_date", '2026-06-29')
+      .eq("current_session_date", '2026-07-13')
       .order("id", { ascending: false });
 
     if (error) {
@@ -42,7 +42,7 @@ export const triggerPlans = async (dayNumber) => {
       try {
         if (isPresent) {
           presentCount++;
-          await sendChineseMsg(id, whatsappPhone, name, dayNumber);
+          await sendThriveconsultaion3day(id, whatsappPhone, name, dayNumber);
         } else {
           //console.log(`> User ${id} Skipping.`);
           continue;
