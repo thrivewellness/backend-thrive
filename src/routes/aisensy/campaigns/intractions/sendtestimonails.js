@@ -60,16 +60,16 @@ export const sendInstTestimonailsnew = async ({ whatsappPhone, name, dayNumber }
 
         templateParams: [
             `${name} 👋`,
-            '💚 Video For Today',
-            `5 Food Items For Women Above 35`,
-            '✨These foods will make your bones stronger',
-            '✨Learn how these help you support overall well being and energy.',
-            "https://www.instagram.com/reel/DaJ_7PJTrWi/"
+            '💚 Meet our Thrive Hero, Ragini Mathur',
+            `She lost 9.5 kgs at the age of 60`,
+            '✨How she managed her Pre diabetes.',
+            '✨How she fixed her thyroid issues.',
+            "https://www.instagram.com/reel/DYzfhkABIqx/"
         ],
         source: "new-landing-page form",
         media: {
-            "url": "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/8240236_5foods.jpg",
-            "filename": "5foods.jpg"
+            "url": "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/1200085_testimonial1.jpeg",
+            "filename": "testimonial_1.jpeg"
         },
         buttons: [],
         carouselCards: [],
