@@ -60,16 +60,16 @@ export const sendInstTestimonailsnew = async ({ whatsappPhone, name, dayNumber }
 
         templateParams: [
             `${name} 👋`,
-            '💚 Meet our Thrive Hero, Ragini Mathur',
-            `She lost 9.5 kgs at the age of 60`,
-            '✨How she managed her Pre diabetes.',
-            '✨How she fixed her thyroid issues.',
-            "https://www.instagram.com/reel/DYzfhkABIqx/"
+            '💚 Video For Video',
+            `4 Exercises for Severe Knee Pain.`,
+            '✨Know the reason of your knee pain.',
+            '✨Exercises to reduce knee pain.',
+            "https://www.instagram.com/reel/DR99Bi3Etil/"
         ],
         source: "new-landing-page form",
         media: {
-            "url": "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/1200085_testimonial1.jpeg",
-            "filename": "testimonial_1.jpeg"
+            "url": "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/1847650_Image423.jpg",
+            "filename": "Image-423.jpg"
         },
         buttons: [],
         carouselCards: [],
