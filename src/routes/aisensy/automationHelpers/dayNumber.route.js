@@ -189,7 +189,7 @@ router.post('/day-number/evening', async (req, res) => {
     const todayIST = getTodayIST();
     const dayNumber = calculateDayNumber(user.current_session_date, todayIST);
 
-    if (!dayNumber || dayNumber < 1) {
+    if (!dayNumber) {
       return res.status(404).json({
         success: false,
         error: 'current_session_date not found or invalid for user'
@@ -250,7 +250,7 @@ router.post('/day-number/morning', async (req, res) => {
     const todayIST = getTodayIST();
     const dayNumber = calculateDayNumber(user.current_session_date, todayIST);
 
-    if (!dayNumber || dayNumber < 1) {
+    if (!dayNumber) {
       return res.status(404).json({
         success: false,
         error: 'current_session_date not found or invalid for user'
