@@ -15,7 +15,7 @@ export const triggerFiveRem = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .eq("current_session_date", '2026-07-13')
+    .eq("current_session_date", '2026-07-20')
     .eq("is_active", true)
     .order("id", { ascending: false });
 
@@ -55,7 +55,7 @@ export const triggerFiveRemEve = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .eq("current_session_date", '2026-07-13')
+    .eq("current_session_date", '2026-07-20')
     .eq("is_active", true)
     .order("id", { ascending: false });
 
