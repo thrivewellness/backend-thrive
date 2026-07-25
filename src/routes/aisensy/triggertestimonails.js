@@ -126,7 +126,7 @@ export const triggerYtVid = async (dayNumber) => {
     const { localPhone, whatsappPhone } = phoneData;
 
     try {
-      await sendYtVid({
+      await tommarowWelcomeSessionRemainder({
         whatsappPhone,
         name: user.name,
         dayNumber,
