@@ -29,7 +29,7 @@ export const triggerFiveRem = async (dayNumber) => {
     const { localPhone, whatsappPhone } = phoneData;
 
     try {
-      await fiveMinSessionRemainderGutHealth({
+      await fiveMinSessionRemainderMetabolHealth({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,
@@ -69,7 +69,7 @@ export const triggerFiveRemEve = async (dayNumber) => {
     const { localPhone, whatsappPhone } = phoneData;
 
     try {
-      await fiveMinSessionRemainderGutHealthEvening({
+      await fiveMinSessionRemainderMetabolHealthEvening({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,
@@ -272,7 +272,7 @@ export const triggerFiveRemWel = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .gte("id", 7829)
+    .gte("id", 8440)
     .order("id", { ascending: false });
 
   if (!users?.length) {
@@ -311,7 +311,7 @@ export const triggerFiveRemWelEve = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .gte("id", 7829)
+    .gte("id", 8440)
     .order("id", { ascending: false });
 
   if (!users?.length) {
@@ -325,6 +325,86 @@ export const triggerFiveRemWelEve = async (dayNumber) => {
 
     try {
       await fiveMinWelcomeSessionRemainderEvening({
+        whatsappPhone,
+        name: user.name,
+        userId: user.ref_user_id,
+        dayNumber
+      });
+
+      console.log(`> Sent to ${user.id}`);
+    } catch (err) {
+      console.error(`> Failed for ${user.id}`, err.message);
+    }
+
+    // WhatsApp safety delay
+    await delay(10);
+  }
+
+  console.log("> Yoga campaign finished");
+};
+
+export const triggerFive14Rem = async (dayNumber) => {
+  console.log("> Yoga campaign started");
+  console.log("> day number: ", dayNumber);
+
+  const { data: users } = await supabase
+    .from("yoga_signups")
+    .select("*")
+    .eq("current_session_date", '2026-07-13')
+    .eq("is_active", true)
+    .order("id", { ascending: false });
+
+  if (!users?.length) {
+    console.log("> No users found");
+    return;
+  }
+
+  for (const user of users) {
+    const phoneData = processPhone(user.phone, user.country_code);
+    const { localPhone, whatsappPhone } = phoneData;
+
+    try {
+      await fiveMinSessionRemainder14Con({
+        whatsappPhone,
+        name: user.name,
+        userId: user.ref_user_id,
+        dayNumber
+      });
+
+      console.log(`> Sent to ${user.id}`);
+    } catch (err) {
+      console.error(`> Failed for ${user.id}`, err.message);
+    }
+
+    // WhatsApp safety delay
+    await delay(10);
+  }
+
+  console.log("> Yoga campaign finished");
+};
+
+export const triggerFive14RemEve = async (dayNumber) => {
+  console.log("> Yoga campaign started");
+  console.log("> day number: ", dayNumber);
+
+  const { data: users } = await supabase
+    .from("yoga_signups")
+    .select("*")
+    .eq("current_session_date", '2026-07-13')
+    .eq("is_active", true)
+    .order("id", { ascending: false });
+
+  if (!users?.length) {
+    console.log("> No users found");
+    return;
+  }
+
+  for (const user of users) {
+    const phoneData = processPhone(user.phone, user.country_code);
+    const { localPhone, whatsappPhone } = phoneData;
+
+    try {
+      await fiveMinSessionRemainder14ConEve({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,
