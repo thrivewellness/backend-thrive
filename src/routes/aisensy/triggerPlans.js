@@ -20,6 +20,7 @@ export const triggerPlans = async (dayNumber) => {
       .from("yoga_signups")
       .select("*")
       .eq("current_session_date", '2026-07-13')
+      .eq("is_active", true)
       .order("id", { ascending: false });
 
     if (error) {
@@ -42,7 +43,7 @@ export const triggerPlans = async (dayNumber) => {
       try {
         if (isPresent) {
           presentCount++;
-          await sendVideoMessage15day(id, whatsappPhone, name, dayNumber);
+          await sendThriveYogaPlansMessage(id, whatsappPhone, name, dayNumber);
         } else {
           //console.log(`> User ${id} Skipping.`);
           continue;

@@ -21,6 +21,7 @@ import { morningSessions, eveningSessions } from "./utils/paramToFuntionMatching
 import dayjs from "dayjs";
 import { continue14Session, continue14SessionEvening } from "../routes/aisensy/campaigns/continue14Session.js";
 import { processPhone } from "../utils/phoneUtils.js";
+import { PaidUsersMsgEvening, PaidUsersMsgMorning } from "../routes/aisensy/campaigns/paidusers/PaidUsersMsg.js";
 
 export const triggerYogaCampaignmorning = async (dayNumber) => {
   console.log("> Yoga campaign started");
@@ -36,7 +37,7 @@ export const triggerYogaCampaignmorning = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .eq("current_session_date", '2026-07-13')
+    .eq("current_session_date", '2026-07-20')
     .eq("is_active", true)
     .order("id", { ascending: false });
 
@@ -86,7 +87,7 @@ export const triggerYogaCampaignevening = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .eq("current_session_date", '2026-07-13')
+    .eq("current_session_date", '2026-07-20')
     .eq("is_active", true)
     .order("id", { ascending: false });
 
@@ -294,7 +295,7 @@ export const trigger14ComProgram = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .eq("current_session_date", '2026-07-13')
+    .eq("current_session_date", '2026-07-20')
     .eq("is_active", true)
     .order("id", { ascending: false });
 
@@ -334,7 +335,7 @@ export const trigger14ComProgramEvening = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .eq("current_session_date", '2026-07-13')
+    .eq("current_session_date", '2026-07-20')
     .eq("is_active", true)
     .order("id", { ascending: false });
 
@@ -382,7 +383,7 @@ export const triggerYogaCampaignmorningnew = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .eq("current_session_date", '2026-07-20')
+    .eq("current_session_date", '2026-07-27')
     .eq("is_active", true)
     .order("id", { ascending: false });
 
@@ -432,7 +433,7 @@ export const triggerYogaCampaigneveningnew = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .eq("current_session_date", '2026-07-20')
+    .eq("current_session_date", '2026-07-27')
     .eq("is_active", true)
     .order("id", { ascending: false });
 
@@ -461,6 +462,93 @@ export const triggerYogaCampaigneveningnew = async (dayNumber) => {
         userId: user.ref_user_id,
       });
 
+
+    } catch (err) {
+      console.error(`> Failed for ${user.id}`, err.message);
+    }
+
+    await delay(50);
+  }
+
+  console.log("> Yoga campaign finished");
+};
+
+export const triggerPaidUserMsgMorning = async (dayNumber) => {
+  console.log("> Paid Yoga campaign started");
+  console.log("> day number: ", dayNumber);
+
+  const { data: users } = await supabase
+    .from("paid_users")
+    .select("name, country_code, phone, ref_user_id")
+    .order("id", { ascending: false });
+
+  if (!users?.length) {
+    console.log("> No users found");
+    return;
+  }
+
+  for (const user of users) {
+    const phoneData = processPhone(user.phone, user.country_code);
+    const { localPhone, whatsappPhone } = phoneData;
+
+    try {
+      await PaidUsersMsgMorning({
+        whatsappPhone,
+        name: user.name,
+        userId: user.ref_user_id,
+        dayNumber
+      });
+
+      console.log(`> Sent to ${user.id}`);
+    } catch (err) {
+      console.error(`> Failed for ${user.id}`, err.message);
+    }
+
+    // WhatsApp safety delay
+    await delay(50);
+  }
+
+  console.log("> Yoga campaign finished");
+};
+
+
+export const triggerPaidUserMsgEvening = async (dayNumber) => {
+  console.log("> Yoga campaign started");
+  console.log("> day number: ", dayNumber);
+  const todayDate = dayjs().format("YYYY-MM-DD");
+
+  console.log("Today's date:", todayDate);
+
+  const { data: users } = await supabase
+    .from("paid_users")
+    .select("name, country_code, phone, attendance, ref_user_id")
+    .order("id", { ascending: false });
+
+
+  if (!users?.length) {
+    console.log("> No users found");
+    return;
+  }
+
+  for (const user of users) {
+    const hasTodayAttendance =
+      Array.isArray(user.attendance) && user.attendance.includes(todayDate);
+
+    if (hasTodayAttendance) {
+      console.log(`> Skipped ${user.id} (attendance already marked for ${todayDate})`);
+      continue;
+    }
+
+    const phoneData = processPhone(user.phone, user.country_code);
+    const { localPhone, whatsappPhone } = phoneData;
+
+    try {
+      await PaidUsersMsgEvening({
+        whatsappPhone,
+        name: user.name,
+        userId: user.ref_user_id,
+        dayNumber
+      });
 
     } catch (err) {
       console.error(`> Failed for ${user.id}`, err.message);

@@ -96,8 +96,7 @@ export const triggerTommarowrem = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .eq("current_session_date", '2026-07-20')
-    .eq("is_active", true)
+    .gte("id", 8440)
     .order("id", { ascending: false });
 
   if (!users?.length) {
@@ -111,7 +110,7 @@ export const triggerTommarowrem = async (dayNumber) => {
     const { localPhone, whatsappPhone } = phoneData;
 
     try {
-      await tommarowSessionRemaindersGutHealth({
+      await tommarowDay1SessionRemainders({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,
@@ -127,7 +126,7 @@ export const triggerTommarowrem = async (dayNumber) => {
     // WhatsApp safety delay
 
     console.log("count: ", count);
-    await delay(100);
+    await delay(10);
   }
 
   console.log("> Yoga campaign finished");
