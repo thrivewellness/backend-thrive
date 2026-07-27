@@ -13,12 +13,12 @@ export const paidSessionDetailsByDay = {
     2: {
         topic: "*Lower Body Strength*",
         morningMedia: {
-            url: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/8667429_day2.jpg.jpeg",
-            filename: "day2.jpg.jpeg",
+            url: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/7906542_tuesdaymor.jpeg",
+            filename: "tuesday_mor.jpeg",
         },
         eveningMedia: {
-            url: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/686971_day9.jpg",
-            filename: "day9.jpg",
+            url: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/8093163_tuesdayeve.png",
+            filename: "tuesday_eve.png",
         },
     },
     3: {
