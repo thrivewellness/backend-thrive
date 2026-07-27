@@ -157,6 +157,16 @@ const handlePaidUserFallback = async ({ phoneNumbers, hasYogaSignup }) => {
   };
 };
 
+const handleYogaSignupDayLimitFallback = async ({ phoneNumbers }) => {
+  const paidUser = await findPaidUser({ phoneNumbers });
+
+  return {
+    success: true,
+    user_exists: true,
+    day_number: paidUser ? getWeekdayRomanNumber() : '0'
+  };
+};
+
 // POST /webhook/day-number
 router.post('/day-number/evening', async (req, res) => {
     console.log('Received request for day number webhook with body:', req.query);
@@ -196,10 +206,9 @@ router.post('/day-number/evening', async (req, res) => {
       });
     }
 
-    if (dayNumber > 15) {
-      const paidUserResponse = await handlePaidUserFallback({
-        phoneNumbers,
-        hasYogaSignup: true
+    if (dayNumber >= 15) {
+      const paidUserResponse = await handleYogaSignupDayLimitFallback({
+        phoneNumbers
       });
 
       return res.status(200).json(paidUserResponse);
@@ -257,10 +266,9 @@ router.post('/day-number/morning', async (req, res) => {
       });
     }
 
-    if (dayNumber > 15) {
-      const paidUserResponse = await handlePaidUserFallback({
-        phoneNumbers,
-        hasYogaSignup: true
+    if (dayNumber >= 15) {
+      const paidUserResponse = await handleYogaSignupDayLimitFallback({
+        phoneNumbers
       });
 
       return res.status(200).json(paidUserResponse);
