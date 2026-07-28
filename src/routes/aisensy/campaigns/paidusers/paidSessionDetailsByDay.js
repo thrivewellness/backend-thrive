@@ -24,45 +24,45 @@ export const paidSessionDetailsByDay = {
     3: {
         topic: "*High-Intensity Interval Training (HIIT)*",
         morningMedia: {
-            url: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/8254092_day3.jpg.jpeg",
-            filename: "day3.jpg.jpeg",
+            url: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/8909431_wednessdaymor.jpg",
+            filename: "wednessday_mor.jpg",
         },
         eveningMedia: {
-            url: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/9953923_day10.jpg",
-            filename: "day10.jpg",
+            url: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/8981690_wednessdayeve.jpg",
+            filename: "wednessday_eve.jpg",
         },
     },
     4: {
         topic: "*Face Yoga Session*",
         morningMedia: {
-            url: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/5760364_day4.jpg.jpeg",
-            filename: "day4.jpg.jpeg",
+            url: "-",
+            filename: "-",
         },
         eveningMedia: {
-            url: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/4754770_day11.jpg",
-            filename: "day11.jpg",
+            url: "-",
+            filename: "-",
         },
     },
     5: {
         topic: "*Full Body Strength*",
         morningMedia: {
-            url: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/8832571_day5.jpeg",
-            filename: "day5.jpeg",
+            url: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/4122226_fridaymor.jpg",
+            filename: "friday_mor.jpg",
         },
         eveningMedia: {
-            url: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/6165651_day12.jpg",
-            filename: "day12.jpg",
+            url: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/6641286_firdayeve.jpg",
+            filename: "firday_eve.jpg",
         },
     },
     6: {
         topic: "*Breathwork & Yoga*",
         morningMedia: {
-            url: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/2356482_day6.jpg",
-            filename: "day6.jpg",
+            url: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/3924834_saturdaymor.jpg",
+            filename: "saturday_mor.jpg",
         },
         eveningMedia: {
-            url: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/7992368_day13.jpg",
-            filename: "day13.jpg",
+            url: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/3003694_saturdayeve.jpg",
+            filename: "saturday_eve.jpg",
         },
     },
 };
