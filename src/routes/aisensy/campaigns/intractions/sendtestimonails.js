@@ -13,16 +13,16 @@ export const sendInstTestimonails = async ({ whatsappPhone, name, dayNumber }) =
 
         templateParams: [
             `${name} 👋`,
-            '💚 Meet our Thrive Hero, Shatha Venkatraman',
-            `She Improved Her Strength & Sugar Levels at the Age of 80 💪`,
-            '✨How she improved her strength, and has seen positive changes in her sugar levels.',
-            '✨How she able to confidently lifts 2.5-3 kg in each hand',
-            "https://www.instagram.com/reel/DZfZO_iR7KJ/"
+            '💚 Meet our Thrive Hero, Silky Chauhan',
+            `She Lost 10 Kgs at Age 45 & Reduced Inflammation 💪`,
+            '✨How she reduced weight, inflammation, and daily body pain.',
+            '✨How small changes that created a big transformation in her health.',
+            "https://www.instagram.com/reels/DU0f2iekaGM/"
         ],
         source: "new-landing-page form",
         media: {
-            "url": "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/9399044_testimonials.png",
-            "filename": "testimonials.png"
+            "url": "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/6788923_testimoals2.jpeg",
+            "filename": "testimoals_2.jpeg"
         },
         buttons: [],
         carouselCards: [],
