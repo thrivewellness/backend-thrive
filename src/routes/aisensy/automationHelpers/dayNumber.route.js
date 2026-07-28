@@ -76,7 +76,7 @@ const findYogaSignupUser = async ({ userId, phoneNumbers, countryCodePairs }) =>
 
   const { data: userById, error: userByIdError } = await supabase
     .from('yoga_signups')
-    .select('id, phone, country_code, current_session_date')
+    .select('id, phone, country_code, current_session_date, ref_user_id')
     .eq('id', userId)
     .single();
 
@@ -87,7 +87,7 @@ const findYogaSignupUser = async ({ userId, phoneNumbers, countryCodePairs }) =>
   for (const pair of countryCodePairs) {
     const { data: userByPhone, error: userByPhoneError } = await supabase
       .from('yoga_signups')
-      .select('id, phone, country_code, current_session_date')
+      .select('id, phone, country_code, current_session_date, ref_user_id')
       .eq('phone', pair.phone)
       .eq('country_code', pair.countryCode)
       .single();
@@ -101,7 +101,7 @@ const findYogaSignupUser = async ({ userId, phoneNumbers, countryCodePairs }) =>
   if (!user && phoneNumbers.length) {
     const { data: userByAnyPhone, error: userByAnyPhoneError } = await supabase
       .from('yoga_signups')
-      .select('id, phone, country_code, current_session_date')
+      .select('id, phone, country_code, current_session_date, ref_user_id')
       .in('phone', phoneNumbers)
       .limit(1)
       .maybeSingle();
@@ -121,7 +121,7 @@ const findPaidUser = async ({ phoneNumbers }) => {
 
   const { data: paidUser, error: paidUserError } = await supabase
     .from('paid_users')
-    .select('id, phone, country_code, plan, plan_end_date, status, is_active')
+    .select('id, phone, country_code, plan, plan_end_date, status, is_active, ref_user_id')
     .in('phone', phoneNumbers)
     .order('id', { ascending: false })
     .limit(1)
@@ -141,7 +141,8 @@ const handlePaidUserFallback = async ({ phoneNumbers, hasYogaSignup }) => {
     return {
       success: true,
       user_exists: hasYogaSignup,
-      day_number: hasYogaSignup ? '0' : '000'
+      day_number: hasYogaSignup ? '0' : '000',
+      ref_user_id: null
     };
   }
 
@@ -153,7 +154,8 @@ const handlePaidUserFallback = async ({ phoneNumbers, hasYogaSignup }) => {
   return {
     success: true,
     user_exists: true,
-    day_number: isPlanActive ? getWeekdayRomanNumber() : '00'
+    day_number: isPlanActive ? getWeekdayRomanNumber() : '00',
+    ref_user_id: isPlanActive ? paidUser.ref_user_id : null
   };
 };
 
@@ -163,7 +165,8 @@ const handleYogaSignupDayLimitFallback = async ({ phoneNumbers }) => {
   return {
     success: true,
     user_exists: true,
-    day_number: paidUser ? getWeekdayRomanNumber() : '0'
+    day_number: paidUser ? getWeekdayRomanNumber() : '0',
+    ref_user_id: paidUser ? paidUser.ref_user_id : null
   };
 };
 
@@ -217,7 +220,8 @@ router.post('/day-number/evening', async (req, res) => {
     return res.status(200).json({
       success: true,
       user_exists: true,
-      day_number: dayNumber
+      day_number: dayNumber,
+      ref_user_id: user.ref_user_id
     });
   } catch (err) {
     console.error('day-number webhook error:', err);
@@ -277,7 +281,8 @@ router.post('/day-number/morning', async (req, res) => {
     return res.status(200).json({
       success: true,
       user_exists: true,
-      day_number: dayNumber
+      day_number: dayNumber,
+      ref_user_id: user.ref_user_id
     });
   } catch (err) {
     console.error('day-number webhook error:', err);
