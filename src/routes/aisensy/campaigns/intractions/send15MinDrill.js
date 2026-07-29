@@ -1,9 +1,24 @@
 
 import axios from "axios";
 
-export const send15MinDrill = async ({ whatsappPhone, name, startDate }) => {
+const formatStartDate = (startDate) => {
+    if (!startDate) return "";
 
-    console.log("send15MinDrill called with:", { whatsappPhone, name,startDate });
+    const date = new Date(startDate);
+    if (Number.isNaN(date.getTime())) return startDate;
+
+    return new Intl.DateTimeFormat("en-GB", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+        timeZone: "Asia/Kolkata",
+    }).format(date);
+};
+
+export const send15MinDrill = async ({ whatsappPhone, name, startDate }) => {
+    const formattedStartDate = formatStartDate(startDate);
+
+    console.log("send15MinDrill called with:", { whatsappPhone, name, startDate: formattedStartDate });
 
    const payload = {
         apiKey: process.env.AISENSY_API_KEY,
@@ -14,7 +29,7 @@ export const send15MinDrill = async ({ whatsappPhone, name, startDate }) => {
         templateParams: [
             `${name} 👋`,
             `Your 14 Days Free Thrive Yoga Journey`,
-            `Monday (${startDate})`,
+            `Monday (${formattedStartDate})`,
             "You can start practising this 15 Min Thrive Yoga Session from today itself",
             "https://youtu.be/KpbIfcaKdX4"
         ],

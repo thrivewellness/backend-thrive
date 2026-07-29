@@ -8,6 +8,44 @@ import { sendAiSensyYogaSignup } from "./aisensy/intiateautomation.js";
 
 const router = express.Router();
 
+const formatDate = (date) => date.toISOString().slice(0, 10);
+
+const addDays = (dateString, days) => {
+  const [year, month, day] = dateString.split("-").map(Number);
+  const date = new Date(Date.UTC(year, month - 1, day));
+  date.setUTCDate(date.getUTCDate() + days);
+  return formatDate(date);
+};
+
+const getNextYogaSessionDate = (date = new Date()) => {
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Kolkata",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    weekday: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hourCycle: "h23",
+  }).formatToParts(date);
+
+  const dateParts = Object.fromEntries(
+    parts.filter((part) => part.type !== "literal").map((part) => [part.type, part.value])
+  );
+
+  const todayDate = `${dateParts.year}-${dateParts.month}-${dateParts.day}`;
+  const weekdayIndex = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].indexOf(dateParts.weekday);
+  const isSundayAfterCutoff =
+    weekdayIndex === 0 &&
+    (Number(dateParts.hour) > 12 ||
+      (Number(dateParts.hour) === 12 &&
+        (Number(dateParts.minute) > 0 || Number(dateParts.second) > 0)));
+
+  const daysUntilSundayCutoff = isSundayAfterCutoff ? 7 : (7 - weekdayIndex) % 7;
+  return addDays(todayDate, daysUntilSundayCutoff + 1);
+};
+
 
 router.post("/yoga/signup", async (req, res, next) => {
   try {
@@ -50,6 +88,7 @@ router.post("/yoga/signup", async (req, res, next) => {
     // INSERT STORE CLEAN DATA
     const randomCode = Math.random().toString(36).substring(2, 6).toUpperCase();
     const ref_user_id = `${name.replace(/\s+/g, "").toLowerCase()}_${randomCode}`;
+    const nextSessionStartDate = getNextYogaSessionDate();
 
     const { data: newUserData, error } = await supabase
       .from("yoga_signups")
@@ -60,6 +99,8 @@ router.post("/yoga/signup", async (req, res, next) => {
         referral,
         coach_ref,
         ref_user_id,
+        current_session_date: nextSessionStartDate,
+        session_start_date: nextSessionStartDate,
       })
       .select()
       .single();
@@ -71,15 +112,7 @@ router.post("/yoga/signup", async (req, res, next) => {
       });
     }
 
-    const { data: program } = await supabase
-      .from("free_yoga_programs_data")
-      .select("start_date")
-      .order("start_date", { ascending: false })
-      .limit(1)
-      .single();
-
-
-    const programStartDate = program?.start_date || "soon";
+    const programStartDate = nextSessionStartDate;
 
 
     sendAiSensyYogaSignup({
