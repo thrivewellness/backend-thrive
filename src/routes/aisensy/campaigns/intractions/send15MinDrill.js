@@ -1,11 +1,11 @@
 
 import axios from "axios";
 
-export const send15MinDrill = async ({ whatsappPhone, name, dayNumber }) => {
+export const send15MinDrill = async ({ whatsappPhone, name, startDate }) => {
 
-    console.log("send15MinDrill called with:", { whatsappPhone, name, dayNumber });
+    console.log("send15MinDrill called with:", { whatsappPhone, name,startDate });
 
-    const payload = {
+   const payload = {
         apiKey: process.env.AISENSY_API_KEY,
         campaignName: "send_dril_before_start",
         destination: whatsappPhone,
@@ -14,7 +14,7 @@ export const send15MinDrill = async ({ whatsappPhone, name, dayNumber }) => {
         templateParams: [
             `${name} 👋`,
             `Your 14 Days Free Thrive Yoga Journey`,
-            "Monday (27th July 2026)",
+            `Monday (${startDate})`,
             "You can start practising this 15 Min Thrive Yoga Session from today itself",
             "https://youtu.be/KpbIfcaKdX4"
         ],
@@ -41,9 +41,5 @@ export const send15MinDrill = async ({ whatsappPhone, name, dayNumber }) => {
             },
         }
     );
-
     return response.data;
 }
-
-
-

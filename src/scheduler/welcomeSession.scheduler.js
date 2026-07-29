@@ -20,6 +20,7 @@ import { triggerconsultaion } from "../routes/aisensy/triggerconsultaion.js";
 import { triggerFiveRem, triggerFiveRemEve, triggerLiveNowRem, triggerTommarowrem, triggerTommarowremmetabolic, triggerTommarowrem14con, triggerFiveRemWelEve, triggerFiveRemWel, triggerFive14Rem, triggerFive14RemEve } from "../routes/aisensy/triggerRemainders.js";
 import { triggerInstTestimonails, triggerInstTestimonailsNew, triggerYtVid } from "../routes/aisensy/triggertestimonails.js";
 import { triggerJoinComunity } from "../routes/aisensy/triggerJoinComunity.js";
+import { trigger15MinDrill } from "../routes/aisensy/trigger15MinDrill.js";
 
 const HANDLERS = {
   triggerYogaCampaignmorning,
@@ -50,7 +51,8 @@ const HANDLERS = {
   triggerFive14Rem,
   triggerFive14RemEve,
   triggerPaidUserMsgEvening,
-  triggerPaidUserMsgMorning
+  triggerPaidUserMsgMorning,
+  trigger15MinDrill
 };
 
 cron.schedule("* * * * *", async () => {
@@ -96,6 +98,10 @@ cron.schedule("* * * * *", async () => {
       console.warn(`No handler found for ${campaign.funtion_name}`);
     }
   }
+});
+
+cron.schedule("0 * * * *", trigger15MinDrill, {
+  timezone: "Asia/Kolkata",
 });
 
 const triggerAttendanceSlot = async (presentMessageTime, sendAbsent = false) => {
