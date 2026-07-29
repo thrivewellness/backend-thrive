@@ -35,12 +35,12 @@ export const paidSessionDetailsByDay = {
     4: {
         topic: "*Face Yoga Session*",
         morningMedia: {
-            url: "-",
-            filename: "-",
+            url: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/2781676_Screenshot%2020260729%20225256.png",
+            filename: "Screenshot 2026-07-29 225256.png",
         },
         eveningMedia: {
-            url: "-",
-            filename: "-",
+            url: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/7168919_Screenshot%2020260729%20225440.png",
+            filename: "Screenshot 2026-07-29 225440.png",
         },
     },
     5: {

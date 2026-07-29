@@ -104,6 +104,18 @@ cron.schedule("0 * * * *", trigger15MinDrill, {
   timezone: "Asia/Kolkata",
 });
 
+const paidUserMessageWeekdays = [1, 2, 3, 4, 5, 6];
+
+paidUserMessageWeekdays.forEach((dayNumber) => {
+  cron.schedule(`15 6 * * ${dayNumber}`, () => triggerPaidUserMsgMorning(dayNumber), {
+    timezone: "Asia/Kolkata",
+  });
+
+  cron.schedule(`10 16 * * ${dayNumber}`, () => triggerPaidUserMsgEvening(dayNumber), {
+    timezone: "Asia/Kolkata",
+  });
+});
+
 const triggerAttendanceSlot = async (presentMessageTime, sendAbsent = false) => {
   console.log(`> Checking campaigns for attendance slot ${presentMessageTime}...`);
 

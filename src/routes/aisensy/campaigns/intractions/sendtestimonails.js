@@ -13,16 +13,16 @@ export const sendInstTestimonails = async ({ whatsappPhone, name, dayNumber }) =
 
         templateParams: [
             `${name} 👋`,
-            '💚 Meet our Thrive Hero, Silky Chauhan',
-            `She Lost 10 Kgs at Age 45 & Reduced Inflammation 💪`,
-            '✨How she reduced weight, inflammation, and daily body pain.',
-            '✨How small changes that created a big transformation in her health.',
-            "https://www.instagram.com/reels/DU0f2iekaGM/"
+            '💚 Meet our Thrive Hero, Shanto Venkatraman',
+            `She Improved Her Strength & Sugar Levels at the Age of 80. 💪`,
+            '✨How consistent strength training improved her strength and independence.',
+            '✨How regular exercise helped support healthier sugar levels over time.🌿',
+            "https://www.instagram.com/reels/DZfZO_iR7KJ/"
         ],
         source: "new-landing-page form",
         media: {
-            "url": "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/6788923_testimoals2.jpeg",
-            "filename": "testimoals_2.jpeg"
+            "url": "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/9399044_testimonials.png",
+            "filename": "testimonials.png"
         },
         buttons: [],
         carouselCards: [],
@@ -60,16 +60,16 @@ export const sendInstTestimonailsnew = async ({ whatsappPhone, name, dayNumber }
 
         templateParams: [
             `${name} 👋`,
-            '💚 Video For Video',
-            `4 Exercises for Severe Knee Pain.`,
-            '✨Know the reason of your knee pain.',
-            '✨Exercises to reduce knee pain.',
-            "https://www.instagram.com/reel/DR99Bi3Etil/"
+            '💚 Meet our Thrive Hero, Ragini Mathur',
+            `She Lost 9.5 Kgs at Age 60 + Managed Prediabetes💪`,
+            '✨How she improved her health despite age and hormonal challenges.',
+            '✨The lifestyle changes that helped her control weight and metabolism.',
+            "https://www.instagram.com/reels/DYzfhkABIqx/"
         ],
         source: "new-landing-page form",
         media: {
-            "url": "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/1847650_Image423.jpg",
-            "filename": "Image-423.jpg"
+            "url": "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/1200085_testimonial1.jpeg",
+            "filename": "testimonial_1.jpeg"
         },
         buttons: [],
         carouselCards: [],

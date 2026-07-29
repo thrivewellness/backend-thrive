@@ -480,6 +480,7 @@ export const triggerPaidUserMsgMorning = async (dayNumber) => {
   const { data: users } = await supabase
     .from("paid_users")
     .select("name, country_code, phone, ref_user_id")
+    .eq("id", 2)
     .order("id", { ascending: false });
 
   if (!users?.length) {
@@ -522,6 +523,7 @@ export const triggerPaidUserMsgEvening = async (dayNumber) => {
   const { data: users } = await supabase
     .from("paid_users")
     .select("name, country_code, phone, attendance, ref_user_id")
+    .eq("id", 2)
     .order("id", { ascending: false });
 
 
