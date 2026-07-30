@@ -106,11 +106,30 @@ export const triggerInstTestimonailsNew = async (dayNumber) => {
 export const triggerYtVid = async (dayNumber) => {
   console.log("> Yoga campaign started");
   console.log("> day number:", dayNumber);
+  // Get today's date in IST
+  const now = new Date();
+
+  const istDate = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Kolkata",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(now);
+
+  // 00:00:00 IST converted to UTC
+  const startOfTodayIST = new Date(`${istDate}T00:00:00+05:30`);
 
   const { data: users, error } = await supabase
     .from("yoga_signups")
     .select("*")
-    .gte("id", 8440)
+    .eq("current_session_date", "2026-08-03")
+    .lt("created_at", startOfTodayIST.toISOString())
+    .order("id", { ascending: false });
+
+  if (error) {
+    console.error(error);
+    return;
+  }
 
   if (!users?.length) {
     console.log("> No users found");
@@ -121,12 +140,11 @@ export const triggerYtVid = async (dayNumber) => {
   let failureCount = 0;
 
   for (const user of users) {
-
     const phoneData = processPhone(user.phone, user.country_code);
-    const { localPhone, whatsappPhone } = phoneData;
+    const { whatsappPhone } = phoneData;
 
     try {
-      await tommarowWelcomeSessionRemainder({
+      await sendYtVid({
         whatsappPhone,
         name: user.name,
         dayNumber,
@@ -139,7 +157,6 @@ export const triggerYtVid = async (dayNumber) => {
       console.error(`> Failed for ${user.id}`, err.message);
     }
 
-    // WhatsApp safety delay
     await delay(20);
   }
 
