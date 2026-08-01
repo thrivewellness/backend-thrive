@@ -96,7 +96,7 @@ export const triggerTommarowrem = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .eq("current_session_date", '2026-07-27')
+    .eq("current_session_date", '2026-08-03')
     .eq("is_active", true)
     .order("id", { ascending: false });
 
@@ -111,7 +111,7 @@ export const triggerTommarowrem = async (dayNumber) => {
     const { localPhone, whatsappPhone } = phoneData;
 
     try {
-      await tommarowSessionRemaindersGutHealth({
+      await tommarowWelcomeSessionRemainder({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,
@@ -181,7 +181,7 @@ export const triggerTommarowremmetabolic = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .eq("current_session_date", '2026-07-20')
+    .eq("current_session_date", '2026-07-27')
     .eq("is_active", true)
     .order("id", { ascending: false });
 
@@ -226,7 +226,7 @@ export const triggerTommarowrem14con = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .eq("current_session_date", '2026-07-13')
+    .eq("current_session_date", '2026-07-20')
     .eq("is_active", true)
     .order("id", { ascending: false });
 
