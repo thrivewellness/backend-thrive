@@ -15,7 +15,7 @@ export const triggerPlans = async (dayNumber) => {
   console.log("> Running Plans Function");
 
   try {
-    // 🔹 Fetch required fields from yoga_signups table
+    // Fetch required fields from yoga_signups table
     const { data: users, error } = await supabase
       .from("yoga_signups")
       .select("*")
@@ -43,7 +43,7 @@ export const triggerPlans = async (dayNumber) => {
       try {
         if (isPresent) {
           presentCount++;
-          await sendThriveYogaPlans1day(id, whatsappPhone, name, dayNumber);
+          await sendVideoMessage15day(id, whatsappPhone, name, dayNumber);
         } else {
           //console.log(`> User ${id} Skipping.`);
           continue;
