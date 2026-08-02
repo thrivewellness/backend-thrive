@@ -10,7 +10,8 @@ export const triggerJoinComunity = async (dayNumber) => {
   const { data: users, error } = await supabase
     .from("yoga_signups")
     .select("*")
-    .gte("id", 7829)
+    .eq("current_session_date", '2026-08-03')
+    .eq("is_active", true)
     .order("id", { ascending: false });
 
 

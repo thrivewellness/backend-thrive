@@ -13,7 +13,7 @@ export const sendJoinCummunity = async ({ whatsappPhone, name, dayNumber }) => {
 
         templateParams: [
             `*${name}* 🙏`,
-            `https://chat.whatsapp.com/LYPaO1mXKAjEmtrlvhfF13`,
+            `https://chat.whatsapp.com/Jvd6LoorIbx6fG0GXqwCbt`,
             "https://www.facebook.com/share/g/1D414kk5qj/?mibextid=wwXIfr",
         ],
         source: "new-landing-page form",
