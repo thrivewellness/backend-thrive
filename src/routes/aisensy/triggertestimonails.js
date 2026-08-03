@@ -17,7 +17,6 @@ export const triggerInstTestimonails = async (dayNumber) => {
     .eq("is_active", true)
     .order("id", { ascending: false });
 
-
   if (!users?.length) {
     console.log("> No users found");
     return;

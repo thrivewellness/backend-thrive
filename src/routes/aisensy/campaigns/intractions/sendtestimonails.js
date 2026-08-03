@@ -13,7 +13,7 @@ export const sendInstTestimonails = async ({ whatsappPhone, name, dayNumber }) =
 
         templateParams: [
             `${name} 👋`,
-            '💚 Meet our Thrive Hero, Shanto Venkatraman',
+            '💚 Meet our Thrive Hero, Silky Chauhan',
             `She Improved Her Strength & Sugar Levels at the Age of 80. 💪`,
             '✨How consistent strength training improved her strength and independence.',
             '✨How regular exercise helped support healthier sugar levels over time.🌿',
@@ -60,16 +60,16 @@ export const sendInstTestimonailsnew = async ({ whatsappPhone, name, dayNumber }
 
         templateParams: [
             `${name} 👋`,
-            '💚 Video for Today',
-            `Tips To Prevent Knee Replacement by Orthopaedic Doctor`,
-            '⚖️ How every extra kilogram puts 3 to 4 kg of pressure on knees.',
-            '🚴 How movement feeds cartilage; complete rest causes more damage!',
-            "https://www.youtube.com/watch?v=WS-SMCJ9N9w"
+            '💚 Meet our Thrive Hero *Archana* ',
+            `She *Lost 14 Kgs* At the age of 48`,
+            '✨How she transformed her body after 40 with simple lifestyle changes.',
+            '✨The habits that helped her reduce weight and inflammation naturally.',
+            "https://www.instagram.com/reel/DT8B45bkfRa/?igsh=MWV5bzEybHBnODZkMA=="
         ],
         source: "new-landing-page form",
         media: {
-            "url": "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/7094137_preventknee.jpg",
-            "filename": "preventknee.jpg"
+            "url": "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/6168911_7.jpg.jpeg",
+            "filename": "7.jpg.jpeg"
         },
         buttons: [],
         carouselCards: [],
