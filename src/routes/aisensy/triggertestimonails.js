@@ -13,7 +13,7 @@ export const triggerInstTestimonails = async (dayNumber) => {
   const { data: users, error } = await supabase
     .from("yoga_signups")
     .select("*")
-    .eq("current_session_date", '2026-07-20')
+    .eq("current_session_date", '2026-07-27')
     .eq("is_active", true)
     .order("id", { ascending: false });
 
@@ -121,7 +121,7 @@ export const triggerYtVid = async (dayNumber) => {
   const { data: users, error } = await supabase
     .from("yoga_signups")
     .select("*")
-    .eq("current_session_date", "2026-08-03")
+    .eq("current_session_date", "2026-08-10")
     .lt("created_at", startOfTodayIST.toISOString())
     .order("id", { ascending: false });
 

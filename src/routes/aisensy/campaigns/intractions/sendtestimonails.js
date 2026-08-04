@@ -13,16 +13,16 @@ export const sendInstTestimonails = async ({ whatsappPhone, name, dayNumber }) =
 
         templateParams: [
             `${name} 👋`,
-            '💚 Meet our Thrive Hero, Silky Chauhan',
-            `She Improved Her Strength & Sugar Levels at the Age of 80. 💪`,
-            '✨How consistent strength training improved her strength and independence.',
-            '✨How regular exercise helped support healthier sugar levels over time.🌿',
-            "https://www.instagram.com/reels/DZfZO_iR7KJ/"
+            '💚 Meet our Thrive Hero, Kanta Rathi',
+            `She Reversed Years of Knee Pain and Finally Got Her Thyroid Under Control 💪`,
+            '✨How she Lost 11 kgs without giving up her daily routine or extreme dieting.',
+            "✨How she Regained the strength to climb stairs and able to move freely🌿",
+            "https://www.instagram.com/reels/DZFiNlYhfFE/"
         ],
         source: "new-landing-page form",
         media: {
-            "url": "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/9399044_testimonials.png",
-            "filename": "testimonials.png"
+            "url": "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/9520352_kanthitestimonail.jpg",
+            "filename": "kanthi_testimonail.jpg"
         },
         buttons: [],
         carouselCards: [],
@@ -60,16 +60,16 @@ export const sendInstTestimonailsnew = async ({ whatsappPhone, name, dayNumber }
 
         templateParams: [
             `${name} 👋`,
-            '💚 Meet our Thrive Hero *Archana* ',
-            `She *Lost 14 Kgs* At the age of 48`,
-            '✨How she transformed her body after 40 with simple lifestyle changes.',
-            '✨The habits that helped her reduce weight and inflammation naturally.',
-            "https://www.instagram.com/reel/DT8B45bkfRa/?igsh=MWV5bzEybHBnODZkMA=="
+            '💚 Video for Today ',
+            `Scientific Ways To Lower Cholesterol Naturally `,
+            '🥑How cholesterol balance relies on your liver and habits, not oil!',
+            '🥣How soluble fiber in oats traps excess cholesterol to flush it out.',
+            "https://www.youtube.com/watch?v=dwbshV_rJYA"
         ],
         source: "new-landing-page form",
         media: {
-            "url": "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/6168911_7.jpg.jpeg",
-            "filename": "7.jpg.jpeg"
+            "url": "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/2744013_cholesterol%20vid.jpg",
+            "filename": "cholesterol _vid.jpg"
         },
         buttons: [],
         carouselCards: [],
