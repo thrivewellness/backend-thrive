@@ -1,5 +1,6 @@
 ﻿import express from 'express';
 import { supabase } from '../../../lib/supabase.js';
+import { processQueryPhoneForLookup } from '../../../utils/phoneUtils.js';
 
 const router = express.Router();
 
@@ -22,42 +23,6 @@ const calculateDayNumber = (currentSessionDate, todayDate) => {
 
   const millisecondsPerDay = 24 * 60 * 60 * 1000;
   return Math.floor((today - sessionStart) / millisecondsPerDay) + 1;
-};
-
-const normalizePhoneForLookup = (phone) => {
-  const rawPhone = phone.toString().trim();
-  const normalizedPhone = rawPhone
-    .replace(/\s+/g, '')
-    .replace(/^\+/, '');
-  const normalizedPhoneWithPlus = rawPhone.replace(/\s+/g, '');
-
-  const digitsOnly = rawPhone.replace(/\D/g, '').replace(/^0+/, '');
-  const phoneNumbers = new Set([normalizedPhone, normalizedPhoneWithPlus, digitsOnly]);
-  const countryCodePairs = [];
-
-  if (digitsOnly.startsWith('91') && digitsOnly.length === 12) {
-    phoneNumbers.add(digitsOnly.slice(2));
-    countryCodePairs.push({ phone: digitsOnly.slice(2), countryCode: '+91' });
-  }
-
-  if (rawPhone.startsWith('+')) {
-    for (let codeLength = 1; codeLength <= 4; codeLength += 1) {
-      if (digitsOnly.length > codeLength) {
-        const countryCode = `+${digitsOnly.slice(0, codeLength)}`;
-        const localPhone = digitsOnly.slice(codeLength);
-
-        phoneNumbers.add(localPhone);
-        countryCodePairs.push({ phone: localPhone, countryCode });
-      }
-    }
-  }
-
-  countryCodePairs.push({ phone: normalizedPhone, countryCode: '+91' });
-
-  return {
-    phoneNumbers: [...phoneNumbers].filter(Boolean),
-    countryCodePairs
-  };
 };
 
 const getWeekdayRomanNumber = () => {
@@ -114,7 +79,22 @@ const findYogaSignupUser = async ({ userId, phoneNumbers, countryCodePairs }) =>
   return user;
 };
 
-const findPaidUser = async ({ phoneNumbers }) => {
+const findPaidUser = async ({ phoneNumbers, countryCodePairs }) => {
+  for (const pair of countryCodePairs) {
+    const { data: paidUser, error: paidUserError } = await supabase
+      .from('paid_users')
+      .select('id, phone, country_code, plan, plan_end_date, status, is_active, ref_user_id')
+      .eq('phone', pair.phone)
+      .eq('country_code', pair.countryCode)
+      .order('id', { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    if (!paidUserError && paidUser) {
+      return paidUser;
+    }
+  }
+
   if (!phoneNumbers.length) {
     return null;
   }
@@ -134,8 +114,8 @@ const findPaidUser = async ({ phoneNumbers }) => {
   return paidUser;
 };
 
-const handlePaidUserFallback = async ({ phoneNumbers, hasYogaSignup }) => {
-  const paidUser = await findPaidUser({ phoneNumbers });
+const handlePaidUserFallback = async ({ phoneNumbers, countryCodePairs, hasYogaSignup }) => {
+  const paidUser = await findPaidUser({ phoneNumbers, countryCodePairs });
 
   if (!paidUser) {
     return {
@@ -159,8 +139,8 @@ const handlePaidUserFallback = async ({ phoneNumbers, hasYogaSignup }) => {
   };
 };
 
-const handleYogaSignupDayLimitFallback = async ({ phoneNumbers }) => {
-  const paidUser = await findPaidUser({ phoneNumbers });
+const handleYogaSignupDayLimitFallback = async ({ phoneNumbers, countryCodePairs }) => {
+  const paidUser = await findPaidUser({ phoneNumbers, countryCodePairs });
 
   return {
     success: true,
@@ -183,7 +163,7 @@ router.post('/day-number/evening', async (req, res) => {
       });
     }
 
-    const { phoneNumbers, countryCodePairs } = normalizePhoneForLookup(phone);
+    const { phoneNumbers, countryCodePairs } = processQueryPhoneForLookup(phone);
     const user = await findYogaSignupUser({
       userId: user_id,
       phoneNumbers,
@@ -193,6 +173,7 @@ router.post('/day-number/evening', async (req, res) => {
     if (!user) {
       const paidUserResponse = await handlePaidUserFallback({
         phoneNumbers,
+        countryCodePairs,
         hasYogaSignup: false
       });
 
@@ -211,7 +192,8 @@ router.post('/day-number/evening', async (req, res) => {
 
     if (dayNumber >= 15) {
       const paidUserResponse = await handleYogaSignupDayLimitFallback({
-        phoneNumbers
+        phoneNumbers,
+        countryCodePairs
       });
 
       return res.status(200).json(paidUserResponse);
@@ -244,7 +226,7 @@ router.post('/day-number/morning', async (req, res) => {
       });
     }
 
-    const { phoneNumbers, countryCodePairs } = normalizePhoneForLookup(phone);
+    const { phoneNumbers, countryCodePairs } = processQueryPhoneForLookup(phone);
     const user = await findYogaSignupUser({
       userId: user_id,
       phoneNumbers,
@@ -254,6 +236,7 @@ router.post('/day-number/morning', async (req, res) => {
     if (!user) {
       const paidUserResponse = await handlePaidUserFallback({
         phoneNumbers,
+        countryCodePairs,
         hasYogaSignup: false
       });
 
@@ -272,7 +255,8 @@ router.post('/day-number/morning', async (req, res) => {
 
     if (dayNumber >= 15) {
       const paidUserResponse = await handleYogaSignupDayLimitFallback({
-        phoneNumbers
+        phoneNumbers,
+        countryCodePairs
       });
 
       return res.status(200).json(paidUserResponse);
