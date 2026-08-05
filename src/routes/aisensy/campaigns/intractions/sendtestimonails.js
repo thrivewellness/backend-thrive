@@ -10,19 +10,19 @@ export const sendInstTestimonails = async ({ whatsappPhone, name, dayNumber }) =
         campaignName: "send_vid_img",
         destination: whatsappPhone,
         userName: "Thrive Integrated Lifestyle Private Limited",
-
+        
         templateParams: [
             `${name} 👋`,
-            '💚 Meet our Thrive Hero, Kanta Rathi',
-            `She Reversed Years of Knee Pain and Finally Got Her Thyroid Under Control 💪`,
-            '✨How she Lost 11 kgs without giving up her daily routine or extreme dieting.',
-            "✨How she Regained the strength to climb stairs and able to move freely🌿",
-            "https://www.instagram.com/reels/DZFiNlYhfFE/"
+            '💚 Meet our Thrive Hero, Shanto Venkatraman',
+            `She Improved Her Strength & Sugar Levels at the Age of 80. 💪`,
+            '✨How consistent strength training improved her strength and independence.',
+            '✨How regular exercise helped support healthier sugar levels over time.🌿',
+            "https://www.instagram.com/reels/DZfZO_iR7KJ/"
         ],
         source: "new-landing-page form",
         media: {
-            "url": "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/9520352_kanthitestimonail.jpg",
-            "filename": "kanthi_testimonail.jpg"
+            "url": "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/9399044_testimonials.png",
+            "filename": "testimonials.png"
         },
         buttons: [],
         carouselCards: [],
@@ -58,19 +58,19 @@ export const sendInstTestimonailsnew = async ({ whatsappPhone, name, dayNumber }
         destination: whatsappPhone,
         userName: "Thrive Integrated Lifestyle Private Limited",
 
-        templateParams: [
+         templateParams: [
             `${name} 👋`,
-            '💚 Video for Today ',
-            `Scientific Ways To Lower Cholesterol Naturally `,
-            '🥑How cholesterol balance relies on your liver and habits, not oil!',
-            '🥣How soluble fiber in oats traps excess cholesterol to flush it out.',
-            "https://www.youtube.com/watch?v=dwbshV_rJYA"
+            '💚 Meet our Thrive Hero, Ragini Mathur',
+            `She Lost 9.5 Kgs at Age 60 + Managed Prediabetes💪`,
+            '✨How she improved her health despite age and hormonal challenges.',
+            '✨The lifestyle changes that helped her control weight and metabolism.',
+            "https://www.instagram.com/reels/DYzfhkABIqx/"
         ],
         source: "new-landing-page form",
         media: {
-            "url": "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/2744013_cholesterol%20vid.jpg",
-            "filename": "cholesterol _vid.jpg"
-        },
+            "url": "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/1200085_testimonial1.jpeg",
+            "filename": "testimonial_1.jpeg"
+        }, 
         buttons: [],
         carouselCards: [],
         location: {},
