@@ -131,21 +131,39 @@ const triggerLandingPageMessages = async ({ userId, formFields, createdAt }) => 
     coachLeadRemainder({
       id: userId,
       whatsappPhone: COACH_LEAD_WHATSAPP_PHONE,
+
+      // Common
       name: toTemplateValue(formFields.name),
       phnumber: formatLeadPhoneForTemplate({
         whatsapp: formFields.whatsapp,
         countryCode: formFields.countryCode
       }),
-      duration: toTemplateValue(formFields.duration || formFields.dateTime),
       ageGroup: toTemplateValue(formFields.ageGroup),
       created_at: formatLeadCreatedAt(createdAt),
-      goal: toTemplateValue(formFields.goal || formFields.customGoal || formFields.message),
+      goal: toTemplateValue(formFields.goal),
+
+      // Weight Loss
+      targetWeightLoss: toTemplateValue(formFields.targetWeightLoss),
+      weightLossObstacle: toTemplateValue(formFields.weightLossObstacle),
+      whyLoseWeight: toTemplateValue(formFields.whyLoseWeight),
+
+      // Medical Condition
+      medicalConditions: toTemplateValue(formFields.medicalConditions),
+      medicationStatus: toTemplateValue(formFields.medicationStatus),
+
+      // Menopause
+      menopauseStage: toTemplateValue(formFields.menopauseStage),
+      menopauseSymptoms: toTemplateValue(formFields.menopauseSymptoms),
+
+      // Common
       symptoms: toTemplateValue(formFields.symptoms),
+      duration: toTemplateValue(formFields.duration || formFields.dateTime),
       readiness: toTemplateValue(formFields.readiness),
-      service: toTemplateValue(formFields.service),
-      ref: toTemplateValue(formFields.ref || formFields.cr_ref),
-      approach: toTemplateValue(formFields.approach),
-      invest: toTemplateValue(formFields.invest)
+
+      openToInvest: toTemplateValue(formFields.openToInvest),
+      invest: toTemplateValue(formFields.invest),
+
+      ref: toTemplateValue(formFields.ref || formFields.cr_ref)
     })
   );
 
