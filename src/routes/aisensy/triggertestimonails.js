@@ -105,6 +105,7 @@ export const triggerInstTestimonailsNew = async (dayNumber) => {
 export const triggerYtVid = async (dayNumber) => {
   console.log("> Yoga campaign started");
   console.log("> day number:", dayNumber);
+
   // Get today's date in IST
   const now = new Date();
 
@@ -113,7 +114,7 @@ export const triggerYtVid = async (dayNumber) => {
     year: "numeric",
     month: "2-digit",
     day: "2-digit",
-  }).format(now);
+  }).format(now); // e.g. "2026-08-06"
 
   // 00:00:00 IST converted to UTC
   const startOfTodayIST = new Date(`${istDate}T00:00:00+05:30`);
@@ -147,6 +148,7 @@ export const triggerYtVid = async (dayNumber) => {
         whatsappPhone,
         name: user.name,
         dayNumber,
+        todayDate: istDate, // Pass today's IST date
       });
 
       successCount++;
