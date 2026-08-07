@@ -111,7 +111,7 @@ export const triggerTommarowrem = async (dayNumber) => {
     const { localPhone, whatsappPhone } = phoneData;
 
     try {
-      await tommarowDay1SessionRemainders({
+      await tommarowSessionRemaindersGutHealth({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,
