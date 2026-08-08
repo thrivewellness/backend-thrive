@@ -56,7 +56,7 @@ export const tommarowWelcomeSessionRemainder = async ({ userId, whatsappPhone, n
         templateParams: [
             `*${name} Ji*`,
             `*Welcome Session*`,
-            `02 Aug 2026`,
+            `09 Aug 2026`,
             `11 AM | 4 PM (IST)`,
             `40 Min`,
             `🧘 Understand the Thrive Yoga philosophy`,
