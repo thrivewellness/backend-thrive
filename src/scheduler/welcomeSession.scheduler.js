@@ -104,7 +104,7 @@ cron.schedule("0 * * * *", trigger15MinDrill, {
   timezone: "Asia/Kolkata",
 });
 
-const paidUserMessageWeekdays = [1, 2, 3, 4, 5, 6];
+const paidUserMessageWeekdays = [1, 2, 3, 5, 6];
 
 paidUserMessageWeekdays.forEach((dayNumber) => {
   cron.schedule(`15 6 * * ${dayNumber}`, () => triggerPaidUserMsgMorning(dayNumber), {
