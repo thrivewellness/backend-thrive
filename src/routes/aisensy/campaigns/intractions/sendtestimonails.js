@@ -13,16 +13,16 @@ export const sendInstTestimonails = async ({ whatsappPhone, name, dayNumber }) =
         
         templateParams: [
             `${name} 👋`,
-            '💚 Meet our Thrive Hero, Shanto Venkatraman',
-            `She Improved Her Strength & Sugar Levels at the Age of 80. 💪`,
-            '✨How consistent strength training improved her strength and independence.',
-            '✨How regular exercise helped support healthier sugar levels over time.🌿',
-            "https://www.instagram.com/reels/DZfZO_iR7KJ/"
+            '💚 Meet our Thrive Hero, Silky Chauhan',
+            `*She Lost 10 Kgs at Age 45 + Reduced Inflammation & Body Pain.*💪`,
+            '✨How she reduced weight, inflammation, and daily body pain.',
+            '✨How small changes that created a big transformation in her health.🌿',
+            "https://www.instagram.com/reels/DU0f2iekaGM/"
         ],
         source: "new-landing-page form",
         media: {
-            "url": "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/9399044_testimonials.png",
-            "filename": "testimonials.png"
+            "url": "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/6788923_testimoals2.jpeg",
+            "filename": "testimoals_2.jpeg"
         },
         buttons: [],
         carouselCards: [],
@@ -60,17 +60,17 @@ export const sendInstTestimonailsnew = async ({ whatsappPhone, name, dayNumber }
 
          templateParams: [
             `${name} 👋`,
-            '💚 Video for today',
-            `Orthopaedic Doctor Shared Tips To Prevent Knee Replacement`,
-            "🦵 Knee pain is a joint breakdown, not just aging catching up!",
-            "⚖️ Every extra kilogram puts 3 to 4 kg of pressure on knees.",
-            "https://www.youtube.com/watch?v=WS-SMCJ9N9w"
+            '💚 Meet our Thrive Hero, Archana Bhimasen',
+            `She Lost 14 Kgs at Age 48 💪`,
+            '✨How she transformed her body after 40 with simple lifestyle changes.',
+            '✨The habits that helped her reduce weight and inflammation naturally.',
+            "https://www.youtube.com/watch?v=XX6Cc4vHPZQ"
         ],
         source: "new-landing-page form",
         media: {
-            "url": "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/7094137_preventknee.jpg",
-            "filename": "preventknee.jpg"
-        }, 
+            "url": "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/9076501_archanaytvid.jpg",
+            "filename": "archanaytvid.jpg"
+        },
         buttons: [],
         carouselCards: [],
         location: {},
