@@ -1,10 +1,33 @@
 
 import axios from "axios";
 
+const formatReadableDate = (dateString) => {
+    if (!dateString) return "Tomorrow";
+
+    const [year, month, day] = dateString.split("-").map(Number);
+    const date = new Date(Date.UTC(year, month - 1, day));
+
+    return new Intl.DateTimeFormat("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+        timeZone: "UTC"
+    }).format(date);
+};
+
+const subtractDays = (dateString, days) => {
+    if (!dateString) return null;
+
+    const [year, month, day] = dateString.split("-").map(Number);
+    const date = new Date(Date.UTC(year, month - 1, day));
+    date.setUTCDate(date.getUTCDate() - days);
+
+    return date.toISOString().slice(0, 10);
+};
 
 
-export const tommarowDay1SessionRemainders = async ({ userId, whatsappPhone, name, dayNumber }) => {
-    console.log("id: ",userId);
+export const tommarowDay1SessionRemainders = async ({ userId, whatsappPhone, name, dayNumber, session_startdate }) => {
+
     const payload = {
         apiKey: process.env.AISENSY_API_KEY,
         campaignName: "day1_session_reminder_txt",
@@ -41,12 +64,14 @@ export const tommarowDay1SessionRemainders = async ({ userId, whatsappPhone, nam
             },
         }
     );
-    console.log(`Aisensy 5 min session remainder response for ${userId}:`, response.data);
+    
     return response.data;
 }
 
-export const tommarowWelcomeSessionRemainder = async ({ userId, whatsappPhone, name, dayNumber }) => {
-    console.log("received user data tomarow rem : ", whatsappPhone, name, userId, dayNumber);
+export const tommarowWelcomeSessionRemainder = async ({ userId, whatsappPhone, name, dayNumber, session_startdate }) => {
+ 
+    const welcomeSessionDate = formatReadableDate(subtractDays(session_startdate, 1));
+   
     const payload = {
         apiKey: process.env.AISENSY_API_KEY,
         campaignName: "welcome_session_reminder_txt",
@@ -56,7 +81,7 @@ export const tommarowWelcomeSessionRemainder = async ({ userId, whatsappPhone, n
         templateParams: [
             `*${name} Ji*`,
             `*Welcome Session*`,
-            `09 Aug 2026`,
+            welcomeSessionDate,
             `11 AM | 4 PM (IST)`,
             `40 Min`,
             `🧘 Understand the Thrive Yoga philosophy`,
@@ -83,6 +108,6 @@ export const tommarowWelcomeSessionRemainder = async ({ userId, whatsappPhone, n
             },
         }
     );
-    console.log(`Aisensy 5 min session remainder response for ${userId}:`, response.data);
+   
     return response.data;
 }

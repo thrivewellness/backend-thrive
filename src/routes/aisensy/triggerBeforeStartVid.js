@@ -4,29 +4,58 @@ import { processPhone } from "../../utils/phoneUtils.js";
 import { sendYtVid } from "./campaigns/intractions/sendtYtVid.js";
 import { tommarowDay1SessionRemainders, tommarowWelcomeSessionRemainder } from "./campaigns/remainders/tommarowSessionRemainders.js";
 
-export const triggerYtVid = async (dayNumber) => {
-  console.log("> Yoga campaign started");
-  console.log("> day number:", dayNumber);
-
-  // Get today's date in IST
-  const now = new Date();
-
-  const istDate = new Intl.DateTimeFormat("en-CA", {
+const formatISTDate = (date = new Date()) =>
+  new Intl.DateTimeFormat("en-CA", {
     timeZone: "Asia/Kolkata",
     year: "numeric",
     month: "2-digit",
     day: "2-digit",
-  }).format(now); // e.g. "2026-08-06"
+  }).format(date);
 
-  // 00:00:00 IST converted to UTC
-  const startOfTodayIST = new Date(`${istDate}T00:00:00+05:30`);
+const parseDateAsUTC = (dateString) => {
+  const [year, month, day] = dateString.split("-").map(Number);
+  return new Date(Date.UTC(year, month - 1, day));
+};
 
-  const { data: users, error } = await supabase
+const addDays = (date, days) => {
+  const nextDate = new Date(date);
+  nextDate.setUTCDate(nextDate.getUTCDate() + days);
+  return nextDate;
+};
+
+const toDateString = (date) => date.toISOString().slice(0, 10);
+
+const getUpcomingMonday = (todayIST) => {
+  const today = parseDateAsUTC(todayIST);
+  const dayOfWeek = today.getUTCDay();
+  const daysUntilMonday = (8 - dayOfWeek) % 7 || 7;
+
+  return {
+    date: toDateString(addDays(today, daysUntilMonday)),
+    daysLeft: daysUntilMonday,
+    dayOfWeek,
+  };
+};
+
+const getUsersForUpcomingMonday = async (upcomingMondayDate, startOfTodayIST) =>
+  supabase
     .from("yoga_signups")
     .select("*")
-    .eq("current_session_date", "2026-08-10")
+    .eq("current_session_date", upcomingMondayDate)
     .lt("created_at", startOfTodayIST.toISOString())
     .order("id", { ascending: false });
+
+
+export const triggerUpcomingMondayPreStartCampaign = async () => {
+  
+  const istDate = formatISTDate();
+  const startOfTodayIST = new Date(`${istDate}T00:00:00+05:30`);
+  const upcomingMonday = getUpcomingMonday(istDate);
+
+  const { data: users, error } = await getUsersForUpcomingMonday(
+    upcomingMonday.date,
+    startOfTodayIST
+  );
 
   if (error) {
     console.error(error);
@@ -46,12 +75,32 @@ export const triggerYtVid = async (dayNumber) => {
     const { whatsappPhone } = phoneData;
 
     try {
-      await sendYtVid({
-        whatsappPhone,
-        name: user.name,
-        dayNumber,
-        todayDate: istDate, // Pass today's IST date
-      });
+      if (upcomingMonday.dayOfWeek >= 1 && upcomingMonday.dayOfWeek <= 5) {
+        await sendYtVid({
+          whatsappPhone,
+          name: user.name,
+          dayNumber: upcomingMonday.dayOfWeek,
+          todayDate: istDate,
+          session_startdate: upcomingMonday.date,
+          daysaleft: upcomingMonday.daysLeft,
+        });
+      } else if (upcomingMonday.dayOfWeek === 6) {
+        await tommarowWelcomeSessionRemainder({
+          whatsappPhone,
+          name: user.name,
+          userId: user.ref_user_id,
+          dayNumber: 0,
+          session_startdate: upcomingMonday.date,
+        });
+      } else if (upcomingMonday.dayOfWeek === 0) {
+        await tommarowDay1SessionRemainders({
+          whatsappPhone,
+          name: user.name,
+          userId: user.ref_user_id,
+          dayNumber: 1,
+          session_startdate: upcomingMonday.date,
+        });
+      }
 
       successCount++;
       console.log(`> Sent to ${user.id}`);
@@ -62,53 +111,4 @@ export const triggerYtVid = async (dayNumber) => {
 
     await delay(20);
   }
-
-  console.log("> Yoga campaign finished");
-  console.log(`> Total users: ${users.length}`);
-  console.log(`> Successfully sent: ${successCount}`);
-  console.log(`> Failed: ${failureCount}`);
-};
-
-export const triggerSessionsRem = async (dayNumber) => {
-  console.log("> Yoga campaign started");
-  console.log("> day number: ", dayNumber);
-
-  const { data: users } = await supabase
-    .from("yoga_signups")
-    .select("*")
-    .eq("current_session_date", '2026-08-10')
-    .eq("is_active", true)
-    .order("id", { ascending: false });
-
-  if (!users?.length) {
-    console.log("> No users found");
-    return;
-  }
-
-  let count = 0;
-  for (const user of users) {
-    const phoneData = processPhone(user.phone, user.country_code);
-    const { localPhone, whatsappPhone } = phoneData;
-
-    try {
-      await tommarowWelcomeSessionRemainder({
-        whatsappPhone,
-        name: user.name,
-        userId: user.ref_user_id,
-        dayNumber
-      });
-
-      console.log(`> Sent to ${user.id}`);
-      count++;
-    } catch (err) {
-      console.error(`> Failed for ${user.id}`, err.message);
-    }
-
-    // WhatsApp safety delay
-
-    console.log("count: ", count);
-    await delay(10);
-  }
-
-  console.log("> Yoga campaign finished");
 };

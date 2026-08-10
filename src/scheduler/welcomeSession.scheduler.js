@@ -21,6 +21,7 @@ import { triggerFiveRem, triggerFiveRemEve, triggerLiveNowRem, triggerTommarowre
 import { triggerInstTestimonails, triggerInstTestimonailsNew, triggerYtVid } from "../routes/aisensy/triggertestimonails.js";
 import { triggerJoinComunity } from "../routes/aisensy/triggerJoinComunity.js";
 import { trigger15MinDrill } from "../routes/aisensy/trigger15MinDrill.js";
+import { triggerUpcomingMondayPreStartCampaign } from "../routes/aisensy/triggerBeforeStartVid.js";
 
 const HANDLERS = {
   triggerYogaCampaignmorning,
@@ -52,7 +53,8 @@ const HANDLERS = {
   triggerFive14RemEve,
   triggerPaidUserMsgEvening,
   triggerPaidUserMsgMorning,
-  trigger15MinDrill
+  trigger15MinDrill,
+  triggerUpcomingMondayPreStartCampaign
 };
 
 cron.schedule("* * * * *", async () => {
@@ -101,6 +103,10 @@ cron.schedule("* * * * *", async () => {
 });
 
 cron.schedule("0 * * * *", trigger15MinDrill, {
+  timezone: "Asia/Kolkata",
+});
+
+cron.schedule("0 18 * * *", triggerUpcomingMondayPreStartCampaign, {
   timezone: "Asia/Kolkata",
 });
 
