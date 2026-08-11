@@ -3,9 +3,9 @@ import axios from "axios";
 
 export const sendInstTestimonails = async ({ whatsappPhone, name, dayNumber }) => {
 
-    console.log("sendInstTestimonails called with:", { whatsappPhone, name, dayNumber });
-
-    const payload = {
+  
+    {/*
+        const payload = {
         apiKey: process.env.AISENSY_API_KEY,
         campaignName: "send_vid_img",
         destination: whatsappPhone,
@@ -42,16 +42,14 @@ export const sendInstTestimonails = async ({ whatsappPhone, name, dayNumber }) =
             },
         }
     );
+*/}
 
-
-    console.log(`Aisensy sendInstTestimonails response for ${whatsappPhone}:`, response.data);  
     return response.data;
 }
 
 export const sendInstTestimonailsnew = async ({ whatsappPhone, name, dayNumber }) => {
 
-    console.log("sendInstTestimonails called with:", { whatsappPhone, name, dayNumber });
-
+   {/* 
     const payload = {
         apiKey: process.env.AISENSY_API_KEY,
         campaignName: "send_vid_img",
@@ -89,8 +87,6 @@ export const sendInstTestimonailsnew = async ({ whatsappPhone, name, dayNumber }
             },
         }
     );
-
-
-    console.log(`Aisensy sendInstTestimonails response for ${whatsappPhone}:`, response.data);  
+*/}
     return response.data;
 }

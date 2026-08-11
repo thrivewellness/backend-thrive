@@ -22,6 +22,7 @@ import { triggerInstTestimonails, triggerInstTestimonailsNew, triggerYtVid } fro
 import { triggerJoinComunity } from "../routes/aisensy/triggerJoinComunity.js";
 import { trigger15MinDrill } from "../routes/aisensy/trigger15MinDrill.js";
 import { triggerUpcomingMondayPreStartCampaign } from "../routes/aisensy/triggerBeforeStartVid.js";
+import { trigger9PmMsg } from "../routes/aisensy/trigger9PmMsg.js";
 
 const HANDLERS = {
   triggerYogaCampaignmorning,
@@ -56,6 +57,23 @@ const HANDLERS = {
   trigger15MinDrill,
   triggerUpcomingMondayPreStartCampaign
 };
+
+
+const getTodayIST = () =>
+  new Date().toLocaleDateString("en-CA", {
+    timeZone: "Asia/Kolkata",
+  });
+
+const getWeekdayDayNumberIST = () => {
+  const weekday = new Date().toLocaleDateString("en-US", {
+    timeZone: "Asia/Kolkata",
+    weekday: "short",
+  });
+
+  return ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].indexOf(weekday) + 1;
+};
+
+trigger9PmMsg(6,'2026-08-08');
 
 cron.schedule("* * * * *", async () => {
   const now = new Date().toISOString(); // Always use ISO
@@ -107,6 +125,10 @@ cron.schedule("0 * * * *", trigger15MinDrill, {
 });
 
 cron.schedule("0 18 * * *", triggerUpcomingMondayPreStartCampaign, {
+  timezone: "Asia/Kolkata",
+});
+
+cron.schedule("0 21 * * *", () => trigger9PmMsg(getWeekdayDayNumberIST(), getTodayIST()), {
   timezone: "Asia/Kolkata",
 });
 

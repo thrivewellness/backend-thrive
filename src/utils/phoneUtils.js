@@ -1,5 +1,4 @@
 export function processPhone(phone, countryCode) {
-  console.log("> processPhone called with:", { phone, countryCode });
 
   if (!phone || !countryCode) return null;
 

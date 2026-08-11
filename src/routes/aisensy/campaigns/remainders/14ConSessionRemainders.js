@@ -74,8 +74,10 @@ export const fiveMinSessionRemainder14ConEve = async ({ userId, whatsappPhone, n
 }
 
 export const tommarowSessionRemainders14Con = async ({ userId, whatsappPhone, name, dayNumber }) => {
-    console.log("received user data tomarow rem : ", whatsappPhone, name, userId, dayNumber);
-    const payload = {
+    console.log("received user data 14 tomarow rem : ", whatsappPhone, name, userId, dayNumber);
+    
+    
+  {/*  const payload = {
         apiKey: process.env.AISENSY_API_KEY,
         campaignName: "session_reminder_vid",
         destination: whatsappPhone,
@@ -114,6 +116,8 @@ export const tommarowSessionRemainders14Con = async ({ userId, whatsappPhone, na
         }
     );
     console.log(`Aisensy 5 min session remainder response for ${userId}:`, response.data);
+    
+    */}
     return response.data;
 }
 
