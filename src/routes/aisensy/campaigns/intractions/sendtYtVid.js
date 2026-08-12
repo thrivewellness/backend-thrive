@@ -2,16 +2,6 @@ import axios from "axios";
 
 const videoContentByDay = {
     1: {
-        title: "Shoulder Pain Relief Exercises at Home | Fix Stiff Shoulders Fast",
-        pointOne: "🚨 How pendulum swings and wall-crawling movements instantly relieve shoulder stiffness.",
-        pointTwo: "💪 How internal and external shoulder rotations correct posture and prevent joint tightness.",
-        videoUrl: "https://www.youtube.com/watch?v=zI1KIiquc_Q",
-        media: {
-            url: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/7246114_shoulderpain.jpg",
-            filename: "shoulder_pain.jpg"
-        }
-    },
-    2: {
         title: "Knee Pain Relief Exercises While Sitting | Ghutno Ka Dard Thik Karein",
         pointOne: "🦵 How seated isometric pushes strengthen knee joints without putting strain on the knees.",
         pointTwo: "🩸 How active heel strides and ankle pumps boost circulation and relieve stiffness from sitting.",
@@ -21,7 +11,7 @@ const videoContentByDay = {
             filename: "knee_pain.jpg"
         }
     },
-    3: {
+    2: {
         title: "10 Mins Routine to Get Glowing & Sharp Face",
         pointOne: "✨ How targeted face yoga massage activates 40+ facial muscles to boost blood flow and natural glow.",
         pointTwo: "💆 How jawline and cheekbone activation drains lymphatic fluid to reduce puffiness and double chin.",
@@ -31,7 +21,7 @@ const videoContentByDay = {
             filename: "glowing_skin.jpg"
         }
     },
-    4: {
+    3: {
         title: "10 Anti Aging Exercises for Parents | Reverse Your Age",
         pointOne: "⏳ How combining upper and lower body movements slows biological aging and preserves muscle density.",
         pointTwo: "🧘 How dynamic balance and joint opening routines improve overall body mobility and daily energy.",
@@ -41,7 +31,7 @@ const videoContentByDay = {
             filename: "anti_ageing.jpg"
         }
     },
-    5: {
+    4: {
         title: "Do This For Strong Core & Flat Stomach – Core Aur Stomach Ke Liye",
         pointOne: "🔥 How deep core activation through glute bridges and crunches targets visceral belly fat safely.",
         pointTwo: "🛡️ How building core stability protects your lower back from injury while shaping a flatter stomach.",
@@ -49,6 +39,16 @@ const videoContentByDay = {
         media: {
             url: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/1347752_corestreangthvid.jpg",
             filename: "core_streangth_vid.jpg"
+        }
+    },
+    5: {
+        title: "Why You Can't Lose Belly Fat (The Real Reason) & How To Lose It",
+        pointOne: "🚨How high cortisol from stress signals your body to store belly fat.",
+        pointTwo: "🏃How combine strength training with cardio to engage core muscles",
+        videoUrl: "https://www.youtube.com/watch?v=QXdvWhi1GE8",
+        media: {
+            url: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/9990913_12.jpg.jpeg",
+            filename: "12.jpg.jpeg"
         }
     }
 };

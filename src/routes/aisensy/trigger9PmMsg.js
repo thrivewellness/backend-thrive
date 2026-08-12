@@ -67,8 +67,8 @@ const getMessageCampaign = (dayNumber) => {
   // Day 1 - 4
   if (dayNumber >= 1 && dayNumber <= 4) {
     return {
-      name: "sendInstTestimonailsnew",
-      sender: sendInstTestimonailsnew,
+      name: "sendInstTestimonails",
+      sender: sendInstTestimonails,
     };
   }
 
@@ -91,8 +91,8 @@ const getMessageCampaign = (dayNumber) => {
   // Day 8 - 10
   if (dayNumber >= 8 && dayNumber <= 10) {
     return {
-      name: "sendInstTestimonails",
-      sender: sendInstTestimonails,
+      name: "sendInstTestimonailsnew",
+      sender: sendInstTestimonailsnew,
     };
   }
 

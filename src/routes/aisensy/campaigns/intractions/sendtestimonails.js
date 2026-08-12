@@ -59,7 +59,7 @@ const testimonials = {
       "✨How she transformed her body after 40 with simple lifestyle changes.",
     description2:
       "✨The habits that helped her reduce weight and inflammation naturally.🌿",
-    link: "https://www.youtube.com/watch?v=XX6Cc4vHPZQ",
+    link: "https://www.instagram.com/reels/DT8B45bkfRa/",
     mediaUrl:
       "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/9076501_archanaytvid.jpg",
     mediaFilename: "archanaytvid.jpg",
@@ -91,14 +91,14 @@ const testimonials = {
 
   4: {
     title: "💚 Video for Today",
-    result: "Orthopaedic Doctor Shared Tips To Prevent Knee Replacement 💪",
+    result: "Fix Your Thyroid Naturally | Boost Metabolism & Balance Hormones Fast 🔥 ",
     description1:
-      "🦵 How knee pain is a joint breakdown, not just aging catching up!",
+      "🦋 Thyroid controls metabolism; sluggish T3 causes weight gain.",
     description2:
-      "🏋️ How strong quadriceps absorb joint shock and protect cartilage.",
-    link: "https://www.youtube.com/watch?v=WS-SMCJ9N9w",
-    mediaUrl: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/7094137_preventknee.jpg",
-    mediaFilename: "preventknee.jpg",
+      "🩺 Test Free T3, Free T4, Anti-TPO for full thyroid health assessment.",
+    link: "https://www.youtube.com/watch?v=CFAPvOdaUqw",
+    mediaUrl: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/630005_4.jpg.jpeg",
+    mediaFilename: "4.jpg.jpeg",
   },
 };
 
@@ -119,6 +119,18 @@ const newTestimonials = {
   },
 
   9: {
+    title: "💚 Video for Today",
+    result: "How to Lose Weight After The Age of 35 💪",
+    description1:
+      "😴How good sleep & stress relief aid recovery.",
+    description2:
+      "💪How menopause impacts metabolism & muscles.",
+    link: "https://www.instagram.com/reel/Dbql7UnTzCT/",
+    mediaUrl: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/8335858_weightlossafter35.jpg",
+    mediaFilename: "weight_loss_after_35.jpg",
+  },
+
+  10: {
     title: "💚 Meet our Thrive Hero, kantha Rathi",
     result: "She Reversed Years of Knee Pain and Got Her Thyroid Under Control💪",
     description1:
@@ -129,18 +141,7 @@ const newTestimonials = {
     mediaUrl: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/9520352_kanthitestimonail.jpg",
     mediaFilename: "kanthi_testimonail.jpg",
   },
-
-  10: {
-    title: "💚 Meet our Thrive Hero, Shanta Venkatraman",
-    result: "She Improved Her Strength & Sugar Levels at the Age of 80. 💪",
-    description1:
-      "✨How consistent strength training improved her strength and independence.",
-    description2:
-      "✨How regular exercise helped support healthier sugar levels over time.🌿",
-    link: "https://www.instagram.com/reels/DZfZO_iR7KJ/",
-    mediaUrl: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/9399044_testimonials.png",
-    mediaFilename: "testimonials.png",
-  },
+  
 };
 
 // Main functions
