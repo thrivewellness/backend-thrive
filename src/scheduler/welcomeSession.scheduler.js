@@ -58,7 +58,6 @@ const HANDLERS = {
   triggerUpcomingMondayPreStartCampaign
 };
 
-
 const getTodayIST = () =>
   new Date().toLocaleDateString("en-CA", {
     timeZone: "Asia/Kolkata",
@@ -72,8 +71,6 @@ const getWeekdayDayNumberIST = () => {
 
   return ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].indexOf(weekday) + 1;
 };
-
-trigger9PmMsg(6,'2026-08-08');
 
 cron.schedule("* * * * *", async () => {
   const now = new Date().toISOString(); // Always use ISO
