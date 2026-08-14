@@ -134,7 +134,7 @@ export const triggerGutHealthProgram = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .eq("current_session_date", '2026-08-03')
+    .eq("current_session_date", '2026-08-10')
     .eq("is_active", true)
     .order("id", { ascending: false });
 
@@ -174,7 +174,7 @@ export const triggerGutHealthProgramEvening = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .eq("current_session_date", '2026-08-03')
+    .eq("current_session_date", '2026-08-10')
     .eq("is_active", true)
     .order("id", { ascending: false });
 
