@@ -29,7 +29,7 @@ export const triggerFiveRem = async (dayNumber) => {
     const { localPhone, whatsappPhone } = phoneData;
 
     try {
-      await fiveMinSessionRemainderGutHealth({
+      await fiveMinSessionRemainderMetabolHealth({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,
@@ -69,7 +69,167 @@ export const triggerFiveRemEve = async (dayNumber) => {
     const { localPhone, whatsappPhone } = phoneData;
 
     try {
-      await fiveMinSessionRemainderGutHealthEvening({
+      await fiveMinSessionRemainderMetabolHealthEvening({
+        whatsappPhone,
+        name: user.name,
+        userId: user.ref_user_id,
+        dayNumber
+      });
+
+      console.log(`> Sent to ${user.id}`);
+    } catch (err) {
+      console.error(`> Failed for ${user.id}`, err.message);
+    }
+
+    // WhatsApp safety delay
+    await delay(10);
+  }
+
+  console.log("> Yoga campaign finished");
+};
+
+export const triggerFiveRemWel = async (dayNumber) => {
+  console.log("> Yoga campaign started");
+  console.log("> day number: ", dayNumber);
+
+  const { data: users } = await supabase
+    .from("yoga_signups")
+    .select("*")
+    .eq("current_session_date", '2026-08-17')
+    .eq("is_active", true)
+    .order("id", { ascending: false });
+
+  if (!users?.length) {
+    console.log("> No users found");
+    return;
+  }
+
+  for (const user of users) {
+    const phoneData = processPhone(user.phone, user.country_code);
+    const { localPhone, whatsappPhone } = phoneData;
+
+    try {
+      await fiveMinWelcomeSessionRemainderMorning({
+        whatsappPhone,
+        name: user.name,
+        userId: user.ref_user_id,
+        dayNumber
+      });
+
+      console.log(`> Sent to ${user.id}`);
+    } catch (err) {
+      console.error(`> Failed for ${user.id}`, err.message);
+    }
+
+    // WhatsApp safety delay
+    await delay(10);
+  }
+
+  console.log("> Yoga campaign finished");
+};
+
+export const triggerFiveRemWelEve = async (dayNumber) => {
+  console.log("> Yoga campaign started");
+  console.log("> day number: ", dayNumber);
+
+  const { data: users } = await supabase
+    .from("yoga_signups")
+    .select("*")
+    .eq("current_session_date", '2026-08-17')
+    .eq("is_active", true)
+    .order("id", { ascending: false });
+
+  if (!users?.length) {
+    console.log("> No users found");
+    return;
+  }
+
+  for (const user of users) {
+    const phoneData = processPhone(user.phone, user.country_code);
+    const { localPhone, whatsappPhone } = phoneData;
+
+    try {
+      await fiveMinWelcomeSessionRemainderEvening({
+        whatsappPhone,
+        name: user.name,
+        userId: user.ref_user_id,
+        dayNumber
+      });
+
+      console.log(`> Sent to ${user.id}`);
+    } catch (err) {
+      console.error(`> Failed for ${user.id}`, err.message);
+    }
+
+    // WhatsApp safety delay
+    await delay(10);
+  }
+
+  console.log("> Yoga campaign finished");
+};
+
+export const triggerFive14Rem = async (dayNumber) => {
+  console.log("> Yoga campaign started");
+  console.log("> day number: ", dayNumber);
+
+  const { data: users } = await supabase
+    .from("yoga_signups")
+    .select("*")
+    .eq("current_session_date", '2026-08-03')
+    .eq("is_active", true)
+    .order("id", { ascending: false });
+
+  if (!users?.length) {
+    console.log("> No users found");
+    return;
+  }
+
+  for (const user of users) {
+    const phoneData = processPhone(user.phone, user.country_code);
+    const { localPhone, whatsappPhone } = phoneData;
+
+    try {
+      await fiveMinSessionRemainder14Con({
+        whatsappPhone,
+        name: user.name,
+        userId: user.ref_user_id,
+        dayNumber
+      });
+
+      console.log(`> Sent to ${user.id}`);
+    } catch (err) {
+      console.error(`> Failed for ${user.id}`, err.message);
+    }
+
+    // WhatsApp safety delay
+    await delay(10);
+  }
+
+  console.log("> Yoga campaign finished");
+};
+
+export const triggerFive14RemEve = async (dayNumber) => {
+  console.log("> Yoga campaign started");
+  console.log("> day number: ", dayNumber);
+
+  const { data: users } = await supabase
+    .from("yoga_signups")
+    .select("*")
+    .eq("current_session_date", '2026-08-03')
+    .eq("is_active", true)
+    .order("id", { ascending: false });
+
+  if (!users?.length) {
+    console.log("> No users found");
+    return;
+  }
+
+  for (const user of users) {
+    const phoneData = processPhone(user.phone, user.country_code);
+    const { localPhone, whatsappPhone } = phoneData;
+
+    try {
+      await fiveMinSessionRemainder14ConEve({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,
@@ -127,298 +287,6 @@ export const triggerTommarowrem = async (dayNumber) => {
     // WhatsApp safety delay
 
     console.log("count: ", count);
-    await delay(10);
-  }
-
-  console.log("> Yoga campaign finished");
-};
-
-
-export const triggerLiveNowRem = async (dayNumber) => {
-  console.log("> Yoga campaign started");
-  console.log("> day number: ", dayNumber);
-
-  const { data: users } = await supabase
-    .from("yoga_signups")
-    .select("*")
-    .eq("current_session_date", '2026-07-13')
-    .eq("is_active", true)
-    .order("id", { ascending: false });
-
-
-  if (!users?.length) {
-    console.log("> No users found");
-    return;
-  }
-
-  for (const user of users) {
-    const phoneData = processPhone(user.phone, user.country_code);
-    const { localPhone, whatsappPhone } = phoneData;
-
-    try {
-      await liveNowRemainder({
-        whatsappPhone,
-        name: user.name,
-        userId: user.ref_user_id,
-        dayNumber
-      });
-
-      console.log(`> Sent to ${user.id}`);
-    } catch (err) {
-      console.error(`> Failed for ${user.id}`, err.message);
-    }
-
-    await delay(10);
-  }
-
-  console.log("> Yoga campaign finished");
-};
-
-export const triggerTommarowremmetabolic = async (dayNumber) => {
-  console.log("> Yoga campaign started");
-  console.log("> day number: ", dayNumber);
-
-  const { data: users } = await supabase
-    .from("yoga_signups")
-    .select("*")
-    .eq("current_session_date", '2026-08-03')
-    .eq("is_active", true)
-    .order("id", { ascending: false });
-
-
-  if (!users?.length) {
-    console.log("> No users found");
-    return;
-  }
-
-  let count = 0;
-  for (const user of users) {
-    const phoneData = processPhone(user.phone, user.country_code);
-    const { localPhone, whatsappPhone } = phoneData;
-
-    try {
-      await tommarowSessionRemaindersMetabolHealth({
-        whatsappPhone,
-        name: user.name,
-        userId: user.ref_user_id,
-        dayNumber
-      });
-
-      console.log(`> Sent to ${user.id}`);
-      count++;
-    } catch (err) {
-      console.error(`> Failed for ${user.id}`, err.message);
-    }
-
-    // WhatsApp safety delay
-
-    console.log("count: ", count);
-    await delay(200);
-  }
-
-  console.log("> Yoga campaign finished");
-};
-
-export const triggerTommarowrem14con = async (dayNumber) => {
-  console.log("> Yoga campaign started");
-  console.log("> day number: ", dayNumber);
-
-  const { data: users } = await supabase
-    .from("yoga_signups")
-    .select("*")
-    .eq("current_session_date", '2026-07-27')
-    .eq("is_active", true)
-    .order("id", { ascending: false });
-
-
-  if (!users?.length) {
-    console.log("> No users found");
-    return;
-  }
-
-  let count = 0;
-  for (const user of users) {
-    const phoneData = processPhone(user.phone, user.country_code);
-    const { localPhone, whatsappPhone } = phoneData;
-
-    try {
-      await tommarowSessionRemainders14Con({
-        whatsappPhone,
-        name: user.name,
-        userId: user.ref_user_id,
-        dayNumber
-      });
-
-      console.log(`> Sent to ${user.id}`);
-      count++;
-    } catch (err) {
-      console.error(`> Failed for ${user.id}`, err.message);
-    }
-
-    // WhatsApp safety delay
-
-    console.log("count: ", count);
-    await delay(200);
-  }
-
-  console.log("> Yoga campaign finished");
-};
-
-
-export const triggerFiveRemWel = async (dayNumber) => {
-  console.log("> Yoga campaign started");
-  console.log("> day number: ", dayNumber);
-
-  const { data: users } = await supabase
-    .from("yoga_signups")
-    .select("*")
-    .eq("current_session_date", '2026-08-10')
-    .eq("is_active", true)
-    .order("id", { ascending: false });
-
-  if (!users?.length) {
-    console.log("> No users found");
-    return;
-  }
-
-  for (const user of users) {
-    const phoneData = processPhone(user.phone, user.country_code);
-    const { localPhone, whatsappPhone } = phoneData;
-
-    try {
-      await fiveMinWelcomeSessionRemainderMorning({
-        whatsappPhone,
-        name: user.name,
-        userId: user.ref_user_id,
-        dayNumber
-      });
-
-      console.log(`> Sent to ${user.id}`);
-    } catch (err) {
-      console.error(`> Failed for ${user.id}`, err.message);
-    }
-
-    // WhatsApp safety delay
-    await delay(10);
-  }
-
-  console.log("> Yoga campaign finished");
-};
-
-export const triggerFiveRemWelEve = async (dayNumber) => {
-  console.log("> Yoga campaign started");
-  console.log("> day number: ", dayNumber);
-
-  const { data: users } = await supabase
-    .from("yoga_signups")
-    .select("*")
-    .eq("current_session_date", '2026-08-10')
-    .eq("is_active", true)
-    .order("id", { ascending: false });
-
-  if (!users?.length) {
-    console.log("> No users found");
-    return;
-  }
-
-  for (const user of users) {
-    const phoneData = processPhone(user.phone, user.country_code);
-    const { localPhone, whatsappPhone } = phoneData;
-
-    try {
-      await fiveMinWelcomeSessionRemainderEvening({
-        whatsappPhone,
-        name: user.name,
-        userId: user.ref_user_id,
-        dayNumber
-      });
-
-      console.log(`> Sent to ${user.id}`);
-    } catch (err) {
-      console.error(`> Failed for ${user.id}`, err.message);
-    }
-
-    // WhatsApp safety delay
-    await delay(10);
-  }
-
-  console.log("> Yoga campaign finished");
-};
-
-export const triggerFive14Rem = async (dayNumber) => {
-  console.log("> Yoga campaign started");
-  console.log("> day number: ", dayNumber);
-
-  const { data: users } = await supabase
-    .from("yoga_signups")
-    .select("*")
-    .eq("current_session_date", '2026-07-27')
-    .eq("is_active", true)
-    .order("id", { ascending: false });
-
-  if (!users?.length) {
-    console.log("> No users found");
-    return;
-  }
-
-  for (const user of users) {
-    const phoneData = processPhone(user.phone, user.country_code);
-    const { localPhone, whatsappPhone } = phoneData;
-
-    try {
-      await fiveMinSessionRemainder14Con({
-        whatsappPhone,
-        name: user.name,
-        userId: user.ref_user_id,
-        dayNumber
-      });
-
-      console.log(`> Sent to ${user.id}`);
-    } catch (err) {
-      console.error(`> Failed for ${user.id}`, err.message);
-    }
-
-    // WhatsApp safety delay
-    await delay(10);
-  }
-
-  console.log("> Yoga campaign finished");
-};
-
-export const triggerFive14RemEve = async (dayNumber) => {
-  console.log("> Yoga campaign started");
-  console.log("> day number: ", dayNumber);
-
-  const { data: users } = await supabase
-    .from("yoga_signups")
-    .select("*")
-    .eq("current_session_date", '2026-07-27')
-    .eq("is_active", true)
-    .order("id", { ascending: false });
-
-  if (!users?.length) {
-    console.log("> No users found");
-    return;
-  }
-
-  for (const user of users) {
-    const phoneData = processPhone(user.phone, user.country_code);
-    const { localPhone, whatsappPhone } = phoneData;
-
-    try {
-      await fiveMinSessionRemainder14ConEve({
-        whatsappPhone,
-        name: user.name,
-        userId: user.ref_user_id,
-        dayNumber
-      });
-
-      console.log(`> Sent to ${user.id}`);
-    } catch (err) {
-      console.error(`> Failed for ${user.id}`, err.message);
-    }
-
-    // WhatsApp safety delay
     await delay(10);
   }
 
