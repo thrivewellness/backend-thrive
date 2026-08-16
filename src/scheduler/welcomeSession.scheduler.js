@@ -17,7 +17,7 @@ import {
 import { triggerAttendance } from "../routes/aisensy/triggerAttendance.js";
 import { triggerPlans } from "../routes/aisensy/triggerPlans.js";
 import { triggerconsultaion } from "../routes/aisensy/triggerconsultaion.js";
-import { triggerFiveRem, triggerFiveRemEve, triggerLiveNowRem, triggerTommarowrem, triggerTommarowremmetabolic, triggerTommarowrem14con, triggerFiveRemWelEve, triggerFiveRemWel, triggerFive14Rem, triggerFive14RemEve } from "../routes/aisensy/triggerRemainders.js";
+import { triggerFiveRem, triggerFiveRemEve, triggerFiveRemWelEve, triggerFiveRemWel, triggerFive14Rem, triggerFive14RemEve } from "../routes/aisensy/triggerRemainders.js";
 import { triggerInstTestimonails, triggerInstTestimonailsNew, triggerYtVid } from "../routes/aisensy/triggertestimonails.js";
 import { triggerJoinComunity } from "../routes/aisensy/triggerJoinComunity.js";
 import { trigger15MinDrill } from "../routes/aisensy/trigger15MinDrill.js";
@@ -35,12 +35,8 @@ const HANDLERS = {
   triggerwelcomenmorning,
   triggerwelcomeevening,
   triggerFiveRem,
-  triggerLiveNowRem,
-  triggerTommarowrem,
   triggerFiveRemEve,
   triggerInstTestimonails,
-  triggerTommarowrem14con,
-  triggerTommarowremmetabolic,
   trigger14ComProgram,
   trigger14ComProgramEvening,
   triggerFiveRemWelEve,

@@ -240,7 +240,7 @@ export const triggerwelcomenmorning = async (dayNumber) => {
     }
 
     // WhatsApp safety delay
-    await delay(50);
+    await delay(10);
   }
 
   console.log("> Yoga campaign finished");
@@ -283,7 +283,7 @@ export const triggerwelcomeevening = async (dayNumber) => {
     }
 
     count++;
-    await delay(200);
+    await delay(10);
   }
 
   console.log(`> Yoga campaign finished. Total users processed: ${count}`);
