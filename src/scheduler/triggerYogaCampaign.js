@@ -214,7 +214,7 @@ export const triggerwelcomenmorning = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .eq("current_session_date", '2026-08-17')
+    .eq("current_session_date", '2026-08-24')
     .eq("is_active", true)
     .order("id", { ascending: false });
 
@@ -254,7 +254,7 @@ export const triggerwelcomeevening = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .eq("current_session_date", '2026-08-17')
+    .eq("current_session_date", '2026-08-24')
     .eq("is_active", true)
     .order("id", { ascending: false });
 

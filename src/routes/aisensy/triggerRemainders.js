@@ -29,7 +29,7 @@ export const triggerFiveRem = async (dayNumber) => {
     const { localPhone, whatsappPhone } = phoneData;
 
     try {
-      await fiveMinSessionRemainderGutHealth({
+      await fiveMinSessionRemainderMetabolHealth({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,
@@ -69,7 +69,7 @@ export const triggerFiveRemEve = async (dayNumber) => {
     const { localPhone, whatsappPhone } = phoneData;
 
     try {
-      await fiveMinSessionRemainderGutHealthEvening({
+      await fiveMinSessionRemainderMetabolHealthEvening({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,
@@ -95,7 +95,7 @@ export const triggerFiveRemWel = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .eq("current_session_date", '2026-08-17')
+    .eq("current_session_date", '2026-08-24')
     .eq("is_active", true)
     .order("id", { ascending: false });
 
@@ -135,7 +135,7 @@ export const triggerFiveRemWelEve = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .eq("current_session_date", '2026-08-17')
+    .eq("current_session_date", '2026-08-24')
     .eq("is_active", true)
     .order("id", { ascending: false });
 
@@ -175,7 +175,7 @@ export const triggerFive14Rem = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .eq("current_session_date", '2026-08-03')
+    .eq("current_session_date", '2026-08-10')
     .eq("is_active", true)
     .order("id", { ascending: false });
 
@@ -215,7 +215,7 @@ export const triggerFive14RemEve = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .eq("current_session_date", '2026-08-03')
+    .eq("current_session_date", '2026-08-10')
     .eq("is_active", true)
     .order("id", { ascending: false });
 
