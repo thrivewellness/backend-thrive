@@ -15,6 +15,7 @@ import {
   triggerPaidUserMsgEvening
 } from "./triggerYogaCampaign.js";
 import { triggerAttendance } from "../routes/aisensy/triggerAttendance.js";
+import { triggerAttendancePaid } from "../routes/aisensy/triggerAttendancePaid.js";
 import { triggerPlans } from "../routes/aisensy/triggerPlans.js";
 import { triggerconsultaion } from "../routes/aisensy/triggerconsultaion.js";
 import { triggerFiveRem, triggerFiveRemEve, triggerFiveRemWelEve, triggerFiveRemWel, triggerFive14Rem, triggerFive14RemEve } from "../routes/aisensy/triggerRemainders.js";
@@ -140,13 +141,15 @@ paidUserMessageWeekdays.forEach((dayNumber) => {
 const triggerAttendanceSlot = async (presentMessageTime, sendAbsent = false) => {
   console.log(`> Checking campaigns for attendance slot ${presentMessageTime}...`);
 
+  await triggerAttendancePaid(getTodayIST(), presentMessageTime, { sendAbsent });
+
   const campaign = await checkCampaignTriggeredToday(supabase);
 
   if (campaign) {
     console.log("> Campaign was triggered today.");
     await triggerAttendance(campaign.campaign_date, campaign.day_number, presentMessageTime, { sendAbsent });
   } else {
-    console.log("> No campaign triggered today. Skipping.");
+    console.log("> No free campaign triggered today. Skipping free attendance.");
   }
 };
 
