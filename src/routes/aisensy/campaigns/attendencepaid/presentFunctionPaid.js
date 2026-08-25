@@ -28,7 +28,7 @@ export const presentFunctionPaid = async (
   const milestoneQuote = isMilestone ? milestoneQuotes[totalPresentDays] : null;
   const dayLine = milestoneQuote
     ? `${totalPresentDays} Thrive Yoga days completed! \uD83C\uDF89`
-    : `Day ${day} completed strong \uD83D\uDCAA`;
+    : `Thankyou for attending today’s session 💚`;
   const quote = milestoneQuote || "\uD83C\uDF3F Keep showing up. You are doing great.";
   const statusLine = "Present \u2714\uFE0F";
 
@@ -59,7 +59,7 @@ export const presentFunctionPaid = async (
       }
     : {
         apiKey: process.env.AISENSY_API_KEY,
-        campaignName: "free_present_msg",
+        campaignName: "present_msg_both_users",
         destination: whatsappPhone,
         userName: "Thrive Wellness",
         templateParams: [
