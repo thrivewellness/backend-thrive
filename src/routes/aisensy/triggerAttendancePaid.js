@@ -7,7 +7,7 @@ import { processPhone } from "../../utils/phoneUtils.js";
 const PAID_ATTENDANCE_MILESTONES = new Set([
   50, 100, 200, 300, 500, 1000, 1500, 2000, 2500,
 ]);
-const PAID_ATTENDANCE_SKIPPED_DAYS = new Set([0, 4]); // Sunday and Thursday
+const PAID_ATTENDANCE_SKIPPED_DAYS = new Set([0, 4, 5]); // Sunday and Thursday
 
 const getTodayIST = () =>
   new Date().toLocaleDateString("en-CA", {
