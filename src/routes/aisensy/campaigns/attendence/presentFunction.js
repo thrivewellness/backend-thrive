@@ -80,7 +80,7 @@ export const presentFunction = async (
 
   const activeSpecialDay = isBadgeEligible ? specialDayConfig[day] : null;
   const isSpecialDay = Boolean(activeSpecialDay);
-  const dayLine = activeSpecialDay?.dayLine || `${day} completed strong \uD83D\uDCAA`;
+  const dayLine = activeSpecialDay?.dayLine || `Day ${day} completed strong \uD83D\uDCAA`;
   const statusLine = "Present \u2714\uFE0F";
   const badgeLine = activeSpecialDay?.badgeLine || "";
   const quote = activeSpecialDay?.quote || defaultQuoteByDay[day] || "\uD83C\uDF3F Keep showing up. You are doing great.";
@@ -112,7 +112,7 @@ export const presentFunction = async (
       }
     : {
         apiKey: process.env.AISENSY_API_KEY,
-        campaignName: "free_present_msg",
+        campaignName: "free_present_msg_both_users",
         destination: whatsappPhone,
         userName: "Thrive Wellness",
         templateParams: [
