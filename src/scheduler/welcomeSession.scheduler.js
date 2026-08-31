@@ -129,7 +129,7 @@ cron.schedule("0 21 * * *", () => trigger9PmMsg(getWeekdayDayNumberIST(), getTod
   timezone: "Asia/Kolkata",
 });
 
-const paidUserMessageWeekdays = [1, 2, 3, 6];
+const paidUserMessageWeekdays = [1, 2, 3, 5, 6];
 
 paidUserMessageWeekdays.forEach((dayNumber) => {
   cron.schedule(`15 6 * * ${dayNumber}`, () => triggerPaidUserMsgMorning(dayNumber), {

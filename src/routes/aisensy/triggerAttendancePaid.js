@@ -3,22 +3,21 @@ import { presentFunctionPaid } from "./campaigns/attendencepaid/presentFunctionP
 import { absentFunctionPaid } from "./campaigns/attendencepaid/absentFunctionPaid.js";
 import { delay } from "../../utils/delay.js";
 import { processPhone } from "../../utils/phoneUtils.js";
+import {
+  getPaidAttendanceWeekDates,
+  getValidPaidAttendanceDates,
+  isPaidAttendanceSkippedDay,
+} from "../../utils/paidAttendance.js";
 
 const PAID_ATTENDANCE_MILESTONES = new Set([
   50, 100, 200, 300, 500, 1000, 1500, 2000, 2500,
 ]);
-const PAID_ATTENDANCE_SKIPPED_DAYS = new Set([0, 4, 5]); // Sunday and Thursday
-
 const getTodayIST = () =>
   new Date().toLocaleDateString("en-CA", {
     timeZone: "Asia/Kolkata",
   });
 
-export const isPaidAttendanceSkippedDay = (dateString) => {
-  const date = new Date(`${String(dateString).slice(0, 10)}T12:00:00Z`);
-
-  return !Number.isNaN(date.getTime()) && PAID_ATTENDANCE_SKIPPED_DAYS.has(date.getUTCDay());
-};
+export { isPaidAttendanceSkippedDay };
 
 const getNowIST = () => {
   const parts = new Intl.DateTimeFormat("en-CA", {
@@ -37,18 +36,6 @@ const getNowIST = () => {
 
   return `${values.year}-${values.month}-${values.day} ${values.hour}:${values.minute}:${values.second}`;
 };
-
-const formatDate = (date) => date.toISOString().slice(0, 10);
-
-const addDays = (dateString, days) => {
-  const [year, month, day] = dateString.split("-").map(Number);
-  const date = new Date(Date.UTC(year, month - 1, day));
-  date.setUTCDate(date.getUTCDate() + days);
-  return formatDate(date);
-};
-
-const getTrackerDates = (today) =>
-  Array.from({ length: 7 }, (_, index) => addDays(today, index - 6));
 
 const getPlanDayNumber = (planStartDate, today) => {
   const start = new Date(`${String(planStartDate).slice(0, 10)}T12:00:00Z`);
@@ -155,9 +142,10 @@ export const triggerAttendancePaid = async (
     if (error) throw error;
 
     for (const user of users || []) {
-      const attendanceList = Array.isArray(user.attendance) ? user.attendance : [];
+      const attendanceList = getValidPaidAttendanceDates(user.attendance);
+      const attendanceSet = new Set(attendanceList);
       const activityList = Array.isArray(user.activity) ? user.activity : [];
-      const isPresent = attendanceList.includes(triggeredToday);
+      const isPresent = attendanceSet.has(triggeredToday);
       const shouldSendPresent = presentMessageTime
         ? hasPendingPresentActivity(activityList, triggeredToday, presentMessageTime)
         : isPresent;
@@ -167,10 +155,9 @@ export const triggerAttendancePaid = async (
       if (!shouldSendPresent && !shouldSendAbsent) continue;
 
       const { whatsappPhone } = processPhone(user.phone, user.country_code);
-      const uniqueAttendance = [...new Set(attendanceList.filter(Boolean))];
-      const totalPresentDays = uniqueAttendance.length;
-      const tracker = getTrackerDates(triggeredToday)
-        .map((date) => (attendanceList.includes(date) ? "\u2705" : "\u2B1C"))
+      const totalPresentDays = attendanceList.length;
+      const tracker = getPaidAttendanceWeekDates(triggeredToday)
+        .map((date) => (attendanceSet.has(date) ? "\u2705" : "\u2B1C"))
         .join("");
       const planDayNumber = getPlanDayNumber(user.plan_start_date, triggeredToday);
 

@@ -71,7 +71,7 @@ export const presentFunctionPaid = async (
   const dailyQuote = dailyQuotes[getDayOfMonthIST() - 1];
   const dayLine = milestoneQuote
     ? `${totalPresentDays} Thrive Yoga days completed! \uD83C\uDF89`
-    : `Thankyou for attending today’s session 💚`;
+    : "Thank you for attending today’s session 💚";
   const quote = milestoneQuote || dailyQuote;
   const statusLine = "Present \u2714\uFE0F";
 

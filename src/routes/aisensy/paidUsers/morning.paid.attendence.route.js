@@ -1,5 +1,6 @@
 import express from "express";
 import { supabase } from "../../../lib/supabase.js";
+import { isPaidAttendanceSkippedDay } from "../../../utils/paidAttendance.js";
 
 const router = express.Router();
 
@@ -83,6 +84,16 @@ router.post("/", async (req, res) => {
 
     console.log("Paid Morning Attendance API Called At:", currentDateTime);
     console.log("Received ID:", id);
+
+    if (isPaidAttendanceSkippedDay(todayDate)) {
+      console.log("Ignoring paid morning attendance: no session on Thursday/Sunday");
+      return res.status(200).json({
+        success: true,
+        message: "No paid session today. Attendance was not recorded.",
+        type: "ignored",
+        link: null,
+      });
+    }
 
     const { data: existingUser, error: fetchError } = await supabase
       .from("paid_users")
