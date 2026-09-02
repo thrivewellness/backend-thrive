@@ -17,7 +17,7 @@ export const triggerPlans = async (dayNumber) => {
     const { data: users, error } = await supabase
       .from("yoga_signups")
       .select("*")
-      .eq("current_session_date", "2026-08-17")
+      .eq("current_session_date", "2026-08-24")
       .order("id", { ascending: false });
 
     if (error) {
@@ -65,7 +65,7 @@ export const triggerPlans = async (dayNumber) => {
       }
 
       try {
-        await sendPlansOfferMsg(id, whatsappPhone, name, dayNumber);
+        await sendThriveconsultaion3day(id, whatsappPhone, name, dayNumber);
         sentCount++;
       } catch (err) {
         console.error(`> Failed for user ${id}:`, err.message);
