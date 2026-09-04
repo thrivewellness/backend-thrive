@@ -65,7 +65,7 @@ export const triggerPlans = async (dayNumber) => {
       }
 
       try {
-        await sendThriveYogaPlans2day(id, whatsappPhone, name, dayNumber);
+        await sendThriveYogaPlans1day(id, whatsappPhone, name, dayNumber);
         sentCount++;
       } catch (err) {
         console.error(`> Failed for user ${id}:`, err.message);
