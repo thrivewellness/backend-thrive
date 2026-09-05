@@ -183,7 +183,7 @@ router.get('/get-yoga/new', async (req, res, next) => {
   try {
     const { data, error } = await supabase
       .from('yoga_signups')
-      .select('*')
+      .select("id, name, phone, country_code, referral, coach_ref, ref_user_id, current_session_date, session_start_date, created_at")
       .eq('id', 403)
 
     if (error) {
