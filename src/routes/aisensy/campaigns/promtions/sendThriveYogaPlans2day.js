@@ -5,17 +5,39 @@ export const sendThriveYogaPlans2day = async (id, whatsappPhone, name, dayNumber
 
     console.log("sendThriveYogaPlans2day called with: user", { id, whatsappPhone, name });
 
+    const phoneNumber = String(whatsappPhone ?? "").trim();
+    const isIndianUser = phoneNumber.startsWith("91") && phoneNumber.length === 12;
+
+    const planDetails = isIndianUser
+        ? [
+            "~₹ 16,500~",
+            "*₹3,599 (78% off)*",
+            "~₹ 4,500~",
+            "*₹1,499 (67% off)*",
+            "~₹ 999~",
+            "*₹599 (40% off)*",
+            `https://payment.thrivewellness.in/payment/yoga/basic?ref=2day_left_message&userid=${id}`,
+        ]
+        : [
+            "~$450~",
+            "*$99 (78% off)*",
+            "~$118.18~",
+            "*$39 (67% off)*",
+            "~$20~",
+            "*$10 (50% off)*",
+            `https://payment.thrivewellness.in/payment/yoga/basic?cur=usd&ref=2day_left_message&userid=${id}`,
+        ];
+
     const payload = {
         apiKey: process.env.AISENSY_API_KEY,
-        campaignName: "1_2_rem_plan_vid_new",
+        campaignName: "plans_rem_days_left",
         destination: whatsappPhone,
         userName: "Thrive Integrated Lifestyle Private Limited",
 
         templateParams: [
-            `${name} Ji 🙏`,
-            "2 Day",
-            "https://payment.thrivewellness.in/payment/yoga/basic",
-            "https://payment.thrivewellness.in/payment/yoga/advanced"
+            `${name} Ji `,
+            "2 Days",
+            ...planDetails,
         ],
 
         source: "new-landing-page form",
@@ -31,7 +53,7 @@ export const sendThriveYogaPlans2day = async (id, whatsappPhone, name, dayNumber
                 parameters: [
                     {
                         type: "text",
-                        text: `talk-to-expert?ref=trigger_plan_2day_left`  // dynamic value (e.g., user ID, order ID, etc.)
+                        text: `talk-to-expert?ref=2day_left_message`  // dynamic value (e.g., user ID, order ID, etc.)
                     }
                 ]
             }

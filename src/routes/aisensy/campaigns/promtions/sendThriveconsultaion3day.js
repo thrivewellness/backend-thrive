@@ -16,7 +16,7 @@ export const sendThriveconsultaion3day = async ( id, whatsappPhone, name, dayNum
                 "3 Day",
                 "Free Thrive Yoga Program 🧘‍♂️",
                 "From next Monday, our new Thrive Yoga batch begins. Before you decide the next step, we’d love to offer you a free 10-minute Consultation with our coach.",
-                "https://www.thrivewellness.in/talk-to-expert?ref=3_day_left_rem_con_msg",
+                "https://www.thrivewellness.in/talk-to-expert?ref=3_day_left_rem_consult_message",
             ],
 
             source: "new-landing-page form",

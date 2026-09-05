@@ -1,21 +1,6 @@
 import { supabase } from "../lib/supabase.js";
-import { sendWelcomeSessionMorningMessage } from "../routes/aisensy/campaigns/welcomeSession.js";
 import { day0SessionMorning, day0SessionEvening } from "../routes/aisensy/campaigns/day0welcome.js"
-import { day1Session, day1SessionEvening } from "../routes/aisensy/campaigns/day1Session.js"
-import { day2Session, day2SessionEvening } from "../routes/aisensy/campaigns/day2Session.js"
-import { day3Session, day3SessionEvening } from "../routes/aisensy/campaigns/day3Session.js"
-import { day4Session, day4SessionEvening } from "../routes/aisensy/campaigns/day4Session.js"
-import { day5Session, day5SessionEvening } from "../routes/aisensy/campaigns/day5Session.js"
-import { day6Session, day6SessionEvening, GutHealthDay6, GutHealthDay6Evening } from "../routes/aisensy/campaigns/day6Session.js"
-import { day7Session, day7SessionEvening } from "../routes/aisensy/campaigns/day7Session.js"
-import { day8Session, day8SessionEvening } from "../routes/aisensy/campaigns/day8Session.js"
-import { day9Session, day9SessionEvening } from "../routes/aisensy/campaigns/day9Session.js"
-import { day10Session, day10SessionEvening } from "../routes/aisensy/campaigns/day10Session.js"
-import { day11Session, day11SessionEvening } from "../routes/aisensy/campaigns/day11Session.js"
-import { day12Session, day12SessionEvening } from "../routes/aisensy/campaigns/day12Session.js"
-import { day13Session, day13SessionEvening } from "../routes/aisensy/campaigns/day13Session.js"
-import { day14Session, day14SessionEvening } from "../routes/aisensy/campaigns/day14Session.js"
-import { GutHealthProgram } from "../routes/aisensy/campaigns/gutHealth.js"
+import { GutHealthDay6, GutHealthDay6Evening } from "../routes/aisensy/campaigns/day6Session.js"
 import { delay } from "../utils/delay.js";
 import { morningSessions, eveningSessions } from "./utils/paramToFuntionMatching.js";
 import dayjs from "dayjs";
@@ -214,7 +199,7 @@ export const triggerwelcomenmorning = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .eq("current_session_date", '2026-08-31')
+    .eq("current_session_date", '2026-09-07')
     .eq("is_active", true)
     .order("id", { ascending: false });
 
@@ -254,7 +239,7 @@ export const triggerwelcomeevening = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .eq("current_session_date", '2026-08-31')
+    .eq("current_session_date", '2026-09-07')
     .eq("is_active", true)
     .order("id", { ascending: false });
 
@@ -288,87 +273,6 @@ export const triggerwelcomeevening = async (dayNumber) => {
 
   console.log(`> Yoga campaign finished. Total users processed: ${count}`);
 };
-
-
-export const trigger14ComProgram = async (dayNumber) => {
-  console.log("> Yoga campaign started");
-  console.log("> day number: ", dayNumber);
-
-  const { data: users } = await supabase
-    .from("yoga_signups")
-    .select("*")
-    .eq("current_session_date", '2026-07-20')
-    .eq("is_active", true)
-    .order("id", { ascending: false });
-
-  if (!users?.length) {
-    console.log("> No users found");
-    return;
-  }
-
-  for (const user of users) {
-    const phoneData = processPhone(user.phone, user.country_code);
-    const { localPhone, whatsappPhone } = phoneData;
-
-    try {
-      await continue14Session({
-        whatsappPhone,
-        name: user.name,
-        userId: user.ref_user_id,
-      });
-
-      console.log(`> Sent to ${user.id}`);
-    } catch (err) {
-      console.error(`> Failed for ${user.id}`, err.message);
-    }
-
-    // WhatsApp safety delay
-    await delay(40);
-  }
-
-  console.log("> Yoga campaign finished");
-};
-
-
-export const trigger14ComProgramEvening = async (dayNumber) => {
-  console.log("> Yoga campaign started");
-  console.log("> day number: ", dayNumber);
-
-  const { data: users } = await supabase
-    .from("yoga_signups")
-    .select("*")
-    .eq("current_session_date", '2026-07-20')
-    .eq("is_active", true)
-    .order("id", { ascending: false });
-
-  if (!users?.length) {
-    console.log("> No users found");
-    return;
-  }
-
-  for (const user of users) {
-    const phoneData = processPhone(user.phone, user.country_code);
-    const { localPhone, whatsappPhone } = phoneData;
-
-    try {
-      await continue14SessionEvening({
-        whatsappPhone,
-        name: user.name,
-        userId: user.ref_user_id,
-      });
-
-      console.log(`> Sent to ${user.id}`);
-    } catch (err) {
-      console.error(`> Failed for ${user.id}`, err.message);
-    }
-
-    // WhatsApp safety delay
-    await delay(40);
-  }
-
-  console.log("> Yoga campaign finished");
-};
-
 
 
 export const triggerYogaCampaignmorningnew = async (dayNumber) => {
