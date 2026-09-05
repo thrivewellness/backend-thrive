@@ -179,24 +179,27 @@ router.post("/yoga/signup", async (req, res, next) => {
 });
 
 // to get yoga signups
-router.get('/get-yoga/new', async (req, res, next) => {
+router.get('/health/new', async (req, res, next) => {
   try {
     const { data, error } = await supabase
       .from('yoga_signups')
-      .select("id, name, phone, country_code, referral, coach_ref, ref_user_id, current_session_date, session_start_date, created_at")
+      .select("id, created_at, name, phone, country_code, ref_user_id")
       .eq('id', 403)
 
     if (error) {
       return res.status(500).json({
         success: false,
-        message: 'Failed to fetch yoga signups'
+        message: 'Api working good at backend(api.thrivewellness.in) but failed to fetch data from supabase',
+        error: error.message
       });
     }
 
     res.status(200).json({
       success: true,
       count: data.length,
-      data
+      message: 'Nice working good, api and supabase both are working fine',
+      developerMessage: 'This is a test api to check if the api and supabase are working fine @api.thrivewellness.in, build by thakheer khan CTO/Dev of thrivewellness.in',
+      results: data
     });
   } catch (err) {
     next(err);
