@@ -179,7 +179,7 @@ router.post("/yoga/signup", async (req, res, next) => {
 });
 
 // to get yoga signups
-router.get('/health/new', async (req, res, next) => {
+router.get('/health', async (req, res, next) => {
   try {
     const { data, error } = await supabase
       .from('yoga_signups')
@@ -197,8 +197,8 @@ router.get('/health/new', async (req, res, next) => {
     res.status(200).json({
       success: true,
       count: data.length,
-      message: 'Nice working good, api and supabase both are working fine',
-      developerMessage: 'This is a test api to check if the api and supabase are working fine @api.thrivewellness.in, build by thakheer khan CTO/Dev of thrivewellness.in',
+      message: 'Nice, api route and supabase(query) both are working fine',
+      DeveloperNote: 'This is a test api to check if the api and supabase are working fine @api.thrivewellness.in, build by thakheer khan CTO/Dev of thrivewellness.in',
       results: data
     });
   } catch (err) {
