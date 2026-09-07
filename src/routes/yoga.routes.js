@@ -172,7 +172,6 @@ router.post("/yoga/signup", async (req, res, next) => {
       .from("community_links")
       .select("link")
       .eq("batch_start_date", programStartDate)
-      .maybeSingle();
 
     if (communityError) {
       console.error("Community link lookup error:", communityError);
