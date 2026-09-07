@@ -60,7 +60,7 @@ router.post("/yoga/signup", async (req, res, next) => {
 
     // PROCESS PHONE FOR 
     const phoneData = processPhone(phone, countryCode);
-    
+
     if (!phoneData) {
       return res.status(400).json({
         success: false,
@@ -151,7 +151,7 @@ router.post("/yoga/signup", async (req, res, next) => {
       const userName = newUserData.name;
       const coachRef = coachData?.coach_ref || null;
 
-  
+
       //  Only update if coach_ref exists
       if (coachRef) {
         const { error: updateError } = await supabase
@@ -172,6 +172,8 @@ router.post("/yoga/signup", async (req, res, next) => {
       .from("community_links")
       .select("link")
       .eq("batch_start_date", programStartDate)
+      .limit(1)
+      .maybeSingle();
 
     if (communityError) {
       console.error("Community link lookup error:", communityError);
