@@ -168,10 +168,22 @@ router.post("/yoga/signup", async (req, res, next) => {
       await handleReferralCount(userId, userName, referral, count || 0);
     }
 
+    const { data: communityData, error: communityError } = await supabase
+      .from("community_links")
+      .select("link")
+      .eq("batch_start_date", programStartDate)
+      .maybeSingle();
+
+    if (communityError) {
+      console.error("Community link lookup error:", communityError);
+    }
+
+    const communityLink = communityData?.link?.trim() || "nobatchlink";
 
     res.status(200).json({
       success: true,
       message: "Signup successful",
+      community_link: communityLink,
     });
   } catch (err) {
     next(err);
