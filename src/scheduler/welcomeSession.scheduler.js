@@ -17,7 +17,11 @@ import {
   isPaidAttendanceSkippedDay,
   triggerAttendancePaid,
 } from "../routes/aisensy/triggerAttendancePaid.js";
-import { triggerPlans } from "../routes/aisensy/triggerPlans.js";
+import {
+  triggerPlans,
+  triggerPlansSunday,
+} from "../routes/aisensy/triggerPlans.js";
+
 import { triggerconsultaion } from "../routes/aisensy/triggerconsultaion.js";
 import { triggerFiveRem, triggerFiveRemEve, triggerFiveRemWelEve, triggerFiveRemWel, triggerFive14Rem, triggerFive14RemEve } from "../routes/aisensy/triggerRemainders.js";
 import { triggerInstTestimonails, triggerInstTestimonailsNew, triggerYtVid } from "../routes/aisensy/triggertestimonails.js";
@@ -151,7 +155,6 @@ const triggerAttendanceSlot = async (presentMessageTime, sendAbsent = false) => 
   const campaign = await checkCampaignTriggeredToday(supabase);
 
   if (campaign) {
-    console.log("> Campaign was triggered today.");
     await triggerAttendance(campaign.campaign_date, campaign.day_number, presentMessageTime, { sendAbsent });
   } else {
     console.log("> No free campaign triggered today. Skipping free attendance.");
@@ -200,3 +203,74 @@ export const checkCampaignTriggeredToday = async (supabase) => {
 
   return data;
 };
+
+// ================================================================
+//trigger Plans Offer Message
+
+// Monday - Wednesday -> 8:00 AM IST
+[1, 2, 3].forEach((dayNumber) => {
+  cron.schedule(
+    `0 8 * * ${dayNumber}`,
+    async () => {
+      try {
+        await triggerPlans(dayNumber);
+      } catch (error) {
+        console.error(`triggerPlans(${dayNumber}) failed:`, error);
+      }
+    },
+    {
+      timezone: "Asia/Kolkata",
+    }
+  );
+});
+
+
+// Thursday - Saturday -> 1:00 PM IST
+[4, 5, 6].forEach((dayNumber) => {
+  cron.schedule(
+    `0 13 * * ${dayNumber}`,
+    async () => {
+      try {
+        await triggerPlans(dayNumber);
+      } catch (error) {
+        console.error(`triggerPlans(${dayNumber}) failed:`, error);
+      }
+    },
+    {
+      timezone: "Asia/Kolkata",
+    }
+  );
+});
+
+
+// Sunday morning -> 11:40 AM IST
+cron.schedule(
+  "40 11 * * 0",
+  async () => {
+    try {
+      await triggerPlansSunday("morning");
+    } catch (error) {
+      console.error("triggerPlansSunday('morning') failed:", error);
+    }
+  },
+  {
+    timezone: "Asia/Kolkata",
+  }
+);
+
+// Sunday evening -> 4:40 PM IST
+cron.schedule(
+  "40 16 * * 0",
+  async () => {
+    try {
+      await triggerPlansSunday("evening");
+    } catch (error) {
+      console.error("triggerPlansSunday('evening') failed:", error);
+    }
+  },
+  {
+    timezone: "Asia/Kolkata",
+  }
+);
+
+//================================================================

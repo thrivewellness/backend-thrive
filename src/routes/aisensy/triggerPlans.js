@@ -8,6 +8,7 @@ import { sendThriveYogaPlans2day } from "./campaigns/promtions/sendThriveYogaPla
 import { sendThriveconsultaion3day } from "./campaigns/promtions/sendThriveconsultaion3day.js";
 import { sendPlansOfferMsg } from "./campaigns/promtions/sendPlansOfferMsg.js";
 import { processPhone } from "../../utils/phoneUtils.js";
+import { sendMisCallFromHealth } from "./campaigns/promtions/sendMisCallFromHealth.js";
 
 // Plans Trigger Function
 export const triggerPlans = async (dayNumber) => {
@@ -65,7 +66,7 @@ export const triggerPlans = async (dayNumber) => {
       }
 
       try {
-        await sendChineseMsg(id, whatsappPhone, name, dayNumber);
+        await sendMisCallFromHealth(id, whatsappPhone, name, dayNumber);
         sentCount++;
       } catch (err) {
         console.error(`> Failed for user ${id}:`, err.message);
@@ -80,3 +81,9 @@ export const triggerPlans = async (dayNumber) => {
     console.error("Trigger Plans Error:", err);
   }
 };
+
+export const triggerPlansSunday = async (sessionType) => {
+
+  console.log("> Running Plans Sunday Function");
+  console.log(`> Session Type: ${sessionType}`);
+}
