@@ -4,6 +4,7 @@ import { fiveMinWelcomeSessionRemainderEvening, fiveMinWelcomeSessionRemainderMo
 import { fiveMinSessionRemainderMetabolHealth, fiveMinSessionRemainderMetabolHealthEvening } from "./campaigns/remainders/MetabolHealthSessionRemainders.js";
 import { fiveMinSessionRemainder14Con, fiveMinSessionRemainder14ConEve } from "./campaigns/remainders/14ConSessionRemainders.js";
 import { processPhone } from "../../utils/phoneUtils.js";
+import { fiveMinSessionRemainderGutHealth,fiveMinSessionRemainderGutHealthEvening } from "./campaigns/remainders/gutHealthSessionRemainders.js";
 
 
 export const triggerFiveRem = async (dayNumber) => {
@@ -13,7 +14,7 @@ export const triggerFiveRem = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .eq("current_session_date", '2026-08-31')
+    .eq("current_session_date", '2026-09-07')
     .eq("is_active", true)
     .order("id", { ascending: false });
 
@@ -27,7 +28,7 @@ export const triggerFiveRem = async (dayNumber) => {
     const { localPhone, whatsappPhone } = phoneData;
 
     try {
-      await fiveMinSessionRemainderMetabolHealth({
+      await fiveMinSessionRemainderGutHealth({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,
@@ -53,7 +54,7 @@ export const triggerFiveRemEve = async (dayNumber) => {
   const { data: users } = await supabase
     .from("yoga_signups")
     .select("*")
-    .eq("current_session_date", '2026-08-31')
+    .eq("current_session_date", '2026-09-07')
     .eq("is_active", true)
     .order("id", { ascending: false });
 
@@ -67,7 +68,7 @@ export const triggerFiveRemEve = async (dayNumber) => {
     const { localPhone, whatsappPhone } = phoneData;
 
     try {
-      await fiveMinSessionRemainderMetabolHealthEvening({
+      await fiveMinSessionRemainderGutHealthEvening({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,
