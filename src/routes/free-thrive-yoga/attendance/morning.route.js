@@ -85,7 +85,7 @@ router.post("/", async (req, res) => {
 
     // Validate ID
     if ((typeof id !== "string" || !id.trim()) &&
-        (typeof id !== "number" || !Number.isFinite(id) || id === 0)) {
+        (typeof id !== "number" || !Number.isFinite(id) || id <= 0)) {
       return res.status(400).json({ error: "Invalid ID", code: "INVALID_ID" });
     }
 
@@ -138,6 +138,21 @@ router.post("/", async (req, res) => {
     if (sessionError) throw sessionError;
 
     const sessionLink = sessionData?.link ?? null;
+    const firstSlotStart = [7, 14].includes(Number(dayNumber))
+      ? SPECIAL_MORNING_ATTENDANCE_SLOTS[0].start
+      : MORNING_ATTENDANCE_SLOTS[0].start;
+
+    if (currentTime < firstSlotStart) {
+      return res.status(200).json({
+        success: true,
+        code: "SESSION_EARLY_ACCESS",
+        message: "Session available",
+        type: "session",
+        link: sessionLink,
+        data: { dayNumber, sessionType: "morning" },
+      });
+    }
+
     const attendanceSlot = getAttendanceSlot(currentTime, dayNumber);
     const isMorningTime = Boolean(attendanceSlot);
 

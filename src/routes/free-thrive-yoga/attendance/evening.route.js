@@ -85,7 +85,7 @@ router.post("/", async (req, res) => {
 
     // Validate ID
     if ((typeof id !== "string" || !id.trim()) &&
-        (typeof id !== "number" || !Number.isFinite(id) || id === 0)) {
+        (typeof id !== "number" || !Number.isFinite(id) || id <= 0)) {
       return res.status(400).json({ error: "Invalid ID", code: "INVALID_ID" });
     }
 
@@ -122,8 +122,8 @@ router.post("/", async (req, res) => {
       });
     }
 
-    if (dayNumber < 1) return res.status(400).json({ error: "Campaign has not started", code: "CAMPAIGN_NOT_STARTED", data: { current_session_date: existingUser.current_session_date } });
-    if (dayNumber > 14) return res.status(400).json({ error: "Your 14-day yoga campaign has been completed.", code: "CAMPAIGN_ENDED", data: { dayNumber } });
+    if (dayNumber < 1) return res.status(400).json({ error: "Program has not started", code: "PROGRAM_NOT_STARTED", data: { current_session_date: existingUser.current_session_date } });
+    if (dayNumber > 14) return res.status(400).json({ error: "Your 14-day yoga program has been completed.", code: "PROGRAM_ENDED", data: { dayNumber } });
 
     // Fetch this user's session link for today and their calculated day number.
     const { data: sessionData, error: sessionError } = await supabase
@@ -139,6 +139,21 @@ router.post("/", async (req, res) => {
     if (sessionError) throw sessionError;
 
     const sessionLink = sessionData?.link ?? null;
+    const firstSlotStart = [7, 14].includes(Number(dayNumber))
+      ? SPECIAL_EVENING_ATTENDANCE_SLOTS[0].start
+      : EVENING_ATTENDANCE_SLOTS[0].start;
+
+    if (currentTime < firstSlotStart) {
+      return res.status(200).json({
+        success: true,
+        code: "SESSION_EARLY_ACCESS",
+        message: "Session available",
+        type: "session",
+        link: sessionLink,
+        data: { dayNumber, sessionType: "evening" },
+      });
+    }
+
     const attendanceSlot = getAttendanceSlot(currentTime, dayNumber);
     const isEveningTime = Boolean(attendanceSlot);
 
