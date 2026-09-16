@@ -31,6 +31,10 @@ const calculateDayNumber = (currentSessionDate, todayDate) => {
   }
 
   const sessionDate = currentSessionDate.toString().slice(0, 10);
+  const parsedSessionDate = new Date(`${sessionDate}T00:00:00Z`);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(sessionDate) ||
+      Number.isNaN(parsedSessionDate.getTime()) ||
+      parsedSessionDate.toISOString().slice(0, 10) !== sessionDate) return null;
   const sessionStart = new Date(`${sessionDate}T00:00:00+05:30`);
   const today = new Date(`${todayDate}T00:00:00+05:30`);
 
@@ -77,11 +81,12 @@ const recordActivity = async ({ id, existingActivity, activity }) => {
 // POST /free-thrive-yoga/attendance/morning
 router.post("/", async (req, res) => {
   try {
-    const { id } = req.body;
+    const id = req.body?.id;
 
     // Validate ID
-    if (!id) {
-      return res.status(400).json({ error: "Invalid ID" });
+    if ((typeof id !== "string" || !id.trim()) &&
+        (typeof id !== "number" || !Number.isFinite(id) || id === 0)) {
+      return res.status(400).json({ error: "Invalid ID", code: "INVALID_ID" });
     }
 
     const { currentTime, todayDate, currentDateTime } = getISTDateTime();
@@ -99,35 +104,40 @@ router.post("/", async (req, res) => {
     if (fetchError) {
       // PGRST116 = No rows found
       if (fetchError.code === "PGRST116") {
-        return res.status(400).json({ error: "Invalid ID" });
+        return res.status(400).json({ error: "Invalid ID", code: "USER_NOT_FOUND" });
       }
       throw fetchError;
     }
 
     if (!existingUser) {
-      return res.status(400).json({ error: "Invalid ID" });
+      return res.status(400).json({ error: "Invalid ID", code: "USER_NOT_FOUND" });
     }
 
     const dayNumber = calculateDayNumber(existingUser.current_session_date, todayDate);
 
-    if (!dayNumber || dayNumber < 1) {
+    if (dayNumber === null) {
       return res.status(400).json({
         error: "current_session_date not found or invalid for user",
+        code: "INVALID_SESSION_DATE",
       });
     }
 
-    // Fetch this user's campaign link for today and their calculated day number.
-    const { data: campaignData, error: campaignError } = await supabase
-      .from("campaigns_data")
-      .select("link, day_number")
-      .eq("campaign_date", todayDate)
-      .eq("session_name", "morning")
-      .eq("day_number", dayNumber)
+    if (dayNumber < 1) return res.status(400).json({ error: "Program has not started", code: "PROGRAM_NOT_STARTED", data: { current_session_date: existingUser.current_session_date } });
+    if (dayNumber > 14) return res.status(400).json({ error: "Your 14-day yoga program has been completed.", code: "PROGRAM_ENDED", data: { dayNumber } });
+
+    // Fetch this user's session link for today and their calculated day number.
+    const { data: sessionData, error: sessionError } = await supabase
+      .from("free_session_link")
+      .select("link, session_number")
+      .eq("session_date", todayDate)
+      .eq("session_type", "morning")
+      .eq("session_number", dayNumber)
       .single();
 
-    if (campaignError && campaignError.code !== "PGRST116") throw campaignError;
+    if (sessionError?.code === "PGRST116" || (!sessionData && !sessionError)) return res.status(400).json({ error: "No session is available for today.", code: "SESSION_NOT_FOUND", data: { dayNumber, sessionType: "morning" } });
+    if (sessionError) throw sessionError;
 
-    const campaignLink = campaignData?.link ?? null;
+    const sessionLink = sessionData?.link ?? null;
     const attendanceSlot = getAttendanceSlot(currentTime, dayNumber);
     const isMorningTime = Boolean(attendanceSlot);
 
@@ -181,13 +191,15 @@ router.post("/", async (req, res) => {
 
       if (error) throw error;
 
-      console.log("link", campaignLink);
+      console.log("link", sessionLink);
 
       return res.status(200).json({
         success: true,
-        message: "Morning attendance recorded",
+        code: hasSlotAttendanceActivity ? "ALREADY_ATTENDED" : "ATTENDANCE_RECORDED",
+        message: hasSlotAttendanceActivity ? "Attendance has already been recorded for this session." : "Morning attendance recorded",
         type: "attendance",
-        link: campaignLink,
+        link: sessionLink,
+        data: { dayNumber, sessionType: "morning" },
       });
     } else {
       // ---- UPDATE ACTIVITY ----
@@ -197,18 +209,20 @@ router.post("/", async (req, res) => {
         activity: activityRecord,
       });
 
-      console.log("link", campaignLink);
+      console.log("link", sessionLink);
 
       return res.status(200).json({
         success: true,
+        code: "OUTSIDE_ATTENDANCE_WINDOW",
         message: "Activity recorded",
         type: "activity",
-        link: campaignLink,
+        link: sessionLink,
+        data: { dayNumber, sessionType: "morning" },
       });
     }
   } catch (err) {
     console.error("Error:", err);
-    return res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: "An internal error occurred.", code: "INTERNAL_ERROR" });
   }
 });
 
