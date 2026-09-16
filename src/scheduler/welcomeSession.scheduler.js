@@ -128,6 +128,38 @@ cron.schedule("0 21 * * *", () => trigger9PmMsg(getWeekdayDayNumberIST(), getTod
   timezone: "Asia/Kolkata",
 });
 
+cron.schedule("0 6 * * *", () => triggerYogaCampaignmorning(getWeekdayDayNumberIST() + 7), {
+  timezone: "Asia/Kolkata",
+});
+
+cron.schedule("5 6 * * *", () => triggerYogaCampaignmorningnew(getWeekdayDayNumberIST()), {
+  timezone: "Asia/Kolkata",
+});
+
+cron.schedule("0 16 * * *", () => triggerYogaCampaignevening(getWeekdayDayNumberIST() + 7), {
+  timezone: "Asia/Kolkata",
+});
+
+cron.schedule("5 16 * * *", () => triggerYogaCampaigneveningnew(getWeekdayDayNumberIST()), {
+  timezone: "Asia/Kolkata",
+});
+
+cron.schedule("30 9 * * 6", () => triggerGutHealthProgram(6), {
+  timezone: "Asia/Kolkata",
+});
+
+cron.schedule("0 14 * * 6", () => triggerGutHealthProgramEvening(6), {
+  timezone: "Asia/Kolkata",
+});
+
+cron.schedule("0 9 * * 0", () => triggerwelcomenmorning(0), {
+  timezone: "Asia/Kolkata",
+});
+
+cron.schedule("0 14 * * 0", () => triggerwelcomeevening(0), {
+  timezone: "Asia/Kolkata",
+});
+
 const paidUserMessageWeekdays = [1, 2, 3, 5, 6];
 
 paidUserMessageWeekdays.forEach((dayNumber) => {
