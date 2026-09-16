@@ -34,7 +34,6 @@ const HANDLERS = {
   triggerYogaCampaignmorning,
   triggerYogaCampaignevening,
   triggerGutHealthProgram,
-  triggerAttendance,
   triggerPlans,
   triggerGutHealthProgramEvening,
   triggerconsultaion,
@@ -142,7 +141,7 @@ paidUserMessageWeekdays.forEach((dayNumber) => {
 });
 
 const triggerAttendanceSlot = async (presentMessageTime, sendAbsent = false) => {
-  console.log(`> Checking campaigns for attendance slot ${presentMessageTime}...`);
+  console.log(`> Triggering attendance slot ${presentMessageTime}...`);
 
   const todayIST = getTodayIST();
 
@@ -152,13 +151,7 @@ const triggerAttendanceSlot = async (presentMessageTime, sendAbsent = false) => 
     await triggerAttendancePaid(todayIST, presentMessageTime, { sendAbsent });
   }
 
-  const campaign = await checkCampaignTriggeredToday(supabase);
-
-  if (campaign) {
-    await triggerAttendance(campaign.campaign_date, campaign.day_number, presentMessageTime, { sendAbsent });
-  } else {
-    console.log("> No free campaign triggered today. Skipping free attendance.");
-  }
+  await triggerAttendance(todayIST, presentMessageTime, { sendAbsent });
 };
 
 cron.schedule("0 10 * * *", () => triggerAttendanceSlot(["08:00", "09:00", "10:00"]), {
@@ -177,32 +170,6 @@ cron.schedule("35 20 * * *", () => triggerAttendanceSlot(["18:30", "19:30", "20:
   timezone: "Asia/Kolkata",
 });
 
-
-// Helper to check if any campaign was triggered today  
-export const checkCampaignTriggeredToday = async (supabase) => {
-  // Get today's date in IST (YYYY-MM-DD format)
-  const todayIST = new Date().toLocaleDateString("en-CA", {
-    timeZone: "Asia/Kolkata",
-  });
-  // en-CA gives format: YYYY-MM-DD 
-
-  const { data, error } = await supabase
-    .from("campaigns_data")
-    .select("id, campaign_date, day_number")
-    .eq("campaign_date", todayIST)
-    .eq("triggered_status", true)
-    .limit(1)
-    .single();
-
-  if (error) {
-    if (error.code !== "PGRST116") {
-      console.error("Error checking today's campaigns:", error);
-    }
-    return null;
-  }
-
-  return data;
-};
 
 // ================================================================
 //trigger Plans Offer Message

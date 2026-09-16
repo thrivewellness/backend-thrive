@@ -6,11 +6,6 @@ import { processPhone } from "../../utils/phoneUtils.js";
 
 const formatDate = (date) => date.toISOString().slice(0, 10);
 
-const getTodayIST = () =>
-  new Date().toLocaleDateString("en-CA", {
-    timeZone: "Asia/Kolkata",
-  });
-
 const getNowIST = () => {
   const parts = new Intl.DateTimeFormat("en-CA", {
     timeZone: "Asia/Kolkata",
@@ -171,19 +166,13 @@ const markAbsentMessageSent = async (user, date) => {
 // Attendance Trigger Function
 export const triggerAttendance = async (
   triggeredToday,
-  dayNumber,
   presentMessageTime = null,
   options = {}
 ) => {
-  if (!dayNumber) {
-    dayNumber = triggeredToday;
-    triggeredToday = getTodayIST();
-  }
-
   const { sendAbsent = presentMessageTime === null } = options;
 
   console.log("> Running Attendance Function");
-  console.log("> Triggered Campaign:", triggeredToday);
+  console.log("> Attendance Date:", triggeredToday);
   console.log("> Present Message Time:", presentMessageTime || "all");
   console.log("> Send Absent:", sendAbsent);
 
