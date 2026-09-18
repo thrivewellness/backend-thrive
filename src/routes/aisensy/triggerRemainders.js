@@ -68,7 +68,7 @@ export const triggerFiveRemEve = async (dayNumber) => {
     const { localPhone, whatsappPhone } = phoneData;
 
     try {
-      await fiveMinSessionRemainderMetabolHealthEvening({
+      await fiveMinSessionRemainderGutHealthEvening({
         whatsappPhone,
         name: user.name,
         userId: user.ref_user_id,
