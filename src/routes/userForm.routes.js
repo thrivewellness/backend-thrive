@@ -139,6 +139,8 @@ const triggerLandingPageMessages = async ({ userId, formFields, createdAt }) => 
         countryCode: formFields.countryCode
       }),
       ageGroup: toTemplateValue(formFields.ageGroup),
+      height: toTemplateValue(formFields.height),
+      weight: toTemplateValue(formFields.weight),
       created_at: formatLeadCreatedAt(createdAt),
       goal: toTemplateValue(formFields.goal),
 
@@ -162,6 +164,7 @@ const triggerLandingPageMessages = async ({ userId, formFields, createdAt }) => 
 
       openToInvest: toTemplateValue(formFields.openToInvest),
       invest: toTemplateValue(formFields.invest),
+      callTime: toTemplateValue(formFields.callTime),
 
       ref: toTemplateValue(formFields.ref || formFields.cr_ref)
     })

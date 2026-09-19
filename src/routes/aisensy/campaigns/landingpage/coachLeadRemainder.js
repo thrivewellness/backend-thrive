@@ -8,6 +8,8 @@ export const coachLeadRemainder = async ({
     name,
     phnumber,
     ageGroup,
+    height,
+    weight,
     created_at,
     goal,
 
@@ -30,6 +32,7 @@ export const coachLeadRemainder = async ({
     readiness,
     openToInvest,
     invest,
+    callTime,
 
     ref
 }) => {
@@ -37,7 +40,11 @@ export const coachLeadRemainder = async ({
     console.log("coachLeadRemainder called with:", {
         id,
         whatsappPhone,
-        name
+        name,
+        height,
+    weight,
+    callTime
+
     });
 
     const payload = {
