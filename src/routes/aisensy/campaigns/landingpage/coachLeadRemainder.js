@@ -42,8 +42,8 @@ export const coachLeadRemainder = async ({
         whatsappPhone,
         name,
         height,
-    weight,
-    callTime
+        weight,
+        callTime
 
     });
 
@@ -56,36 +56,52 @@ export const coachLeadRemainder = async ({
         templateParams: [
             name,                   // {{1}}
             phnumber,               // {{2}}
-            ageGroup,               // {{3}}
-            created_at,             // {{4}}
+            ageGroup,       // {{3}}
+            height,       //{{4}}
+            weight,       // {{5}}
+            created_at,             // {{6}}
 
-            goal,                   // {{5}}
+            goal,                   // {{7}}
 
-            targetWeightLoss,       // {{6}}
-            weightLossObstacle,     // {{7}}
-            whyLoseWeight,          // {{8}}
+            targetWeightLoss,       // {{8}}
+            weightLossObstacle,     // {{9}}
+            whyLoseWeight,          // {{10}}
 
-            medicalConditions,      // {{9}}
-            medicationStatus,       // {{10}}
+            medicalConditions,      // {{11}}
+            medicationStatus,       // {{12}}
 
-            menopauseStage,         // {{11}}
-            menopauseSymptoms,      // {{12}}
+            menopauseStage,         // {{13}}
+            menopauseSymptoms,      // {{14}}
 
-            symptoms,               // {{13}}
-            duration,               // {{14}}
-            readiness,              // {{15}}
+            symptoms,               // {{15}}
+            duration,               // {{16}}
+            readiness,              // {{17}}
 
-            openToInvest,           // {{16}}
-            invest,                 // {{17}}
+            openToInvest,           // {{18}}
+            invest,                 // {{19}}
 
-            ref,                    // {{18}}
+            callTime,             // {{20}} 
 
-            `https://admin.thrivewellness.in/leads/update?id=${id}` // {{19}}
+            ref,                    // {{21}}
+
+            `https://admin.thrivewellness.in/leads/update?id=${id}` // {{22}}
         ],
 
         source: "new-landing-page form",
         media: {},
-        buttons: [],
+        buttons: [
+            {
+                "type": "button",
+                "sub_type": "URL",
+                "index": 0,
+                "parameters": [
+                    {
+                        "type": "text",
+                        "text": `leads/update?id=${id}`
+                    }
+                ]
+            }
+        ],
         carouselCards: [],
         location: {},
         attributes: {},
