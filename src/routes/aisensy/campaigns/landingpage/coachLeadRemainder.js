@@ -49,7 +49,7 @@ export const coachLeadRemainder = async ({
 
     const payload = {
         apiKey: process.env.AISENSY_API_KEY,
-        campaignName: "caoch_lead_notify_new",
+        campaignName: "caoch_lead_notify_new_xhixo",
         destination: whatsappPhone,
         userName: "Thrive Integrated Lifestyle Private Limited",
 
