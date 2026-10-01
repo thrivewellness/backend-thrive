@@ -34,6 +34,9 @@ export const coachLeadRemainder = async ({
     invest,
     callTime,
 
+    callAttendance,
+    backupCallTime,
+
     ref
 }) => {
 
@@ -49,7 +52,7 @@ export const coachLeadRemainder = async ({
 
     const payload = {
         apiKey: process.env.AISENSY_API_KEY,
-        campaignName: "caoch_lead_notify_new_xhixo",
+        campaignName: "caoch_lead_notification",
         destination: whatsappPhone,
         userName: "Thrive Integrated Lifestyle Private Limited",
 
@@ -80,11 +83,14 @@ export const coachLeadRemainder = async ({
             openToInvest,           // {{18}}
             invest,                 // {{19}}
 
-            callTime,             // {{20}} 
+            callTime,                // {{20}} 
 
-            ref,                    // {{21}}
+            callAttendance,          // {{21}}
+            backupCallTime,         // {{22}}
 
-            `https://admin.thrivewellness.in/leads/update?id=${id}` // {{22}}
+            ref,                    // {{23}}
+
+            `https://admin.thrivewellness.in/leads/update?id=${id}` // {{24}}
         ],
 
         source: "new-landing-page form",

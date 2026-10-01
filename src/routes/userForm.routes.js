@@ -165,6 +165,8 @@ const triggerLandingPageMessages = async ({ userId, formFields, createdAt }) => 
       openToInvest: toTemplateValue(formFields.openToInvest),
       invest: toTemplateValue(formFields.invest),
       callTime: toTemplateValue(formFields.callTime),
+      callAttendance: toTemplateValue(formFields.callAttendance),
+      backupCallTime: toTemplateValue(formFields.backupCallTime),
 
       ref: toTemplateValue(formFields.ref || formFields.cr_ref)
     })
