@@ -267,7 +267,7 @@ router.post('/user/form/open', async (req, res, next) => {
     
     const { error: insertError } = await supabase
       .from('user_forms')
-      .insert([{ user_id: userId, form: formEntries }]);
+      .insert([{ user_id: userId, form: formEntries,  Designate: formEntries[0].cr_ref || 'not_assigned' }]);
 
     if (insertError) {
       return res.status(500).json({

@@ -48,6 +48,36 @@ const dailyQuotes = [
   "You closed out the month by showing up for yourself. That's worth celebrating. \uD83C\uDF89",
 ];
 
+const badgeMediaByDay = {
+  50: {
+    url: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/b6d44050-bdbb-47f3-a605-459c68b43fd6_50daymailstone.jpeg",
+    filename: "50daymailstone.jpeg",
+  },
+  100: {
+    url: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/567638_thriveyoga7daybadge.jpg",
+    filename: "thrive_yoga_7day_badge.jpg",
+  },
+  150: {
+    url: "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/696b61f2951b730d7655fef4/528811_14.jpg.jpeg",
+    filename: "day14_badge",
+  },
+};
+
+
+const getBadgeButton = (day, refUserId) => [
+  {
+    type: "button",
+    sub_type: "URL",
+    index: 0,
+    parameters: [
+      {
+        type: "text",
+        text: `/free-yoga/badge/day${day}?id=${refUserId}`,
+      },
+    ],
+  },
+];
+
 const getDayOfMonthIST = () =>
   Number(
     new Intl.DateTimeFormat("en-US", {
@@ -77,49 +107,49 @@ export const presentFunctionPaid = async (
 
   const payload = milestoneQuote
     ? {
-        apiKey: process.env.AISENSY_API_KEY,
-        campaignName: "attendance_badge",
-        destination: whatsappPhone,
-        userName: "Thrive Integrated Lifestyle Private Limited",
-        templateParams: [
-          `${name || "user"} Ji`,
-          dayLine,
-          statusLine,
-          `You have unlocked your ${totalPresentDays}-Day Achievement Badge \uD83C\uDFC5`,
-          quote,
-          tracker,
-          "Celebrate this milestone and share your achievement with friends!",
-        ],
-        source: "new-landing-page form",
-        media: {},
-        buttons: [],
-        carouselCards: [],
-        location: {},
-        attributes: {},
-        paramsFallbackValue: {
-          FirstName: "user",
-        },
-      }
+      apiKey: process.env.AISENSY_API_KEY,
+      campaignName: "attendance_badge",
+      destination: whatsappPhone,
+      userName: "Thrive Integrated Lifestyle Private Limited",
+      templateParams: [
+        `${name || "user"} Ji`,
+        dayLine,
+        statusLine,
+        `You have unlocked your ${totalPresentDays}-Day Achievement Badge \uD83C\uDFC5`,
+        quote,
+        tracker,
+        "Celebrate this milestone and share your achievement with friends!",
+      ],
+      source: "new-landing-page form",
+      media: badgeMediaByDay[day] || {},
+      buttons: getBadgeButton(day, userId),
+      carouselCards: [],
+      location: {},
+      attributes: {},
+      paramsFallbackValue: {
+        FirstName: "user",
+      },
+    }
     : {
-        apiKey: process.env.AISENSY_API_KEY,
-        campaignName: "present_msg_both_users",
-        destination: whatsappPhone,
-        userName: "Thrive Wellness",
-        templateParams: [
-          `${name || "user"} Ji`,
-          dayLine,
-          statusLine,
-          tracker,
-          `Total Thrive yoga days: ${totalPresentDays}`,
-          quote,
-        ],
-        source: "new-landing-page form",
-        media: {},
-        buttons: [],
-        carouselCards: [],
-        location: {},
-        attributes: {},
-      };
+      apiKey: process.env.AISENSY_API_KEY,
+      campaignName: "present_msg_both_users",
+      destination: whatsappPhone,
+      userName: "Thrive Wellness",
+      templateParams: [
+        `${name || "user"} Ji`,
+        dayLine,
+        statusLine,
+        tracker,
+        `Total Thrive yoga days: ${totalPresentDays}`,
+        quote,
+      ],
+      source: "new-landing-page form",
+      media: {},
+      buttons: [],
+      carouselCards: [],
+      location: {},
+      attributes: {},
+    };
 
   try {
     const response = await axios.post(AISENSY_URL, payload, {

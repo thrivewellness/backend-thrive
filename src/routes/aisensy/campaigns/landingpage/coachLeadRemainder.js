@@ -90,7 +90,7 @@ export const coachLeadRemainder = async ({
 
             ref,                    // {{23}}
 
-            `https://admin.thrivewellness.in/leads/update?id=${id}` // {{24}}
+            `https://coach.thrivewellness.in/dashboard/leads/${id}` // {{24}}
         ],
 
         source: "new-landing-page form",
@@ -103,7 +103,7 @@ export const coachLeadRemainder = async ({
                 "parameters": [
                     {
                         "type": "text",
-                        "text": `leads/update?id=${id}`
+                        "text": `dashboard/leads/${id}`
                     }
                 ]
             }
